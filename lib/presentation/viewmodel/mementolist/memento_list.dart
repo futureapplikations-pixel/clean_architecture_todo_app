@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../data/repository/mementos_impl.dart';
 import '../../../domain/model/memento.dart';
-import '../../../domain/repository/mementos.dart';
 import 'memento_filter_kind.dart';
 
 part 'memento_list.g.dart';
@@ -10,7 +10,7 @@ part 'memento_list.g.dart';
 class MementoListViewModel extends _$MementoListViewModel {
   @override
   Future<List<Memento>> build() async {
-    final mementos = await ref.watch(mementosRepositoryProvider).getMementos();
+    final mementos = await ref.watch(mementosRepositoryImplProvider.notifier).getMementos();
     final filterKind = ref.watch(mementoFilterKindProvider);
     // TODO: Implement filter logic
     return mementos;
@@ -26,7 +26,7 @@ class MementoListViewModel extends _$MementoListViewModel {
     String? company,
     DateTime? birthday,
   }) async {
-    await ref.read(mementosRepositoryProvider).createMemento(
+    await ref.read(mementosRepositoryImplProvider.notifier).createMemento(
           name: name,
           photo: photo,
           email: email,
@@ -50,7 +50,7 @@ class MementoListViewModel extends _$MementoListViewModel {
     String? company,
     DateTime? birthday,
   }) async {
-    await ref.read(mementosRepositoryProvider).updateMemento(
+    await ref.read(mementosRepositoryImplProvider.notifier).updateMemento(
           id,
           name: name,
           photo: photo,
@@ -65,12 +65,12 @@ class MementoListViewModel extends _$MementoListViewModel {
   }
 
   Future<void> deleteMemento(final int id) async {
-    await ref.read(mementosRepositoryProvider).deleteMemento(id);
+    await ref.read(mementosRepositoryImplProvider.notifier).deleteMemento(id);
     ref.invalidateSelf();
   }
 
   Future<void> deleteAllMementos() async {
-    await ref.read(mementosRepositoryProvider).deleteAllMementos();
+    await ref.read(mementosRepositoryImplProvider.notifier).deleteAllMementos();
     ref.invalidateSelf();
   }
 }

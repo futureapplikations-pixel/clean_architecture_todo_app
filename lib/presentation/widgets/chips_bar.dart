@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../viewmodel/todolist/filter_kind.dart';
+import '../viewmodel/mementolist/memento_filter_kind.dart';
 
 class ChipsBarWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(filterKindProvider.notifier);
+    final viewModel = ref.watch(mementoFilterKindProvider.notifier);
     return SizedBox(
       height: kToolbarHeight,
       child: ListView(
@@ -22,16 +22,16 @@ class ChipsBarWidget extends ConsumerWidget {
           const SizedBox(width: 8),
           buildGroupChip(
             context,
-            viewModel.isFilteredByCompleted(),
-            'Completed',
-            viewModel.filterByCompleted,
+            viewModel.isFilteredByFavorites(),
+            'Favorites',
+            viewModel.filterByFavorites,
           ),
           const SizedBox(width: 8),
           buildGroupChip(
             context,
-            viewModel.isFilteredByIncomplete(),
-            'Incomplete',
-            viewModel.filterByIncomplete,
+            viewModel.isFilteredByRecent(),
+            'Recent',
+            viewModel.filterByRecent,
           ),
         ],
       ),

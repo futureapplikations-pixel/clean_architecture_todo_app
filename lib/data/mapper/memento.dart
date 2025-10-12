@@ -1,5 +1,5 @@
 import '../../domain/model/memento.dart';
-import '../source/database/database.dart' as db;
+import '../source/database/database_impl.dart' as db;
 
 class MementoMapper {
   static Memento transformToModel(db.Memento memento) {

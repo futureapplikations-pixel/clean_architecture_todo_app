@@ -7,7 +7,7 @@ part of 'memento_list.dart';
 // **************************************************************************
 
 String _$mementoListViewModelHash() =>
-    r'018cce74aa1e1cfedb6818d6b44eebf5cf5f49d5';
+    r'a38f16ed4eb30d20edf8b9d61eb121235e104938';
 
 /// See also [MementoListViewModel].
 @ProviderFor(MementoListViewModel)
