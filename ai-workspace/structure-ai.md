@@ -10,12 +10,10 @@
 ### Core Directories
 
 #### lib/data/ (Data Layer)
-- `entity/`: Database entities
-  - `todo.dart`: Database Todo entity typedef
 - `mapper/`: Data mappers
-  - `todo.dart`: Maps between Todo entity and domain model
+  - `memento.dart`: Maps between Memento entity and domain model
 - `repository/`: Repository implementations
-  - `todos_impl.dart`: Implements TodosRepository using Drift database
+  - `mementos_impl.dart`: Implements MementosRepository using Drift database
 - `source/`: Data sources
   - `database/`: Drift SQLite implementation
     - `connection/`: Platform-specific database connections
@@ -25,9 +23,10 @@
 
 #### lib/domain/ (Business Logic Layer)
 - `model/`: Domain models
-  - `todo.dart`: Todo model with business logic
+  - `memento.dart`: Memento model with business logic
+  - `label.dart`: Label model for categorizing mementos
 - `repository/`: Repository interfaces
-  - `todos.dart`: Todo repository interface
+  - `mementos.dart`: Memento repository interface
 - `usecase/`: Business use cases
 
 #### lib/presentation/ (UI Layer)
@@ -35,10 +34,19 @@
 - `router.dart`: GoRouter configuration
 - `theme.dart`: Material 3 theme configuration
 - `view/`: UI screens
+  - `memento_list.dart`: The main screen that displays the list of mementos.
+  - `memento_form.dart`: The screen for creating and editing mementos.
+  - `memento_details.dart`: The screen that displays the details of a memento.
+  - `search_memento_list.dart`: The screen for searching mementos.
 - `viewmodel/`: Screen view models
-  - `todoform/`: Todo creation/editing
-  - `todolist/`: Todo list management
+  - `mementoform/`: Memento creation/editing
+    - `memento_form.dart`: ViewModel for the memento form.
+  - `mementolist/`: Memento list management
+    - `memento_list.dart`: ViewModel for the memento list.
+    - `search_memento_list.dart`: ViewModel for searching mementos.
+    - `memento_filter_kind.dart`: Enum for filtering mementos.
 - `widgets/`: Reusable UI components
+  - `memento_card.dart`: A card widget to display a memento in a list.
 
 ### Platform Directories
 - Platform-specific configurations for:

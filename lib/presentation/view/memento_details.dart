@@ -2,11 +2,11 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../viewmodel/todolist/todo_list.dart';
-import 'todo_form.dart';
+import '../viewmodel/mementolist/memento_list.dart';
+import 'memento_form.dart';
 
-class TodoDetails extends ConsumerWidget {
-  const TodoDetails({
+class MementoDetails extends ConsumerWidget {
+  const MementoDetails({
     Key? key,
     required this.id,
   }) : super(key: key);
@@ -16,23 +16,23 @@ class TodoDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final todos = ref.watch(todoListViewModelProvider);
-    const Widget title = Text('TODO Details');
-    return todos.map(
+    final mementos = ref.watch(mementoListViewModelProvider);
+    const Widget title = Text('Memento Details');
+    return mementos.map(
       loading: (_) => Scaffold(
         appBar: AppBar(title: title),
         body: const Center(child: CircularProgressIndicator()),
       ),
       error: (error) => Scaffold(
         appBar: AppBar(title: title),
-        body: Center(child: Text('Error loading TODO: $error')),
+        body: Center(child: Text('Error loading Memento: $error')),
       ),
-      data: (todos) {
-        final todo = todos.value.firstWhereOrNull((todo) => todo.id.toString() == id);
-        if (todo != null) {
-          return TodoFormPage(
-            key: ValueKey(todo),
-            todo: todo,
+      data: (mementos) {
+        final memento = mementos.value.firstWhereOrNull((memento) => memento.id.toString() == id);
+        if (memento != null) {
+          return MementoFormPage(
+            key: ValueKey(memento),
+            memento: memento,
             showSave: false,
           );
         } else {
@@ -40,7 +40,7 @@ class TodoDetails extends ConsumerWidget {
             appBar: AppBar(title: title),
             body: Center(
               child: Text(
-                'TODO not found',
+                'Memento not found',
                 style: theme.textTheme.titleLarge,
               ),
             ),

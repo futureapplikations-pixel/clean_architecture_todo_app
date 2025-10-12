@@ -38,7 +38,7 @@ abstract class _$UpdateTodoUseCaseImpl
   late final bool isCompleted;
   late final DateTime dueDate;
 
-  Future<void> build(
+  FutureOr<void> build(
     int id, {
     required String title,
     required String? description,
@@ -106,12 +106,12 @@ class UpdateTodoUseCaseImplProvider
     extends AutoDisposeAsyncNotifierProviderImpl<UpdateTodoUseCaseImpl, void> {
   /// See also [UpdateTodoUseCaseImpl].
   UpdateTodoUseCaseImplProvider(
-    this.id, {
-    required this.title,
-    required this.description,
-    required this.isCompleted,
-    required this.dueDate,
-  }) : super.internal(
+    int id, {
+    required String title,
+    required String? description,
+    required bool isCompleted,
+    required DateTime dueDate,
+  }) : this._internal(
           () => UpdateTodoUseCaseImpl()
             ..id = id
             ..title = title
@@ -127,13 +127,76 @@ class UpdateTodoUseCaseImplProvider
           dependencies: UpdateTodoUseCaseImplFamily._dependencies,
           allTransitiveDependencies:
               UpdateTodoUseCaseImplFamily._allTransitiveDependencies,
+          id: id,
+          title: title,
+          description: description,
+          isCompleted: isCompleted,
+          dueDate: dueDate,
         );
+
+  UpdateTodoUseCaseImplProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.isCompleted,
+    required this.dueDate,
+  }) : super.internal();
 
   final int id;
   final String title;
   final String? description;
   final bool isCompleted;
   final DateTime dueDate;
+
+  @override
+  FutureOr<void> runNotifierBuild(
+    covariant UpdateTodoUseCaseImpl notifier,
+  ) {
+    return notifier.build(
+      id,
+      title: title,
+      description: description,
+      isCompleted: isCompleted,
+      dueDate: dueDate,
+    );
+  }
+
+  @override
+  Override overrideWith(UpdateTodoUseCaseImpl Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: UpdateTodoUseCaseImplProvider._internal(
+        () => create()
+          ..id = id
+          ..title = title
+          ..description = description
+          ..isCompleted = isCompleted
+          ..dueDate = dueDate,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+        title: title,
+        description: description,
+        isCompleted: isCompleted,
+        dueDate: dueDate,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<UpdateTodoUseCaseImpl, void>
+      createElement() {
+    return _UpdateTodoUseCaseImplProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -156,18 +219,41 @@ class UpdateTodoUseCaseImplProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin UpdateTodoUseCaseImplRef on AutoDisposeAsyncNotifierProviderRef<void> {
+  /// The parameter `id` of this provider.
+  int get id;
+
+  /// The parameter `title` of this provider.
+  String get title;
+
+  /// The parameter `description` of this provider.
+  String? get description;
+
+  /// The parameter `isCompleted` of this provider.
+  bool get isCompleted;
+
+  /// The parameter `dueDate` of this provider.
+  DateTime get dueDate;
+}
+
+class _UpdateTodoUseCaseImplProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<UpdateTodoUseCaseImpl, void>
+    with UpdateTodoUseCaseImplRef {
+  _UpdateTodoUseCaseImplProviderElement(super.provider);
 
   @override
-  Future<void> runNotifierBuild(
-    covariant UpdateTodoUseCaseImpl notifier,
-  ) {
-    return notifier.build(
-      id,
-      title: title,
-      description: description,
-      isCompleted: isCompleted,
-      dueDate: dueDate,
-    );
-  }
+  int get id => (origin as UpdateTodoUseCaseImplProvider).id;
+  @override
+  String get title => (origin as UpdateTodoUseCaseImplProvider).title;
+  @override
+  String? get description =>
+      (origin as UpdateTodoUseCaseImplProvider).description;
+  @override
+  bool get isCompleted => (origin as UpdateTodoUseCaseImplProvider).isCompleted;
+  @override
+  DateTime get dueDate => (origin as UpdateTodoUseCaseImplProvider).dueDate;
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

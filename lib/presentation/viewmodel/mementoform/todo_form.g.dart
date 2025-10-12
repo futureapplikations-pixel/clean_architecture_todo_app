@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$TodoFormViewModel
-    extends BuildlessAutoDisposeNotifier<Map<String, dynamic>> {
+    extends BuildlessAutoDisposeNotifier<FormData> {
   late final Todo? todo;
 
-  Map<String, dynamic> build(
+  FormData build(
     Todo? todo,
   );
 }
@@ -43,7 +43,7 @@ abstract class _$TodoFormViewModel
 const todoFormViewModelProvider = TodoFormViewModelFamily();
 
 /// See also [TodoFormViewModel].
-class TodoFormViewModelFamily extends Family<Map<String, dynamic>> {
+class TodoFormViewModelFamily extends Family<FormData> {
   /// See also [TodoFormViewModel].
   const TodoFormViewModelFamily();
 
@@ -81,12 +81,12 @@ class TodoFormViewModelFamily extends Family<Map<String, dynamic>> {
 }
 
 /// See also [TodoFormViewModel].
-class TodoFormViewModelProvider extends AutoDisposeNotifierProviderImpl<
-    TodoFormViewModel, Map<String, dynamic>> {
+class TodoFormViewModelProvider
+    extends AutoDisposeNotifierProviderImpl<TodoFormViewModel, FormData> {
   /// See also [TodoFormViewModel].
   TodoFormViewModelProvider(
-    this.todo,
-  ) : super.internal(
+    Todo? todo,
+  ) : this._internal(
           () => TodoFormViewModel()..todo = todo,
           from: todoFormViewModelProvider,
           name: r'todoFormViewModelProvider',
@@ -97,9 +97,51 @@ class TodoFormViewModelProvider extends AutoDisposeNotifierProviderImpl<
           dependencies: TodoFormViewModelFamily._dependencies,
           allTransitiveDependencies:
               TodoFormViewModelFamily._allTransitiveDependencies,
+          todo: todo,
         );
 
+  TodoFormViewModelProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.todo,
+  }) : super.internal();
+
   final Todo? todo;
+
+  @override
+  FormData runNotifierBuild(
+    covariant TodoFormViewModel notifier,
+  ) {
+    return notifier.build(
+      todo,
+    );
+  }
+
+  @override
+  Override overrideWith(TodoFormViewModel Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: TodoFormViewModelProvider._internal(
+        () => create()..todo = todo,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        todo: todo,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<TodoFormViewModel, FormData>
+      createElement() {
+    return _TodoFormViewModelProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -113,14 +155,20 @@ class TodoFormViewModelProvider extends AutoDisposeNotifierProviderImpl<
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin TodoFormViewModelRef on AutoDisposeNotifierProviderRef<FormData> {
+  /// The parameter `todo` of this provider.
+  Todo? get todo;
+}
+
+class _TodoFormViewModelProviderElement
+    extends AutoDisposeNotifierProviderElement<TodoFormViewModel, FormData>
+    with TodoFormViewModelRef {
+  _TodoFormViewModelProviderElement(super.provider);
 
   @override
-  Map<String, dynamic> runNotifierBuild(
-    covariant TodoFormViewModel notifier,
-  ) {
-    return notifier.build(
-      todo,
-    );
-  }
+  Todo? get todo => (origin as TodoFormViewModelProvider).todo;
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -37,7 +37,7 @@ abstract class _$CreateTodoUseCaseImpl
   late final bool isCompleted;
   late final DateTime dueDate;
 
-  Future<Todo> build(
+  FutureOr<Todo> build(
     String title,
     String? description,
     bool isCompleted,
@@ -101,11 +101,11 @@ class CreateTodoUseCaseImplProvider
     extends AutoDisposeAsyncNotifierProviderImpl<CreateTodoUseCaseImpl, Todo> {
   /// See also [CreateTodoUseCaseImpl].
   CreateTodoUseCaseImplProvider(
-    this.title,
-    this.description,
-    this.isCompleted,
-    this.dueDate,
-  ) : super.internal(
+    String title,
+    String? description,
+    bool isCompleted,
+    DateTime dueDate,
+  ) : this._internal(
           () => CreateTodoUseCaseImpl()
             ..title = title
             ..description = description
@@ -120,12 +120,70 @@ class CreateTodoUseCaseImplProvider
           dependencies: CreateTodoUseCaseImplFamily._dependencies,
           allTransitiveDependencies:
               CreateTodoUseCaseImplFamily._allTransitiveDependencies,
+          title: title,
+          description: description,
+          isCompleted: isCompleted,
+          dueDate: dueDate,
         );
+
+  CreateTodoUseCaseImplProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.title,
+    required this.description,
+    required this.isCompleted,
+    required this.dueDate,
+  }) : super.internal();
 
   final String title;
   final String? description;
   final bool isCompleted;
   final DateTime dueDate;
+
+  @override
+  FutureOr<Todo> runNotifierBuild(
+    covariant CreateTodoUseCaseImpl notifier,
+  ) {
+    return notifier.build(
+      title,
+      description,
+      isCompleted,
+      dueDate,
+    );
+  }
+
+  @override
+  Override overrideWith(CreateTodoUseCaseImpl Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: CreateTodoUseCaseImplProvider._internal(
+        () => create()
+          ..title = title
+          ..description = description
+          ..isCompleted = isCompleted
+          ..dueDate = dueDate,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        title: title,
+        description: description,
+        isCompleted: isCompleted,
+        dueDate: dueDate,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<CreateTodoUseCaseImpl, Todo>
+      createElement() {
+    return _CreateTodoUseCaseImplProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -146,17 +204,36 @@ class CreateTodoUseCaseImplProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin CreateTodoUseCaseImplRef on AutoDisposeAsyncNotifierProviderRef<Todo> {
+  /// The parameter `title` of this provider.
+  String get title;
+
+  /// The parameter `description` of this provider.
+  String? get description;
+
+  /// The parameter `isCompleted` of this provider.
+  bool get isCompleted;
+
+  /// The parameter `dueDate` of this provider.
+  DateTime get dueDate;
+}
+
+class _CreateTodoUseCaseImplProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<CreateTodoUseCaseImpl, Todo>
+    with CreateTodoUseCaseImplRef {
+  _CreateTodoUseCaseImplProviderElement(super.provider);
 
   @override
-  Future<Todo> runNotifierBuild(
-    covariant CreateTodoUseCaseImpl notifier,
-  ) {
-    return notifier.build(
-      title,
-      description,
-      isCompleted,
-      dueDate,
-    );
-  }
+  String get title => (origin as CreateTodoUseCaseImplProvider).title;
+  @override
+  String? get description =>
+      (origin as CreateTodoUseCaseImplProvider).description;
+  @override
+  bool get isCompleted => (origin as CreateTodoUseCaseImplProvider).isCompleted;
+  @override
+  DateTime get dueDate => (origin as CreateTodoUseCaseImplProvider).dueDate;
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

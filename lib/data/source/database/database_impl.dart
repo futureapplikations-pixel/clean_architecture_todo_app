@@ -35,57 +35,58 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   int get schemaVersion => 1;
 
   @override
-  Stream<List<Todo>> watchTodos() => _getTodos().watch();
+  Stream<List<Memento>> watchMementos() => _getMementos().watch();
 
   @override
-  Future<List<Todo>> getTodos() => _getTodos().get();
+  Future<List<Memento>> getMementos() => _getMementos().get();
 
   @override
-  Future<Todo?> getTodo(int id) => _getTodoById(id).getSingleOrNull();
+  Future<Memento?> getMementoById(int id) => _getMementoById(id).getSingleOrNull();
 
   @override
-  Future<void> deleteTodo(int id) => _deleteTodo(id);
+  Future<void> deleteMemento(int id) => _deleteMemento(id);
 
   @override
-  Future<Todo> insertTodo(TodosCompanion todo) async {
-    final id = await _insertTodo(
-      todo.title.value,
-      todo.description.value,
-      todo.isCompleted.value,
-      todo.dueDate.value,
+  Future<Memento> insertMemento(MementosCompanion memento) async {
+    final id = await _insertMemento(
+      memento.name.value,
+      memento.photo.value,
+      memento.email.value,
+      memento.phone.value,
+      memento.context.value,
+      memento.jobTitle.value,
+      memento.company.value,
+      memento.birthday.value,
     );
-    return _getTodoById(id).getSingle();
+    return _getMementoById(id).getSingle();
   }
 
   @override
-  Future<void> updateTodo(int id, TodosCompanion todo) async {
+  Future<void> updateMemento(int id, MementosCompanion memento) async {
     return transaction(() {
-      return _updateTodo(
-        todo.title.value,
-        todo.description.value,
-        todo.isCompleted.value,
-        todo.dueDate.value,
+      return _updateMemento(
+        memento.name.value,
+        memento.photo.value,
+        memento.email.value,
+        memento.phone.value,
+        memento.context.value,
+        memento.jobTitle.value,
+        memento.company.value,
+        memento.birthday.value,
         id,
       );
     });
   }
 
   @override
-  Future<void> deleteCompletedTodos() {
+  Future<void> deleteAllMementos() {
     return transaction(() {
-      return _deleteCompletedTodos();
+      return _deleteAllMementos();
     });
   }
 
   @override
-  Future<void> deleteAllTodos() {
-    return transaction(() {
-      return _deleteAllTodos();
-    });
-  }
-
-  @override
-  Future<List<Todo>> searchTodos(String query) {
-    return _searchTodos(query).get().then((value) => value.map((e) => e.result).toList());
+  Future<List<Memento>> searchMementos(String query) {
+    return _searchMementos(query).get().then((value) => value.map((e) => e.result).toList());
   }
 }

@@ -34,7 +34,7 @@ abstract class _$SearchTodoListViewModel
     extends BuildlessAutoDisposeAsyncNotifier<List<Todo>> {
   late final String query;
 
-  Future<List<Todo>> build(
+  FutureOr<List<Todo>> build(
     String query,
   );
 }
@@ -87,8 +87,8 @@ class SearchTodoListViewModelProvider
         List<Todo>> {
   /// See also [SearchTodoListViewModel].
   SearchTodoListViewModelProvider(
-    this.query,
-  ) : super.internal(
+    String query,
+  ) : this._internal(
           () => SearchTodoListViewModel()..query = query,
           from: searchTodoListViewModelProvider,
           name: r'searchTodoListViewModelProvider',
@@ -99,9 +99,51 @@ class SearchTodoListViewModelProvider
           dependencies: SearchTodoListViewModelFamily._dependencies,
           allTransitiveDependencies:
               SearchTodoListViewModelFamily._allTransitiveDependencies,
+          query: query,
         );
 
+  SearchTodoListViewModelProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.query,
+  }) : super.internal();
+
   final String query;
+
+  @override
+  FutureOr<List<Todo>> runNotifierBuild(
+    covariant SearchTodoListViewModel notifier,
+  ) {
+    return notifier.build(
+      query,
+    );
+  }
+
+  @override
+  Override overrideWith(SearchTodoListViewModel Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: SearchTodoListViewModelProvider._internal(
+        () => create()..query = query,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        query: query,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<SearchTodoListViewModel, List<Todo>>
+      createElement() {
+    return _SearchTodoListViewModelProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -115,14 +157,21 @@ class SearchTodoListViewModelProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin SearchTodoListViewModelRef
+    on AutoDisposeAsyncNotifierProviderRef<List<Todo>> {
+  /// The parameter `query` of this provider.
+  String get query;
+}
+
+class _SearchTodoListViewModelProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<SearchTodoListViewModel,
+        List<Todo>> with SearchTodoListViewModelRef {
+  _SearchTodoListViewModelProviderElement(super.provider);
 
   @override
-  Future<List<Todo>> runNotifierBuild(
-    covariant SearchTodoListViewModel notifier,
-  ) {
-    return notifier.build(
-      query,
-    );
-  }
+  String get query => (origin as SearchTodoListViewModelProvider).query;
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_todo_list_impl.dart';
+part of 'search_memento_list.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchTodoListUseCaseImplHash() =>
-    r'2aa3b39467c6430702759eca0efdc0dff87928dd';
+String _$searchMementoListViewModelHash() =>
+    r'1bb59545065e35a1e6acb296b5bbed95397da832';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,36 +30,37 @@ class _SystemHash {
   }
 }
 
-abstract class _$SearchTodoListUseCaseImpl
-    extends BuildlessAutoDisposeAsyncNotifier<List<Todo>> {
+abstract class _$SearchMementoListViewModel
+    extends BuildlessAutoDisposeAsyncNotifier<List<Memento>> {
   late final String query;
 
-  FutureOr<List<Todo>> build(
+  FutureOr<List<Memento>> build(
     String query,
   );
 }
 
-/// See also [SearchTodoListUseCaseImpl].
-@ProviderFor(SearchTodoListUseCaseImpl)
-const searchTodoListUseCaseImplProvider = SearchTodoListUseCaseImplFamily();
+/// See also [SearchMementoListViewModel].
+@ProviderFor(SearchMementoListViewModel)
+const searchMementoListViewModelProvider = SearchMementoListViewModelFamily();
 
-/// See also [SearchTodoListUseCaseImpl].
-class SearchTodoListUseCaseImplFamily extends Family<AsyncValue<List<Todo>>> {
-  /// See also [SearchTodoListUseCaseImpl].
-  const SearchTodoListUseCaseImplFamily();
+/// See also [SearchMementoListViewModel].
+class SearchMementoListViewModelFamily
+    extends Family<AsyncValue<List<Memento>>> {
+  /// See also [SearchMementoListViewModel].
+  const SearchMementoListViewModelFamily();
 
-  /// See also [SearchTodoListUseCaseImpl].
-  SearchTodoListUseCaseImplProvider call(
+  /// See also [SearchMementoListViewModel].
+  SearchMementoListViewModelProvider call(
     String query,
   ) {
-    return SearchTodoListUseCaseImplProvider(
+    return SearchMementoListViewModelProvider(
       query,
     );
   }
 
   @override
-  SearchTodoListUseCaseImplProvider getProviderOverride(
-    covariant SearchTodoListUseCaseImplProvider provider,
+  SearchMementoListViewModelProvider getProviderOverride(
+    covariant SearchMementoListViewModelProvider provider,
   ) {
     return call(
       provider.query,
@@ -78,31 +79,31 @@ class SearchTodoListUseCaseImplFamily extends Family<AsyncValue<List<Todo>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'searchTodoListUseCaseImplProvider';
+  String? get name => r'searchMementoListViewModelProvider';
 }
 
-/// See also [SearchTodoListUseCaseImpl].
-class SearchTodoListUseCaseImplProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<SearchTodoListUseCaseImpl,
-        List<Todo>> {
-  /// See also [SearchTodoListUseCaseImpl].
-  SearchTodoListUseCaseImplProvider(
+/// See also [SearchMementoListViewModel].
+class SearchMementoListViewModelProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<SearchMementoListViewModel,
+        List<Memento>> {
+  /// See also [SearchMementoListViewModel].
+  SearchMementoListViewModelProvider(
     String query,
   ) : this._internal(
-          () => SearchTodoListUseCaseImpl()..query = query,
-          from: searchTodoListUseCaseImplProvider,
-          name: r'searchTodoListUseCaseImplProvider',
+          () => SearchMementoListViewModel()..query = query,
+          from: searchMementoListViewModelProvider,
+          name: r'searchMementoListViewModelProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$searchTodoListUseCaseImplHash,
-          dependencies: SearchTodoListUseCaseImplFamily._dependencies,
+                  : _$searchMementoListViewModelHash,
+          dependencies: SearchMementoListViewModelFamily._dependencies,
           allTransitiveDependencies:
-              SearchTodoListUseCaseImplFamily._allTransitiveDependencies,
+              SearchMementoListViewModelFamily._allTransitiveDependencies,
           query: query,
         );
 
-  SearchTodoListUseCaseImplProvider._internal(
+  SearchMementoListViewModelProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -115,8 +116,8 @@ class SearchTodoListUseCaseImplProvider
   final String query;
 
   @override
-  FutureOr<List<Todo>> runNotifierBuild(
-    covariant SearchTodoListUseCaseImpl notifier,
+  FutureOr<List<Memento>> runNotifierBuild(
+    covariant SearchMementoListViewModel notifier,
   ) {
     return notifier.build(
       query,
@@ -124,10 +125,10 @@ class SearchTodoListUseCaseImplProvider
   }
 
   @override
-  Override overrideWith(SearchTodoListUseCaseImpl Function() create) {
+  Override overrideWith(SearchMementoListViewModel Function() create) {
     return ProviderOverride(
       origin: this,
-      override: SearchTodoListUseCaseImplProvider._internal(
+      override: SearchMementoListViewModelProvider._internal(
         () => create()..query = query,
         from: from,
         name: null,
@@ -140,14 +141,14 @@ class SearchTodoListUseCaseImplProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<SearchTodoListUseCaseImpl, List<Todo>>
-      createElement() {
-    return _SearchTodoListUseCaseImplProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<SearchMementoListViewModel,
+      List<Memento>> createElement() {
+    return _SearchMementoListViewModelProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is SearchTodoListUseCaseImplProvider && other.query == query;
+    return other is SearchMementoListViewModelProvider && other.query == query;
   }
 
   @override
@@ -159,19 +160,19 @@ class SearchTodoListUseCaseImplProvider
   }
 }
 
-mixin SearchTodoListUseCaseImplRef
-    on AutoDisposeAsyncNotifierProviderRef<List<Todo>> {
+mixin SearchMementoListViewModelRef
+    on AutoDisposeAsyncNotifierProviderRef<List<Memento>> {
   /// The parameter `query` of this provider.
   String get query;
 }
 
-class _SearchTodoListUseCaseImplProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<SearchTodoListUseCaseImpl,
-        List<Todo>> with SearchTodoListUseCaseImplRef {
-  _SearchTodoListUseCaseImplProviderElement(super.provider);
+class _SearchMementoListViewModelProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<SearchMementoListViewModel,
+        List<Memento>> with SearchMementoListViewModelRef {
+  _SearchMementoListViewModelProviderElement(super.provider);
 
   @override
-  String get query => (origin as SearchTodoListUseCaseImplProvider).query;
+  String get query => (origin as SearchMementoListViewModelProvider).query;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

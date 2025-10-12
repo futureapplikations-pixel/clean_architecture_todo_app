@@ -34,7 +34,7 @@ abstract class _$DeleteTodoUseCaseImpl
     extends BuildlessAutoDisposeAsyncNotifier<void> {
   late final int id;
 
-  Future<void> build(
+  FutureOr<void> build(
     int id,
   );
 }
@@ -86,8 +86,8 @@ class DeleteTodoUseCaseImplProvider
     extends AutoDisposeAsyncNotifierProviderImpl<DeleteTodoUseCaseImpl, void> {
   /// See also [DeleteTodoUseCaseImpl].
   DeleteTodoUseCaseImplProvider(
-    this.id,
-  ) : super.internal(
+    int id,
+  ) : this._internal(
           () => DeleteTodoUseCaseImpl()..id = id,
           from: deleteTodoUseCaseImplProvider,
           name: r'deleteTodoUseCaseImplProvider',
@@ -98,9 +98,51 @@ class DeleteTodoUseCaseImplProvider
           dependencies: DeleteTodoUseCaseImplFamily._dependencies,
           allTransitiveDependencies:
               DeleteTodoUseCaseImplFamily._allTransitiveDependencies,
+          id: id,
         );
 
+  DeleteTodoUseCaseImplProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
   final int id;
+
+  @override
+  FutureOr<void> runNotifierBuild(
+    covariant DeleteTodoUseCaseImpl notifier,
+  ) {
+    return notifier.build(
+      id,
+    );
+  }
+
+  @override
+  Override overrideWith(DeleteTodoUseCaseImpl Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: DeleteTodoUseCaseImplProvider._internal(
+        () => create()..id = id,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<DeleteTodoUseCaseImpl, void>
+      createElement() {
+    return _DeleteTodoUseCaseImplProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -114,14 +156,20 @@ class DeleteTodoUseCaseImplProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin DeleteTodoUseCaseImplRef on AutoDisposeAsyncNotifierProviderRef<void> {
+  /// The parameter `id` of this provider.
+  int get id;
+}
+
+class _DeleteTodoUseCaseImplProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<DeleteTodoUseCaseImpl, void>
+    with DeleteTodoUseCaseImplRef {
+  _DeleteTodoUseCaseImplProviderElement(super.provider);
 
   @override
-  Future<void> runNotifierBuild(
-    covariant DeleteTodoUseCaseImpl notifier,
-  ) {
-    return notifier.build(
-      id,
-    );
-  }
+  int get id => (origin as DeleteTodoUseCaseImplProvider).id;
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

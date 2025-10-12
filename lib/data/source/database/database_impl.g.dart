@@ -3,11 +3,11 @@
 part of 'database_impl.dart';
 
 // ignore_for_file: type=lint
-class Todos extends Table with TableInfo<Todos, Todo> {
+class Mementos extends Table with TableInfo<Mementos, Memento> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  Todos(this.attachedDatabase, [this._alias]);
+  Mementos(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
@@ -15,73 +15,106 @@ class Todos extends Table with TableInfo<Todos, Todo> {
       type: DriftSqlType.int,
       requiredDuringInsert: false,
       $customConstraints: 'PRIMARY KEY AUTOINCREMENT NOT NULL');
-  static const VerificationMeta _titleMeta = const VerificationMeta('title');
-  late final GeneratedColumn<String> title = GeneratedColumn<String>(
-      'title', aliasedName, false,
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, true,
+  static const VerificationMeta _photoMeta = const VerificationMeta('photo');
+  late final GeneratedColumn<String> photo = GeneratedColumn<String>(
+      'photo', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       $customConstraints: '');
-  static const VerificationMeta _isCompletedMeta =
-      const VerificationMeta('isCompleted');
-  late final GeneratedColumn<int> isCompleted = GeneratedColumn<int>(
-      'is_completed', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL');
-  static const VerificationMeta _dueDateMeta =
-      const VerificationMeta('dueDate');
-  late final GeneratedColumn<String> dueDate = GeneratedColumn<String>(
-      'due_date', aliasedName, false,
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, true,
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL');
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+      'phone', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _contextMeta =
+      const VerificationMeta('context');
+  late final GeneratedColumn<String> context = GeneratedColumn<String>(
+      'context', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _jobTitleMeta =
+      const VerificationMeta('jobTitle');
+  late final GeneratedColumn<String> jobTitle = GeneratedColumn<String>(
+      'job_title', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _companyMeta =
+      const VerificationMeta('company');
+  late final GeneratedColumn<String> company = GeneratedColumn<String>(
+      'company', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _birthdayMeta =
+      const VerificationMeta('birthday');
+  late final GeneratedColumn<String> birthday = GeneratedColumn<String>(
+      'birthday', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
   @override
   List<GeneratedColumn> get $columns =>
-      [id, title, description, isCompleted, dueDate];
+      [id, name, photo, email, phone, context, jobTitle, company, birthday];
   @override
-  String get aliasedName => _alias ?? 'todos';
+  String get aliasedName => _alias ?? 'mementos';
   @override
-  String get actualTableName => 'todos';
+  String get actualTableName => 'mementos';
   @override
-  VerificationContext validateIntegrity(Insertable<Todo> instance,
+  VerificationContext validateIntegrity(Insertable<Memento> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('title')) {
+    if (data.containsKey('name')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     } else if (isInserting) {
-      context.missing(_titleMeta);
+      context.missing(_nameMeta);
     }
-    if (data.containsKey('description')) {
+    if (data.containsKey('photo')) {
       context.handle(
-          _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['description']!, _descriptionMeta));
+          _photoMeta, photo.isAcceptableOrUnknown(data['photo']!, _photoMeta));
     }
-    if (data.containsKey('is_completed')) {
+    if (data.containsKey('email')) {
       context.handle(
-          _isCompletedMeta,
-          isCompleted.isAcceptableOrUnknown(
-              data['is_completed']!, _isCompletedMeta));
-    } else if (isInserting) {
-      context.missing(_isCompletedMeta);
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
     }
-    if (data.containsKey('due_date')) {
-      context.handle(_dueDateMeta,
-          dueDate.isAcceptableOrUnknown(data['due_date']!, _dueDateMeta));
-    } else if (isInserting) {
-      context.missing(_dueDateMeta);
+    if (data.containsKey('phone')) {
+      context.handle(
+          _phoneMeta, phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta));
+    }
+    if (data.containsKey('context')) {
+      context.handle(_contextMeta,
+          this.context.isAcceptableOrUnknown(data['context']!, _contextMeta));
+    }
+    if (data.containsKey('job_title')) {
+      context.handle(_jobTitleMeta,
+          jobTitle.isAcceptableOrUnknown(data['job_title']!, _jobTitleMeta));
+    }
+    if (data.containsKey('company')) {
+      context.handle(_companyMeta,
+          company.isAcceptableOrUnknown(data['company']!, _companyMeta));
+    }
+    if (data.containsKey('birthday')) {
+      context.handle(_birthdayMeta,
+          birthday.isAcceptableOrUnknown(data['birthday']!, _birthdayMeta));
     }
     return context;
   }
@@ -89,77 +122,126 @@ class Todos extends Table with TableInfo<Todos, Todo> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Todo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Memento map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Todo(
+    return Memento(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description']),
-      isCompleted: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}is_completed'])!,
-      dueDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}due_date'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      photo: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}photo']),
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
+      phone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone']),
+      context: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}context']),
+      jobTitle: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}job_title']),
+      company: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}company']),
+      birthday: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}birthday']),
     );
   }
 
   @override
-  Todos createAlias(String alias) {
-    return Todos(attachedDatabase, alias);
+  Mementos createAlias(String alias) {
+    return Mementos(attachedDatabase, alias);
   }
 
   @override
   bool get dontWriteConstraints => true;
 }
 
-class Todo extends DataClass implements Insertable<Todo> {
+class Memento extends DataClass implements Insertable<Memento> {
   final int id;
-  final String title;
-  final String? description;
-  final int isCompleted;
-  final String dueDate;
-  const Todo(
+  final String name;
+  final String? photo;
+  final String? email;
+  final String? phone;
+  final String? context;
+  final String? jobTitle;
+  final String? company;
+  final String? birthday;
+  const Memento(
       {required this.id,
-      required this.title,
-      this.description,
-      required this.isCompleted,
-      required this.dueDate});
+      required this.name,
+      this.photo,
+      this.email,
+      this.phone,
+      this.context,
+      this.jobTitle,
+      this.company,
+      this.birthday});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['title'] = Variable<String>(title);
-    if (!nullToAbsent || description != null) {
-      map['description'] = Variable<String>(description);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || photo != null) {
+      map['photo'] = Variable<String>(photo);
     }
-    map['is_completed'] = Variable<int>(isCompleted);
-    map['due_date'] = Variable<String>(dueDate);
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || phone != null) {
+      map['phone'] = Variable<String>(phone);
+    }
+    if (!nullToAbsent || context != null) {
+      map['context'] = Variable<String>(context);
+    }
+    if (!nullToAbsent || jobTitle != null) {
+      map['job_title'] = Variable<String>(jobTitle);
+    }
+    if (!nullToAbsent || company != null) {
+      map['company'] = Variable<String>(company);
+    }
+    if (!nullToAbsent || birthday != null) {
+      map['birthday'] = Variable<String>(birthday);
+    }
     return map;
   }
 
-  TodosCompanion toCompanion(bool nullToAbsent) {
-    return TodosCompanion(
+  MementosCompanion toCompanion(bool nullToAbsent) {
+    return MementosCompanion(
       id: Value(id),
-      title: Value(title),
-      description: description == null && nullToAbsent
+      name: Value(name),
+      photo:
+          photo == null && nullToAbsent ? const Value.absent() : Value(photo),
+      email:
+          email == null && nullToAbsent ? const Value.absent() : Value(email),
+      phone:
+          phone == null && nullToAbsent ? const Value.absent() : Value(phone),
+      context: context == null && nullToAbsent
           ? const Value.absent()
-          : Value(description),
-      isCompleted: Value(isCompleted),
-      dueDate: Value(dueDate),
+          : Value(context),
+      jobTitle: jobTitle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(jobTitle),
+      company: company == null && nullToAbsent
+          ? const Value.absent()
+          : Value(company),
+      birthday: birthday == null && nullToAbsent
+          ? const Value.absent()
+          : Value(birthday),
     );
   }
 
-  factory Todo.fromJson(Map<String, dynamic> json,
+  factory Memento.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Todo(
+    return Memento(
       id: serializer.fromJson<int>(json['id']),
-      title: serializer.fromJson<String>(json['title']),
-      description: serializer.fromJson<String?>(json['description']),
-      isCompleted: serializer.fromJson<int>(json['is_completed']),
-      dueDate: serializer.fromJson<String>(json['due_date']),
+      name: serializer.fromJson<String>(json['name']),
+      photo: serializer.fromJson<String?>(json['photo']),
+      email: serializer.fromJson<String?>(json['email']),
+      phone: serializer.fromJson<String?>(json['phone']),
+      context: serializer.fromJson<String?>(json['context']),
+      jobTitle: serializer.fromJson<String?>(json['job_title']),
+      company: serializer.fromJson<String?>(json['company']),
+      birthday: serializer.fromJson<String?>(json['birthday']),
     );
   }
   @override
@@ -167,101 +249,148 @@ class Todo extends DataClass implements Insertable<Todo> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'title': serializer.toJson<String>(title),
-      'description': serializer.toJson<String?>(description),
-      'is_completed': serializer.toJson<int>(isCompleted),
-      'due_date': serializer.toJson<String>(dueDate),
+      'name': serializer.toJson<String>(name),
+      'photo': serializer.toJson<String?>(photo),
+      'email': serializer.toJson<String?>(email),
+      'phone': serializer.toJson<String?>(phone),
+      'context': serializer.toJson<String?>(context),
+      'job_title': serializer.toJson<String?>(jobTitle),
+      'company': serializer.toJson<String?>(company),
+      'birthday': serializer.toJson<String?>(birthday),
     };
   }
 
-  Todo copyWith(
+  Memento copyWith(
           {int? id,
-          String? title,
-          Value<String?> description = const Value.absent(),
-          int? isCompleted,
-          String? dueDate}) =>
-      Todo(
+          String? name,
+          Value<String?> photo = const Value.absent(),
+          Value<String?> email = const Value.absent(),
+          Value<String?> phone = const Value.absent(),
+          Value<String?> context = const Value.absent(),
+          Value<String?> jobTitle = const Value.absent(),
+          Value<String?> company = const Value.absent(),
+          Value<String?> birthday = const Value.absent()}) =>
+      Memento(
         id: id ?? this.id,
-        title: title ?? this.title,
-        description: description.present ? description.value : this.description,
-        isCompleted: isCompleted ?? this.isCompleted,
-        dueDate: dueDate ?? this.dueDate,
+        name: name ?? this.name,
+        photo: photo.present ? photo.value : this.photo,
+        email: email.present ? email.value : this.email,
+        phone: phone.present ? phone.value : this.phone,
+        context: context.present ? context.value : this.context,
+        jobTitle: jobTitle.present ? jobTitle.value : this.jobTitle,
+        company: company.present ? company.value : this.company,
+        birthday: birthday.present ? birthday.value : this.birthday,
       );
   @override
   String toString() {
-    return (StringBuffer('Todo(')
+    return (StringBuffer('Memento(')
           ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('description: $description, ')
-          ..write('isCompleted: $isCompleted, ')
-          ..write('dueDate: $dueDate')
+          ..write('name: $name, ')
+          ..write('photo: $photo, ')
+          ..write('email: $email, ')
+          ..write('phone: $phone, ')
+          ..write('context: $context, ')
+          ..write('jobTitle: $jobTitle, ')
+          ..write('company: $company, ')
+          ..write('birthday: $birthday')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, description, isCompleted, dueDate);
+  int get hashCode => Object.hash(
+      id, name, photo, email, phone, context, jobTitle, company, birthday);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Todo &&
+      (other is Memento &&
           other.id == this.id &&
-          other.title == this.title &&
-          other.description == this.description &&
-          other.isCompleted == this.isCompleted &&
-          other.dueDate == this.dueDate);
+          other.name == this.name &&
+          other.photo == this.photo &&
+          other.email == this.email &&
+          other.phone == this.phone &&
+          other.context == this.context &&
+          other.jobTitle == this.jobTitle &&
+          other.company == this.company &&
+          other.birthday == this.birthday);
 }
 
-class TodosCompanion extends UpdateCompanion<Todo> {
+class MementosCompanion extends UpdateCompanion<Memento> {
   final Value<int> id;
-  final Value<String> title;
-  final Value<String?> description;
-  final Value<int> isCompleted;
-  final Value<String> dueDate;
-  const TodosCompanion({
+  final Value<String> name;
+  final Value<String?> photo;
+  final Value<String?> email;
+  final Value<String?> phone;
+  final Value<String?> context;
+  final Value<String?> jobTitle;
+  final Value<String?> company;
+  final Value<String?> birthday;
+  const MementosCompanion({
     this.id = const Value.absent(),
-    this.title = const Value.absent(),
-    this.description = const Value.absent(),
-    this.isCompleted = const Value.absent(),
-    this.dueDate = const Value.absent(),
+    this.name = const Value.absent(),
+    this.photo = const Value.absent(),
+    this.email = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.context = const Value.absent(),
+    this.jobTitle = const Value.absent(),
+    this.company = const Value.absent(),
+    this.birthday = const Value.absent(),
   });
-  TodosCompanion.insert({
+  MementosCompanion.insert({
     this.id = const Value.absent(),
-    required String title,
-    this.description = const Value.absent(),
-    required int isCompleted,
-    required String dueDate,
-  })  : title = Value(title),
-        isCompleted = Value(isCompleted),
-        dueDate = Value(dueDate);
-  static Insertable<Todo> custom({
+    required String name,
+    this.photo = const Value.absent(),
+    this.email = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.context = const Value.absent(),
+    this.jobTitle = const Value.absent(),
+    this.company = const Value.absent(),
+    this.birthday = const Value.absent(),
+  }) : name = Value(name);
+  static Insertable<Memento> custom({
     Expression<int>? id,
-    Expression<String>? title,
-    Expression<String>? description,
-    Expression<int>? isCompleted,
-    Expression<String>? dueDate,
+    Expression<String>? name,
+    Expression<String>? photo,
+    Expression<String>? email,
+    Expression<String>? phone,
+    Expression<String>? context,
+    Expression<String>? jobTitle,
+    Expression<String>? company,
+    Expression<String>? birthday,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (title != null) 'title': title,
-      if (description != null) 'description': description,
-      if (isCompleted != null) 'is_completed': isCompleted,
-      if (dueDate != null) 'due_date': dueDate,
+      if (name != null) 'name': name,
+      if (photo != null) 'photo': photo,
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+      if (context != null) 'context': context,
+      if (jobTitle != null) 'job_title': jobTitle,
+      if (company != null) 'company': company,
+      if (birthday != null) 'birthday': birthday,
     });
   }
 
-  TodosCompanion copyWith(
+  MementosCompanion copyWith(
       {Value<int>? id,
-      Value<String>? title,
-      Value<String?>? description,
-      Value<int>? isCompleted,
-      Value<String>? dueDate}) {
-    return TodosCompanion(
+      Value<String>? name,
+      Value<String?>? photo,
+      Value<String?>? email,
+      Value<String?>? phone,
+      Value<String?>? context,
+      Value<String?>? jobTitle,
+      Value<String?>? company,
+      Value<String?>? birthday}) {
+    return MementosCompanion(
       id: id ?? this.id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      isCompleted: isCompleted ?? this.isCompleted,
-      dueDate: dueDate ?? this.dueDate,
+      name: name ?? this.name,
+      photo: photo ?? this.photo,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      context: context ?? this.context,
+      jobTitle: jobTitle ?? this.jobTitle,
+      company: company ?? this.company,
+      birthday: birthday ?? this.birthday,
     );
   }
 
@@ -271,79 +400,106 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (title.present) {
-      map['title'] = Variable<String>(title.value);
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
-    if (description.present) {
-      map['description'] = Variable<String>(description.value);
+    if (photo.present) {
+      map['photo'] = Variable<String>(photo.value);
     }
-    if (isCompleted.present) {
-      map['is_completed'] = Variable<int>(isCompleted.value);
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
     }
-    if (dueDate.present) {
-      map['due_date'] = Variable<String>(dueDate.value);
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (context.present) {
+      map['context'] = Variable<String>(context.value);
+    }
+    if (jobTitle.present) {
+      map['job_title'] = Variable<String>(jobTitle.value);
+    }
+    if (company.present) {
+      map['company'] = Variable<String>(company.value);
+    }
+    if (birthday.present) {
+      map['birthday'] = Variable<String>(birthday.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('TodosCompanion(')
+    return (StringBuffer('MementosCompanion(')
           ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('description: $description, ')
-          ..write('isCompleted: $isCompleted, ')
-          ..write('dueDate: $dueDate')
+          ..write('name: $name, ')
+          ..write('photo: $photo, ')
+          ..write('email: $email, ')
+          ..write('phone: $phone, ')
+          ..write('context: $context, ')
+          ..write('jobTitle: $jobTitle, ')
+          ..write('company: $company, ')
+          ..write('birthday: $birthday')
           ..write(')'))
         .toString();
   }
 }
 
-class TodosEntries extends Table
+class MementoEntries extends Table
     with
-        TableInfo<TodosEntries, TodosEntrie>,
-        VirtualTableInfo<TodosEntries, TodosEntrie> {
+        TableInfo<MementoEntries, MementoEntrie>,
+        VirtualTableInfo<MementoEntries, MementoEntrie> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  TodosEntries(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _titleMeta = const VerificationMeta('title');
-  late final GeneratedColumn<String> title = GeneratedColumn<String>(
-      'title', aliasedName, false,
+  MementoEntries(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: '');
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, false,
+  static const VerificationMeta _contextMeta =
+      const VerificationMeta('context');
+  late final GeneratedColumn<String> context = GeneratedColumn<String>(
+      'context', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: '');
+  static const VerificationMeta _companyMeta =
+      const VerificationMeta('company');
+  late final GeneratedColumn<String> company = GeneratedColumn<String>(
+      'company', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: '');
   @override
-  List<GeneratedColumn> get $columns => [title, description];
+  List<GeneratedColumn> get $columns => [name, context, company];
   @override
-  String get aliasedName => _alias ?? 'todos_entries';
+  String get aliasedName => _alias ?? 'memento_entries';
   @override
-  String get actualTableName => 'todos_entries';
+  String get actualTableName => 'memento_entries';
   @override
-  VerificationContext validateIntegrity(Insertable<TodosEntrie> instance,
+  VerificationContext validateIntegrity(Insertable<MementoEntrie> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('title')) {
+    if (data.containsKey('name')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     } else if (isInserting) {
-      context.missing(_titleMeta);
+      context.missing(_nameMeta);
     }
-    if (data.containsKey('description')) {
-      context.handle(
-          _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['description']!, _descriptionMeta));
+    if (data.containsKey('context')) {
+      context.handle(_contextMeta,
+          this.context.isAcceptableOrUnknown(data['context']!, _contextMeta));
     } else if (isInserting) {
-      context.missing(_descriptionMeta);
+      context.missing(_contextMeta);
+    }
+    if (data.containsKey('company')) {
+      context.handle(_companyMeta,
+          company.isAcceptableOrUnknown(data['company']!, _companyMeta));
+    } else if (isInserting) {
+      context.missing(_companyMeta);
     }
     return context;
   }
@@ -351,134 +507,570 @@ class TodosEntries extends Table
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  TodosEntrie map(Map<String, dynamic> data, {String? tablePrefix}) {
+  MementoEntrie map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TodosEntrie(
-      title: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+    return MementoEntrie(
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      context: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}context'])!,
+      company: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}company'])!,
     );
   }
 
   @override
-  TodosEntries createAlias(String alias) {
-    return TodosEntries(attachedDatabase, alias);
+  MementoEntries createAlias(String alias) {
+    return MementoEntries(attachedDatabase, alias);
   }
 
   @override
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(title, description, content=todos, content_rowid=id)';
+      'fts5(name, context, company, content=mementos, content_rowid=id)';
 }
 
-class TodosEntrie extends DataClass implements Insertable<TodosEntrie> {
-  final String title;
-  final String description;
-  const TodosEntrie({required this.title, required this.description});
+class MementoEntrie extends DataClass implements Insertable<MementoEntrie> {
+  final String name;
+  final String context;
+  final String company;
+  const MementoEntrie(
+      {required this.name, required this.context, required this.company});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['title'] = Variable<String>(title);
-    map['description'] = Variable<String>(description);
+    map['name'] = Variable<String>(name);
+    map['context'] = Variable<String>(context);
+    map['company'] = Variable<String>(company);
     return map;
   }
 
-  TodosEntriesCompanion toCompanion(bool nullToAbsent) {
-    return TodosEntriesCompanion(
-      title: Value(title),
-      description: Value(description),
+  MementoEntriesCompanion toCompanion(bool nullToAbsent) {
+    return MementoEntriesCompanion(
+      name: Value(name),
+      context: Value(context),
+      company: Value(company),
     );
   }
 
-  factory TodosEntrie.fromJson(Map<String, dynamic> json,
+  factory MementoEntrie.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TodosEntrie(
-      title: serializer.fromJson<String>(json['title']),
-      description: serializer.fromJson<String>(json['description']),
+    return MementoEntrie(
+      name: serializer.fromJson<String>(json['name']),
+      context: serializer.fromJson<String>(json['context']),
+      company: serializer.fromJson<String>(json['company']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'title': serializer.toJson<String>(title),
-      'description': serializer.toJson<String>(description),
+      'name': serializer.toJson<String>(name),
+      'context': serializer.toJson<String>(context),
+      'company': serializer.toJson<String>(company),
     };
   }
 
-  TodosEntrie copyWith({String? title, String? description}) => TodosEntrie(
-        title: title ?? this.title,
-        description: description ?? this.description,
+  MementoEntrie copyWith({String? name, String? context, String? company}) =>
+      MementoEntrie(
+        name: name ?? this.name,
+        context: context ?? this.context,
+        company: company ?? this.company,
       );
   @override
   String toString() {
-    return (StringBuffer('TodosEntrie(')
-          ..write('title: $title, ')
-          ..write('description: $description')
+    return (StringBuffer('MementoEntrie(')
+          ..write('name: $name, ')
+          ..write('context: $context, ')
+          ..write('company: $company')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(title, description);
+  int get hashCode => Object.hash(name, context, company);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is TodosEntrie &&
-          other.title == this.title &&
-          other.description == this.description);
+      (other is MementoEntrie &&
+          other.name == this.name &&
+          other.context == this.context &&
+          other.company == this.company);
 }
 
-class TodosEntriesCompanion extends UpdateCompanion<TodosEntrie> {
-  final Value<String> title;
-  final Value<String> description;
-  const TodosEntriesCompanion({
-    this.title = const Value.absent(),
-    this.description = const Value.absent(),
+class MementoEntriesCompanion extends UpdateCompanion<MementoEntrie> {
+  final Value<String> name;
+  final Value<String> context;
+  final Value<String> company;
+  final Value<int> rowid;
+  const MementoEntriesCompanion({
+    this.name = const Value.absent(),
+    this.context = const Value.absent(),
+    this.company = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
-  TodosEntriesCompanion.insert({
-    required String title,
-    required String description,
-  })  : title = Value(title),
-        description = Value(description);
-  static Insertable<TodosEntrie> custom({
-    Expression<String>? title,
-    Expression<String>? description,
+  MementoEntriesCompanion.insert({
+    required String name,
+    required String context,
+    required String company,
+    this.rowid = const Value.absent(),
+  })  : name = Value(name),
+        context = Value(context),
+        company = Value(company);
+  static Insertable<MementoEntrie> custom({
+    Expression<String>? name,
+    Expression<String>? context,
+    Expression<String>? company,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (title != null) 'title': title,
-      if (description != null) 'description': description,
+      if (name != null) 'name': name,
+      if (context != null) 'context': context,
+      if (company != null) 'company': company,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
-  TodosEntriesCompanion copyWith(
-      {Value<String>? title, Value<String>? description}) {
-    return TodosEntriesCompanion(
-      title: title ?? this.title,
-      description: description ?? this.description,
+  MementoEntriesCompanion copyWith(
+      {Value<String>? name,
+      Value<String>? context,
+      Value<String>? company,
+      Value<int>? rowid}) {
+    return MementoEntriesCompanion(
+      name: name ?? this.name,
+      context: context ?? this.context,
+      company: company ?? this.company,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (title.present) {
-      map['title'] = Variable<String>(title.value);
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
-    if (description.present) {
-      map['description'] = Variable<String>(description.value);
+    if (context.present) {
+      map['context'] = Variable<String>(context.value);
+    }
+    if (company.present) {
+      map['company'] = Variable<String>(company.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('TodosEntriesCompanion(')
-          ..write('title: $title, ')
-          ..write('description: $description')
+    return (StringBuffer('MementoEntriesCompanion(')
+          ..write('name: $name, ')
+          ..write('context: $context, ')
+          ..write('company: $company, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Labels extends Table with TableInfo<Labels, Label> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Labels(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'PRIMARY KEY AUTOINCREMENT NOT NULL');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _colorMeta = const VerificationMeta('color');
+  late final GeneratedColumn<int> color = GeneratedColumn<int>(
+      'color', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [id, name, color];
+  @override
+  String get aliasedName => _alias ?? 'labels';
+  @override
+  String get actualTableName => 'labels';
+  @override
+  VerificationContext validateIntegrity(Insertable<Label> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('color')) {
+      context.handle(
+          _colorMeta, color.isAcceptableOrUnknown(data['color']!, _colorMeta));
+    } else if (isInserting) {
+      context.missing(_colorMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Label map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Label(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      color: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}color'])!,
+    );
+  }
+
+  @override
+  Labels createAlias(String alias) {
+    return Labels(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class Label extends DataClass implements Insertable<Label> {
+  final int id;
+  final String name;
+  final int color;
+  const Label({required this.id, required this.name, required this.color});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['color'] = Variable<int>(color);
+    return map;
+  }
+
+  LabelsCompanion toCompanion(bool nullToAbsent) {
+    return LabelsCompanion(
+      id: Value(id),
+      name: Value(name),
+      color: Value(color),
+    );
+  }
+
+  factory Label.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Label(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      color: serializer.fromJson<int>(json['color']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'color': serializer.toJson<int>(color),
+    };
+  }
+
+  Label copyWith({int? id, String? name, int? color}) => Label(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        color: color ?? this.color,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Label(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('color: $color')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, color);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Label &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.color == this.color);
+}
+
+class LabelsCompanion extends UpdateCompanion<Label> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> color;
+  const LabelsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.color = const Value.absent(),
+  });
+  LabelsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required int color,
+  })  : name = Value(name),
+        color = Value(color);
+  static Insertable<Label> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? color,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (color != null) 'color': color,
+    });
+  }
+
+  LabelsCompanion copyWith(
+      {Value<int>? id, Value<String>? name, Value<int>? color}) {
+    return LabelsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      color: color ?? this.color,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (color.present) {
+      map['color'] = Variable<int>(color.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LabelsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('color: $color')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class MementoLabels extends Table with TableInfo<MementoLabels, MementoLabel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  MementoLabels(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _mementoIdMeta =
+      const VerificationMeta('mementoId');
+  late final GeneratedColumn<int> mementoId = GeneratedColumn<int>(
+      'memento_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _labelIdMeta =
+      const VerificationMeta('labelId');
+  late final GeneratedColumn<int> labelId = GeneratedColumn<int>(
+      'label_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [mementoId, labelId];
+  @override
+  String get aliasedName => _alias ?? 'memento_labels';
+  @override
+  String get actualTableName => 'memento_labels';
+  @override
+  VerificationContext validateIntegrity(Insertable<MementoLabel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('memento_id')) {
+      context.handle(_mementoIdMeta,
+          mementoId.isAcceptableOrUnknown(data['memento_id']!, _mementoIdMeta));
+    } else if (isInserting) {
+      context.missing(_mementoIdMeta);
+    }
+    if (data.containsKey('label_id')) {
+      context.handle(_labelIdMeta,
+          labelId.isAcceptableOrUnknown(data['label_id']!, _labelIdMeta));
+    } else if (isInserting) {
+      context.missing(_labelIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {mementoId, labelId};
+  @override
+  MementoLabel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MementoLabel(
+      mementoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}memento_id'])!,
+      labelId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}label_id'])!,
+    );
+  }
+
+  @override
+  MementoLabels createAlias(String alias) {
+    return MementoLabels(attachedDatabase, alias);
+  }
+
+  @override
+  List<String> get customConstraints => const [
+        'PRIMARY KEY(memento_id, label_id)',
+        'FOREIGN KEY(memento_id)REFERENCES mementos(id)',
+        'FOREIGN KEY(label_id)REFERENCES labels(id)'
+      ];
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class MementoLabel extends DataClass implements Insertable<MementoLabel> {
+  final int mementoId;
+  final int labelId;
+  const MementoLabel({required this.mementoId, required this.labelId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['memento_id'] = Variable<int>(mementoId);
+    map['label_id'] = Variable<int>(labelId);
+    return map;
+  }
+
+  MementoLabelsCompanion toCompanion(bool nullToAbsent) {
+    return MementoLabelsCompanion(
+      mementoId: Value(mementoId),
+      labelId: Value(labelId),
+    );
+  }
+
+  factory MementoLabel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MementoLabel(
+      mementoId: serializer.fromJson<int>(json['memento_id']),
+      labelId: serializer.fromJson<int>(json['label_id']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'memento_id': serializer.toJson<int>(mementoId),
+      'label_id': serializer.toJson<int>(labelId),
+    };
+  }
+
+  MementoLabel copyWith({int? mementoId, int? labelId}) => MementoLabel(
+        mementoId: mementoId ?? this.mementoId,
+        labelId: labelId ?? this.labelId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('MementoLabel(')
+          ..write('mementoId: $mementoId, ')
+          ..write('labelId: $labelId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(mementoId, labelId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MementoLabel &&
+          other.mementoId == this.mementoId &&
+          other.labelId == this.labelId);
+}
+
+class MementoLabelsCompanion extends UpdateCompanion<MementoLabel> {
+  final Value<int> mementoId;
+  final Value<int> labelId;
+  final Value<int> rowid;
+  const MementoLabelsCompanion({
+    this.mementoId = const Value.absent(),
+    this.labelId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MementoLabelsCompanion.insert({
+    required int mementoId,
+    required int labelId,
+    this.rowid = const Value.absent(),
+  })  : mementoId = Value(mementoId),
+        labelId = Value(labelId);
+  static Insertable<MementoLabel> custom({
+    Expression<int>? mementoId,
+    Expression<int>? labelId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (mementoId != null) 'memento_id': mementoId,
+      if (labelId != null) 'label_id': labelId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MementoLabelsCompanion copyWith(
+      {Value<int>? mementoId, Value<int>? labelId, Value<int>? rowid}) {
+    return MementoLabelsCompanion(
+      mementoId: mementoId ?? this.mementoId,
+      labelId: labelId ?? this.labelId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (mementoId.present) {
+      map['memento_id'] = Variable<int>(mementoId.value);
+    }
+    if (labelId.present) {
+      map['label_id'] = Variable<int>(labelId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MementoLabelsCompanion(')
+          ..write('mementoId: $mementoId, ')
+          ..write('labelId: $labelId, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -487,112 +1079,193 @@ class TodosEntriesCompanion extends UpdateCompanion<TodosEntrie> {
 abstract class _$DatabaseImpl extends GeneratedDatabase {
   _$DatabaseImpl(QueryExecutor e) : super(e);
   _$DatabaseImpl.connect(DatabaseConnection c) : super.connect(c);
-  late final Todos todos = Todos(this);
-  late final Index todosDueDateIdx = Index('todos_due_date_idx',
-      'CREATE INDEX IF NOT EXISTS todos_due_date_idx ON todos (due_date)');
-  late final TodosEntries todosEntries = TodosEntries(this);
-  late final Trigger todosInsert = Trigger(
-      'CREATE TRIGGER todos_insert AFTER INSERT ON todos BEGIN INSERT INTO todos_entries ("rowid", title, description) VALUES (new.id, new.title, new.description);END',
-      'todos_insert');
-  late final Trigger todosDelete = Trigger(
-      'CREATE TRIGGER todos_delete AFTER DELETE ON todos BEGIN INSERT INTO todos_entries (todos_entries, "rowid", title, description) VALUES (\'delete\', old.id, old.title, old.description);END',
-      'todos_delete');
-  late final Trigger todosUpdate = Trigger(
-      'CREATE TRIGGER todos_update AFTER UPDATE ON todos BEGIN INSERT INTO todos_entries (todos_entries, "rowid", title, description) VALUES (\'delete\', new.id, new.title, new.description);INSERT INTO todos_entries ("rowid", title, description) VALUES (new.id, new.title, new.description);END',
-      'todos_update');
-  Selectable<SearchTodosResult> _searchTodos(String query) {
+  late final Mementos mementos = Mementos(this);
+  late final MementoEntries mementoEntries = MementoEntries(this);
+  late final Trigger mementosInsert = Trigger(
+      'CREATE TRIGGER mementos_insert AFTER INSERT ON mementos BEGIN INSERT INTO memento_entries ("rowid", name, context, company) VALUES (new.id, new.name, new.context, new.company);END',
+      'mementos_insert');
+  late final Trigger mementosDelete = Trigger(
+      'CREATE TRIGGER mementos_delete AFTER DELETE ON mementos BEGIN INSERT INTO memento_entries (memento_entries, "rowid", name, context, company) VALUES (\'delete\', old.id, old.name, old.context, old.company);END',
+      'mementos_delete');
+  late final Trigger mementosUpdate = Trigger(
+      'CREATE TRIGGER mementos_update AFTER UPDATE ON mementos BEGIN INSERT INTO memento_entries (memento_entries, "rowid", name, context, company) VALUES (\'delete\', new.id, new.name, new.context, new.company);INSERT INTO memento_entries ("rowid", name, context, company) VALUES (new.id, new.name, new.context, new.company);END',
+      'mementos_update');
+  late final Labels labels = Labels(this);
+  late final MementoLabels mementoLabels = MementoLabels(this);
+  Selectable<SearchMementosResult> _searchMementos(String query) {
     return customSelect(
-        'SELECT"result"."id" AS "nested_0.id", "result"."title" AS "nested_0.title", "result"."description" AS "nested_0.description", "result"."is_completed" AS "nested_0.is_completed", "result"."due_date" AS "nested_0.due_date" FROM todos_entries INNER JOIN todos AS result ON result.id = todos_entries."rowid" WHERE todos_entries MATCH ?1 ORDER BY rank',
+        'SELECT"result"."id" AS "nested_0.id", "result"."name" AS "nested_0.name", "result"."photo" AS "nested_0.photo", "result"."email" AS "nested_0.email", "result"."phone" AS "nested_0.phone", "result"."context" AS "nested_0.context", "result"."job_title" AS "nested_0.job_title", "result"."company" AS "nested_0.company", "result"."birthday" AS "nested_0.birthday" FROM memento_entries INNER JOIN mementos AS result ON result.id = memento_entries."rowid" WHERE memento_entries MATCH ?1 ORDER BY rank',
         variables: [
           Variable<String>(query)
         ],
         readsFrom: {
-          todosEntries,
-          todos,
+          mementoEntries,
+          mementos,
         }).asyncMap((QueryRow row) async {
-      return SearchTodosResult(
-        result: await todos.mapFromRow(row, tablePrefix: 'nested_0'),
+      return SearchMementosResult(
+        result: await mementos.mapFromRow(row, tablePrefix: 'nested_0'),
       );
     });
   }
 
-  Selectable<Todo> _getTodos() {
-    return customSelect('SELECT * FROM todos', variables: [], readsFrom: {
-      todos,
-    }).asyncMap(todos.mapFromRow);
+  Selectable<Memento> _getMementos() {
+    return customSelect('SELECT * FROM mementos', variables: [], readsFrom: {
+      mementos,
+    }).asyncMap(mementos.mapFromRow);
   }
 
-  Selectable<Todo> _getTodoById(int id) {
-    return customSelect('SELECT * FROM todos WHERE id = ?1 LIMIT 1',
+  Selectable<Memento> _getMementoById(int id) {
+    return customSelect('SELECT * FROM mementos WHERE id = ?1 LIMIT 1',
         variables: [
           Variable<int>(id)
         ],
         readsFrom: {
-          todos,
-        }).asyncMap(todos.mapFromRow);
+          mementos,
+        }).asyncMap(mementos.mapFromRow);
   }
 
-  Selectable<Todo> _getTodosByDate(String dueDate) {
-    return customSelect('SELECT * FROM todos WHERE due_date = ?1', variables: [
-      Variable<String>(dueDate)
-    ], readsFrom: {
-      todos,
-    }).asyncMap(todos.mapFromRow);
-  }
-
-  Future<int> _insertTodo(
-      String title, String? description, int isCompleted, String dueDate) {
+  Future<int> _insertMemento(
+      String name,
+      String? photo,
+      String? email,
+      String? phone,
+      String? context,
+      String? jobTitle,
+      String? company,
+      String? birthday) {
     return customInsert(
-      'INSERT INTO todos (title, description, is_completed, due_date) VALUES (?1, ?2, ?3, ?4)',
+      'INSERT INTO mementos (name, photo, email, phone, context, job_title, company, birthday) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)',
       variables: [
-        Variable<String>(title),
-        Variable<String>(description),
-        Variable<int>(isCompleted),
-        Variable<String>(dueDate)
+        Variable<String>(name),
+        Variable<String>(photo),
+        Variable<String>(email),
+        Variable<String>(phone),
+        Variable<String>(context),
+        Variable<String>(jobTitle),
+        Variable<String>(company),
+        Variable<String>(birthday)
       ],
-      updates: {todos},
+      updates: {mementos},
     );
   }
 
-  Future<int> _updateTodo(String title, String? description, int isCompleted,
-      String dueDate, int id) {
+  Future<int> _updateMemento(
+      String name,
+      String? photo,
+      String? email,
+      String? phone,
+      String? context,
+      String? jobTitle,
+      String? company,
+      String? birthday,
+      int id) {
     return customUpdate(
-      'UPDATE todos SET title = ?1, description = ?2, is_completed = ?3, due_date = ?4 WHERE id = ?5',
+      'UPDATE mementos SET name = ?1, photo = ?2, email = ?3, phone = ?4, context = ?5, job_title = ?6, company = ?7, birthday = ?8 WHERE id = ?9',
       variables: [
-        Variable<String>(title),
-        Variable<String>(description),
-        Variable<int>(isCompleted),
-        Variable<String>(dueDate),
+        Variable<String>(name),
+        Variable<String>(photo),
+        Variable<String>(email),
+        Variable<String>(phone),
+        Variable<String>(context),
+        Variable<String>(jobTitle),
+        Variable<String>(company),
+        Variable<String>(birthday),
         Variable<int>(id)
       ],
-      updates: {todos},
+      updates: {mementos},
       updateKind: UpdateKind.update,
     );
   }
 
-  Future<int> _deleteTodo(int id) {
+  Future<int> _deleteMemento(int id) {
     return customUpdate(
-      'DELETE FROM todos WHERE id = ?1',
+      'DELETE FROM mementos WHERE id = ?1',
       variables: [Variable<int>(id)],
-      updates: {todos},
+      updates: {mementos},
       updateKind: UpdateKind.delete,
     );
   }
 
-  Future<int> _deleteCompletedTodos() {
+  Future<int> _deleteAllMementos() {
     return customUpdate(
-      'DELETE FROM todos WHERE is_completed = 1',
+      'DELETE FROM mementos',
       variables: [],
-      updates: {todos},
+      updates: {mementos},
       updateKind: UpdateKind.delete,
     );
   }
 
-  Future<int> _deleteAllTodos() {
+  Selectable<Label> _getLabels() {
+    return customSelect('SELECT * FROM labels', variables: [], readsFrom: {
+      labels,
+    }).asyncMap(labels.mapFromRow);
+  }
+
+  Selectable<Label> _getLabelById(int id) {
+    return customSelect('SELECT * FROM labels WHERE id = ?1 LIMIT 1',
+        variables: [
+          Variable<int>(id)
+        ],
+        readsFrom: {
+          labels,
+        }).asyncMap(labels.mapFromRow);
+  }
+
+  Future<int> _insertLabel(String name, int color) {
+    return customInsert(
+      'INSERT INTO labels (name, color) VALUES (?1, ?2)',
+      variables: [Variable<String>(name), Variable<int>(color)],
+      updates: {labels},
+    );
+  }
+
+  Future<int> _updateLabel(String name, int color, int id) {
     return customUpdate(
-      'DELETE FROM todos',
-      variables: [],
-      updates: {todos},
+      'UPDATE labels SET name = ?1, color = ?2 WHERE id = ?3',
+      variables: [
+        Variable<String>(name),
+        Variable<int>(color),
+        Variable<int>(id)
+      ],
+      updates: {labels},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> _deleteLabel(int id) {
+    return customUpdate(
+      'DELETE FROM labels WHERE id = ?1',
+      variables: [Variable<int>(id)],
+      updates: {labels},
+      updateKind: UpdateKind.delete,
+    );
+  }
+
+  Selectable<Label> _getLabelsForMemento(int mementoId) {
+    return customSelect(
+        'SELECT l.* FROM labels AS l INNER JOIN memento_labels AS ml ON ml.label_id = l.id WHERE ml.memento_id = ?1',
+        variables: [
+          Variable<int>(mementoId)
+        ],
+        readsFrom: {
+          labels,
+          mementoLabels,
+        }).asyncMap(labels.mapFromRow);
+  }
+
+  Future<int> _addLabelToMemento(int mementoId, int labelId) {
+    return customInsert(
+      'INSERT INTO memento_labels (memento_id, label_id) VALUES (?1, ?2)',
+      variables: [Variable<int>(mementoId), Variable<int>(labelId)],
+      updates: {mementoLabels},
+    );
+  }
+
+  Future<int> _removeLabelFromMemento(int mementoId, int labelId) {
+    return customUpdate(
+      'DELETE FROM memento_labels WHERE memento_id = ?1 AND label_id = ?2',
+      variables: [Variable<int>(mementoId), Variable<int>(labelId)],
+      updates: {mementoLabels},
       updateKind: UpdateKind.delete,
     );
   }
@@ -602,44 +1275,45 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-        todos,
-        todosDueDateIdx,
-        todosEntries,
-        todosInsert,
-        todosDelete,
-        todosUpdate
+        mementos,
+        mementoEntries,
+        mementosInsert,
+        mementosDelete,
+        mementosUpdate,
+        labels,
+        mementoLabels
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
         [
           WritePropagation(
-            on: TableUpdateQuery.onTableName('todos',
+            on: TableUpdateQuery.onTableName('mementos',
                 limitUpdateKind: UpdateKind.insert),
             result: [
-              TableUpdate('todos_entries', kind: UpdateKind.insert),
+              TableUpdate('memento_entries', kind: UpdateKind.insert),
             ],
           ),
           WritePropagation(
-            on: TableUpdateQuery.onTableName('todos',
+            on: TableUpdateQuery.onTableName('mementos',
                 limitUpdateKind: UpdateKind.delete),
             result: [
-              TableUpdate('todos_entries', kind: UpdateKind.insert),
+              TableUpdate('memento_entries', kind: UpdateKind.insert),
             ],
           ),
           WritePropagation(
-            on: TableUpdateQuery.onTableName('todos',
+            on: TableUpdateQuery.onTableName('mementos',
                 limitUpdateKind: UpdateKind.update),
             result: [
-              TableUpdate('todos_entries', kind: UpdateKind.insert),
+              TableUpdate('memento_entries', kind: UpdateKind.insert),
             ],
           ),
         ],
       );
 }
 
-class SearchTodosResult {
-  final Todo result;
-  SearchTodosResult({
+class SearchMementosResult {
+  final Memento result;
+  SearchMementosResult({
     required this.result,
   });
 }

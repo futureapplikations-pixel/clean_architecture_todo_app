@@ -182,3 +182,105 @@ class _TextFieldState extends State<_TextField> {
     }
   }
 }
+
+typedef DateFieldBuilder = Widget Function(BuildContext context,
+    TextEditingController controller, DateTime? value);
+
+class DateFormField extends StatelessWidget {
+  const DateFormField({
+    Key? key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+    this.validator,
+    this.builder,
+  }) : super(key: key);
+
+  final String label;
+  final DateTime? value;
+  final ValueChanged<DateTime> onChanged;
+  final FormFieldValidator<DateTime>? validator;
+  final DateFieldBuilder? builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return _DateField(
+      label: label,
+      value: value,
+      validator: validator,
+      onChanged: onChanged,
+      builder: builder,
+    );
+  }
+}
+
+class _DateField extends StatefulWidget {
+  const _DateField({
+    Key? key,
+    required this.value,
+    required this.label,
+    required this.onChanged,
+    this.builder,
+    this.validator,
+  }) : super(key: key);
+
+  final String label;
+  final DateTime? value;
+  final ValueChanged<DateTime> onChanged;
+  final FormFieldValidator<DateTime>? validator;
+  final DateFieldBuilder? builder;
+
+  @override
+  State<_DateField> createState() => _DateFieldState();
+}
+
+class _DateFieldState extends State<_DateField> {
+  late final controller =
+      TextEditingController(text: _formatDate(widget.value));
+
+  @override
+  void didUpdateWidget(covariant _DateField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      controller.text = _formatDate(widget.value);
+    }
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) return '';
+    // Using a simple format, can be replaced with `intl` package for more complex formatting
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.builder != null) {
+      return widget.builder!(context, controller, widget.value);
+    } else {
+      return TextFormField(
+        controller: controller,
+        readOnly: true,
+        validator: (value) {
+          if (widget.validator != null) {
+            return widget.validator!(widget.value);
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          labelText: widget.label,
+        ),
+        onTap: () async {
+          final date = await showDatePicker(
+            context: context,
+            initialDate: widget.value ?? DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime.now(),
+          );
+          if (date != null) {
+            widget.onChanged(date);
+          }
+        },
+      );
+    }
+  }
+}

@@ -1,53 +1,28 @@
 # App Purpose
-Clean Architecture Todo Application showcasing modern Flutter development practices.
-
-## Purpose
-- Demonstrate Clean Architecture implementation in Flutter
-- Showcase enterprise-grade state management with Riverpod
-- Implement efficient local data persistence with Drift
-- Provide cross-platform support (iOS, Android, Web, Desktop)
-- Demonstrate Material 3 design system integration
+Memento is a personal relationship management application designed to help users keep track of important information about the people in their lives. It serves as a private, intelligent database to strengthen personal and professional connections by remembering the details that matter.
 
 ## Core Features
-- Local SQLite storage with full-text search
-- Type-safe state management
-- Responsive UI across all platforms
-- Material 3 design implementation
-- Clean Architecture separation of concerns
+- **Memento Management**: Full CRUD operations for contacts (mementos).
+- **Rich Data Profiles**: Store name, photo, contact info, context, professional details, personal dates, and notes.
+- **Search**: Real-time search across all memento data.
+- **Reminders**: Schedule future messages (SMS, Email, WhatsApp) with local notifications.
+- **Data Management**: Local-first storage, label management, and JSON import/export.
+- **Gamification**: Achievements, quests, and seasons to encourage engagement.
+- **Settings**: Theme customization and behavior toggles.
 
 ## Technical Highlights
-- Clean Architecture with three distinct layers
-- Riverpod for state management and DI
-- Drift (SQLite) with FTS5 search
-- GoRouter for type-safe navigation
-- Code generation for boilerplate reduction
-- Cross-platform database support
+- **Architecture**: Clean Architecture with three distinct layers (Data, Domain, Presentation).
+- **State Management**: Riverpod for dependency injection and state management.
+- **Database**: Drift (SQLite) for local, persistent, and searchable data storage.
+- **Navigation**: GoRouter for type-safe and path-based navigation.
+- **UI**: Material 3 for a modern and responsive user interface.
 
 ## Implemented Features
 *Initial analysis on 2025-10-12*
-1. Project Structure
-   - Clean Architecture layer separation
-   - Feature-based organization
-   - Platform-specific configurations
-
-2. Data Layer
-   - SQLite database with Drift
-   - Full-text search capability
-   - Repository pattern implementation
-   - Entity-Model mapping
-
-3. Domain Layer
-   - Todo model with business logic
-   - Repository interfaces
-   - Extension methods for todo filtering
-
-4. Presentation Layer
-   - Material 3 theming
-   - View-ViewModel separation
-   - Riverpod state management
-   - Todo form and list views
-
-5. Infrastructure
-   - Cross-platform database setup
-   - Build configuration
-   - Code generation pipeline
+1. **Project Foundation**
+   - Clean Architecture project structure established.
+   - Core dependencies (Riverpod, Drift, GoRouter) integrated.
+   - Cross-platform support configured for mobile, web, and desktop.
+2. **(In-Progress) Memento Transformation**
+   - Refactoring core data models from Todo to Memento.
+   - Updating database schema to support rich Memento profiles.

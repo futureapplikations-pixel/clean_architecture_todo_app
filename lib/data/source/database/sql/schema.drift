@@ -1,59 +1,97 @@
-CREATE TABLE IF NOT EXISTS [todos] (
+CREATE TABLE IF NOT EXISTS [mementos] (
    [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-   [title] TEXT NOT NULL,
-   [description] TEXT,
-   [is_completed] INTEGER NOT NULL,
-   [due_date] TEXT NOT NULL
+   [name] TEXT NOT NULL,
+   [photo] TEXT,
+   [email] TEXT,
+   [phone] TEXT,
+   [context] TEXT,
+   [job_title] TEXT,
+   [company] TEXT,
+   [birthday] TEXT
 );
 
-CREATE INDEX IF NOT EXISTS todos_due_date_idx ON todos(due_date);
-
-CREATE VIRTUAL TABLE todos_entries USING fts5 (
-    title,
-    description,
-    content=todos,
+CREATE VIRTUAL TABLE memento_entries USING fts5 (
+    name,
+    context,
+    company,
+    content=mementos,
     content_rowid=id
 );
 
-CREATE TRIGGER todos_insert AFTER INSERT ON todos BEGIN
-  INSERT INTO todos_entries(rowid, title, description) VALUES (new.id, new.title, new.description);
+CREATE TRIGGER mementos_insert AFTER INSERT ON mementos BEGIN
+  INSERT INTO memento_entries(rowid, name, context, company) VALUES (new.id, new.name, new.context, new.company);
 END;
 
-CREATE TRIGGER todos_delete AFTER DELETE ON todos BEGIN
-  INSERT INTO todos_entries(todos_entries, rowid, title, description) VALUES ('delete', old.id, old.title, old.description);
+CREATE TRIGGER mementos_delete AFTER DELETE ON mementos BEGIN
+  INSERT INTO memento_entries(memento_entries, rowid, name, context, company) VALUES ('delete', old.id, old.name, old.context, old.company);
 END;
 
-CREATE TRIGGER todos_update AFTER UPDATE ON todos BEGIN
-  INSERT INTO todos_entries(todos_entries, rowid, title, description) VALUES ('delete', new.id, new.title, new.description);
-  INSERT INTO todos_entries(rowid, title, description) VALUES (new.id, new.title, new.description);
+CREATE TRIGGER mementos_update AFTER UPDATE ON mementos BEGIN
+  INSERT INTO memento_entries(memento_entries, rowid, name, context, company) VALUES ('delete', new.id, new.name, new.context, new.company);
+  INSERT INTO memento_entries(rowid, name, context, company) VALUES (new.id, new.name, new.context, new.company);
 END;
 
-_searchTodos: SELECT result.** FROM todos_entries
-    INNER JOIN todos result ON result.id = todos_entries.rowid
-    WHERE todos_entries MATCH :query
+_searchMementos: SELECT result.** FROM memento_entries
+    INNER JOIN mementos result ON result.id = memento_entries.rowid
+    WHERE memento_entries MATCH :query
     ORDER BY rank;
-_getTodos: 
-    SELECT * FROM [todos];
-_getTodoById:
-    SELECT * FROM [todos]
+_getMementos: 
+    SELECT * FROM [mementos];
+_getMementoById:
+    SELECT * FROM [mementos]
     WHERE id = :id
     LIMIT 1;
-_getTodosByDate:
-    SELECT * FROM [todos]
-    WHERE due_date = :due_date;
-_insertTodo:
-    INSERT INTO [todos] (title, description, is_completed, due_date)
-    VALUES (:title, :description, :is_completed, :due_date);
-_updateTodo:
-    UPDATE [todos]
-    SET title = :title, description = :description, is_completed = :is_completed, due_date = :due_date
+_insertMemento:
+    INSERT INTO [mementos] (name, photo, email, phone, context, job_title, company, birthday)
+    VALUES (:name, :photo, :email, :phone, :context, :job_title, :company, :birthday);
+_updateMemento:
+    UPDATE [mementos]
+    SET name = :name, photo = :photo, email = :email, phone = :phone, context = :context, job_title = :job_title, company = :company, birthday = :birthday
     WHERE id = :id;
-_deleteTodo:
-    DELETE FROM [todos]
+_deleteMemento:
+    DELETE FROM [mementos]
     WHERE id = :id;
-_deleteCompletedTodos:
-    DELETE FROM [todos]
-    WHERE is_completed = 1;
-_deleteAllTodos:
-    DELETE FROM [todos];
+_deleteAllMementos:
+    DELETE FROM [mementos];
+
+CREATE TABLE IF NOT EXISTS [labels] (
+   [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+   [name] TEXT NOT NULL,
+   [color] INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS [memento_labels] (
+   [memento_id] INTEGER NOT NULL,
+   [label_id] INTEGER NOT NULL,
+   PRIMARY KEY (memento_id, label_id),
+   FOREIGN KEY (memento_id) REFERENCES mementos(id),
+   FOREIGN KEY (label_id) REFERENCES labels(id)
+);
+
+_getLabels:
+    SELECT * FROM [labels];
+_getLabelById:
+    SELECT * FROM [labels]
+    WHERE id = :id
+    LIMIT 1;
+_insertLabel:
+    INSERT INTO [labels] (name, color)
+    VALUES (:name, :color);
+_updateLabel:
+    UPDATE [labels]
+    SET name = :name, color = :color
+    WHERE id = :id;
+_deleteLabel:
+    DELETE FROM [labels]
+    WHERE id = :id;
+_getLabelsForMemento:
+    SELECT l.* FROM labels l
+    INNER JOIN memento_labels ml ON ml.label_id = l.id
+    WHERE ml.memento_id = :mementoId;
+_addLabelToMemento:
+    INSERT INTO memento_labels (memento_id, label_id)
+    VALUES (:mementoId, :labelId);
+_removeLabelFromMemento:
+    DELETE FROM memento_labels
+    WHERE memento_id = :mementoId AND label_id = :labelId;
 
