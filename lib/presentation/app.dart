@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'router.dart';
 import 'theme.dart';
 
-class TodoApp extends StatelessWidget {
+class MementoApp extends StatelessWidget {
+  const MementoApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    const theme = AppTheme(Colors.green);
+    final theme = AppTheme(const Color(0xFF005FAF));
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: theme.light(),

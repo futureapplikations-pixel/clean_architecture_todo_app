@@ -26,3 +26,5 @@ Memento is a personal relationship management application designed to help users
 2. **(In-Progress) Memento Transformation**
    - Refactoring core data models from Todo to Memento.
    - Updating database schema to support rich Memento profiles.
+3. **(In-Progress) UI Modernization**
+   - Refactoring the UI to be more modern, visually appealing, and consistent across web and android platforms.

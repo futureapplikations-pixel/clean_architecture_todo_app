@@ -4,54 +4,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../viewmodel/mementolist/memento_filter_kind.dart';
 
 class ChipsBarWidget extends ConsumerWidget {
+  const ChipsBarWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(mementoFilterKindProvider.notifier);
+    final selectedFilter = ref.watch(mementoFilterKindProvider);
+
     return SizedBox(
       height: kToolbarHeight,
       child: ListView(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 3, bottom: 3),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         scrollDirection: Axis.horizontal,
         children: [
-          buildGroupChip(
-            context,
-            viewModel.isFilteredByAll(),
-            'All',
-            viewModel.filterByAll,
+          FilterChip(
+            label: const Text('All'),
+            selected: selectedFilter == MementoFilterKind.all,
+            onSelected: (_) => viewModel.filterByAll(),
           ),
           const SizedBox(width: 8),
-          buildGroupChip(
-            context,
-            viewModel.isFilteredByFavorites(),
-            'Favorites',
-            viewModel.filterByFavorites,
+          FilterChip(
+            label: const Text('Favorites'),
+            selected: selectedFilter == MementoFilterKind.favorites,
+            onSelected: (_) => viewModel.filterByFavorites(),
           ),
           const SizedBox(width: 8),
-          buildGroupChip(
-            context,
-            viewModel.isFilteredByRecent(),
-            'Recent',
-            viewModel.filterByRecent,
+          FilterChip(
+            label: const Text('Recent'),
+            selected: selectedFilter == MementoFilterKind.recent,
+            onSelected: (_) => viewModel.filterByRecent(),
           ),
         ],
       ),
-    );
-  }
-
-  Widget buildGroupChip(
-    BuildContext context,
-    bool checked,
-    String label,
-    VoidCallback onSelect,
-  ) {
-    return InputChip(
-      showCheckmark: checked,
-      label: Text(label),
-      selected: checked,
-      onSelected: (_) => onSelect(),
-      selectedColor: checked ? Theme.of(context).colorScheme.tertiary : null,
-      labelStyle: checked ? TextStyle(color: Theme.of(context).colorScheme.onTertiary) : null,
-      checkmarkColor: checked ? Theme.of(context).colorScheme.onTertiary : null,
     );
   }
 }

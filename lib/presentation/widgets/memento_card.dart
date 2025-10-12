@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/model/memento.dart';
-import '../utils/constants.dart';
 import '../viewmodel/mementolist/memento_list.dart';
 
 class MementoCard extends ConsumerWidget {
@@ -22,23 +22,38 @@ class MementoCard extends ConsumerWidget {
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                memento.name,
-                style: theme.textTheme.titleMedium,
+        child: ListTile(
+          leading: CircleAvatar(
+            child: Text(memento.title.substring(0, 1)),
+          ),
+          title: Text(
+            memento.title,
+            style: theme.textTheme.titleMedium,
+          ),
+          subtitle: Text(
+            memento.content,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: PopupMenuButton(
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'edit',
+                child: Text('Edit'),
               ),
-              if (memento.company != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  memento.company!,
-                  style: theme.textTheme.bodySmall,
-                ),
-              ],
+              const PopupMenuItem(
+                value: 'delete',
+                child: Text('Delete'),
+              ),
             ],
+            onSelected: (value) {
+              if (value == 'edit') {
+                context.go('/memento/${memento.id}');
+              } else if (value == 'delete') {
+                final model = ref.read(mementoListViewModelProvider.notifier);
+                model.deleteMemento(memento.id);
+              }
+            },
           ),
         ),
       ),
