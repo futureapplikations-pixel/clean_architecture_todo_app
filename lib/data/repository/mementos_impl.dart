@@ -131,10 +131,12 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
   }
 
   // Label operations
+  @override
   Future<List<Label>> getLabels() {
     return database.getLabels().then(MementoMapper.transformLabelListToModel);
   }
 
+  @override
   Future<Label?> getLabelById(int id) async {
     final label = await database.getLabelById(id);
     if (label == null) {
@@ -143,6 +145,7 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
     return MementoMapper.transformLabelToModel(label);
   }
 
+  @override
   Future<Label> createLabel(String name, int color) async {
     final label = await database.insertLabel(
       db.LabelsCompanion.insert(
@@ -153,6 +156,7 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
     return MementoMapper.transformLabelToModel(label);
   }
 
+  @override
   Future<void> updateLabel(int id, String name, int color) {
     return database.updateLabel(
       id,
@@ -163,27 +167,33 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
     );
   }
 
+  @override
   Future<void> deleteLabel(int id) {
     return database.deleteLabel(id);
   }
 
+  @override
   Future<List<Label>> getLabelsForMemento(int mementoId) {
     return database.getLabelsForMemento(mementoId).then(MementoMapper.transformLabelListToModel);
   }
 
+  @override
   Future<void> addLabelToMemento(int mementoId, int labelId) {
     return database.addLabelToMemento(mementoId, labelId);
   }
 
+  @override
   Future<void> removeLabelFromMemento(int mementoId, int labelId) {
     return database.removeLabelFromMemento(mementoId, labelId);
   }
 
   // Note operations
+  @override
   Future<List<Note>> getNotes() {
     return database.getNotes().then(MementoMapper.transformNoteListToModel);
   }
 
+  @override
   Future<Note?> getNoteById(int id) async {
     final note = await database.getNoteById(id);
     if (note == null) {
@@ -192,10 +202,12 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
     return MementoMapper.transformNoteToModel(note);
   }
 
+  @override
   Future<List<Note>> getNotesForMemento(int mementoId) {
     return database.getNotesForMemento(mementoId).then(MementoMapper.transformNoteListToModel);
   }
 
+  @override
   Future<Note> createNote(int mementoId, String content, {bool isFavorite = false}) async {
     final now = DateTime.now().millisecondsSinceEpoch;
     final note = await database.insertNote(
@@ -210,6 +222,7 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
     return MementoMapper.transformNoteToModel(note);
   }
 
+  @override
   Future<void> updateNote(int id, String content, {bool? isFavorite}) async {
     final now = DateTime.now().millisecondsSinceEpoch;
     await database.updateNote(
@@ -222,6 +235,7 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
     );
   }
 
+  @override
   Future<void> deleteNote(int id) {
     return database.deleteNote(id);
   }

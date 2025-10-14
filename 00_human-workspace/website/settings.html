@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Memento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sage-green: #87A96B;
+            --warm-charcoal: #4A4A4A;
+            --soft-gold: #D4AF37;
+            --off-white: #FAFAFA;
+            --deep-charcoal: #2C2C2C;
+            --light-gray: #E8E8E8;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--off-white);
+            color: var(--deep-charcoal);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-sage { background-color: var(--sage-green); }
+        .bg-charcoal { background-color: var(--warm-charcoal); }
+        .bg-gold { background-color: var(--soft-gold); }
+        .text-sage { color: var(--sage-green); }
+        .text-charcoal { color: var(--warm-charcoal); }
+        .text-gold { color: var(--soft-gold); }
+        .border-sage { border-color: var(--sage-green); }
+        .border-light { border-color: var(--light-gray); }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background-color: rgba(250, 250, 250, 0.9);
+        }
+        
+        .setting-card {
+            transition: all 0.3s ease;
+        }
+        
+        .setting-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--light-gray);
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--sage-green);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        .theme-option {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .theme-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .theme-option.active {
+            border: 2px solid var(--sage-green);
+            box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.1);
+        }
+        
+        .label-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            margin: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .label-chip:hover {
+            transform: scale(1.05);
+        }
+        
+        .drag-drop-area {
+            border: 2px dashed var(--light-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .drag-drop-area.dragover {
+            border-color: var(--sage-green);
+            background-color: rgba(135, 169, 107, 0.05);
+        }
+        
+        .export-progress {
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="nav-blur border-b border-light sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="font-display text-2xl font-bold text-sage">Memento</h1>
+                    <span class="ml-2 text-sm text-charcoal">Relationship Manager</span>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="text-charcoal hover:text-sage transition-colors">Dashboard</a>
+                    <a href="memento.html" class="text-charcoal hover:text-sage transition-colors">Mementos</a>
+                    <a href="messages.html" class="text-charcoal hover:text-sage transition-colors">Messages</a>
+                    <a href="achievements.html" class="text-charcoal hover:text-sage transition-colors">Achievements</a>
+                    <a href="settings.html" class="text-sage font-medium border-b-2 border-sage pb-1">Settings</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-white border-b border-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h1 class="font-display text-4xl font-bold text-charcoal mb-4">Settings</h1>
+                <p class="text-lg text-charcoal opacity-70 max-w-2xl mx-auto">Customize your Memento experience and manage your data</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="space-y-8">
+            <!-- Profile Settings -->
+            <div class="setting-card bg-white rounded-lg shadow-sm border border-light p-6">
+                <h2 class="font-display text-2xl font-semibold text-charcoal mb-6">Profile Settings</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Display Name</label>
+                        <input type="text" id="display-name" value="Memento User" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Email</label>
+                        <input type="email" id="user-email" value="user@memento.app" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Timezone</label>
+                        <select id="timezone" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                            <option value="UTC">UTC</option>
+                            <option value="America/New_York">Eastern Time</option>
+                            <option value="America/Chicago">Central Time</option>
+                            <option value="America/Denver">Mountain Time</option>
+                            <option value="America/Los_Angeles">Pacific Time</option>
+                            <option value="Europe/London">London</option>
+                            <option value="Europe/Paris">Paris</option>
+                            <option value="Asia/Tokyo">Tokyo</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Date Format</label>
+                        <select id="date-format" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button id="save-profile" class="bg-sage text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                        Save Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Theme Settings -->
+            <div class="setting-card bg-white rounded-lg shadow-sm border border-light p-6">
+                <h2 class="font-display text-2xl font-semibold text-charcoal mb-6">Appearance</h2>
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-4">Theme</label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="theme-option active border-2 rounded-lg p-4 text-center" data-theme="light">
+                            <div class="w-12 h-8 bg-white border border-light rounded mx-auto mb-2"></div>
+                            <span class="text-sm text-charcoal">Light</span>
+                        </div>
+                        <div class="theme-option border-2 border-light rounded-lg p-4 text-center" data-theme="dark">
+                            <div class="w-12 h-8 bg-charcoal rounded mx-auto mb-2"></div>
+                            <span class="text-sm text-charcoal">Dark</span>
+                        </div>
+                        <div class="theme-option border-2 border-light rounded-lg p-4 text-center" data-theme="auto">
+                            <div class="w-12 h-8 bg-gradient-to-r from-white to-charcoal rounded mx-auto mb-2"></div>
+                            <span class="text-sm text-charcoal">Auto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-charcoal mb-2">Accent Color</label>
+                    <div class="flex space-x-3">
+                        <button class="w-8 h-8 bg-sage rounded-full border-2 border-white shadow-sm" data-color="sage"></button>
+                        <button class="w-8 h-8 bg-blue-500 rounded-full border-2 border-white shadow-sm" data-color="blue"></button>
+                        <button class="w-8 h-8 bg-green-500 rounded-full border-2 border-white shadow-sm" data-color="green"></button>
+                        <button class="w-8 h-8 bg-purple-500 rounded-full border-2 border-white shadow-sm" data-color="purple"></button>
+                        <button class="w-8 h-8 bg-red-500 rounded-full border-2 border-white shadow-sm" data-color="red"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="setting-card bg-white rounded-lg shadow-sm border border-light p-6">
+                <h2 class="font-display text-2xl font-semibold text-charcoal mb-6">Notifications</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-charcoal">Message Reminders</h3>
+                            <p class="text-sm text-charcoal opacity-70">Get notified when scheduled messages are due</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="message-reminders" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-charcoal">Birthday Reminders</h3>
+                            <p class="text-sm text-charcoal opacity-70">Get notified about upcoming birthdays</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="birthday-reminders" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-charcoal">Achievement Notifications</h3>
+                            <p class="text-sm text-charcoal opacity-70">Get notified when you unlock achievements</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="achievement-notifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-charcoal">Daily Quests</h3>
+                            <p class="text-sm text-charcoal opacity-70">Get notified about new daily quests</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="daily-quests" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Label Management -->
+            <div class="setting-card bg-white rounded-lg shadow-sm border border-light p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-display text-2xl font-semibold text-charcoal">Manage Labels</h2>
+                    <button id="add-label-btn" class="bg-sage text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                        + Add Label
+                    </button>
+                </div>
+                <div id="labels-container" class="mb-4">
+                    <!-- Labels will be populated here -->
+                </div>
+            </div>
+
+            <!-- Data Management -->
+            <div class="setting-card bg-white rounded-lg shadow-sm border border-light p-6">
+                <h2 class="font-display text-2xl font-semibold text-charcoal mb-6">Data Management</h2>
+                
+                <!-- Export Data -->
+                <div class="mb-8">
+                    <h3 class="font-medium text-charcoal mb-4">Export Data</h3>
+                    <p class="text-sm text-charcoal opacity-70 mb-4">Download your memento data for backup or transfer</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button id="export-all" class="bg-sage text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                            Export All Data
+                        </button>
+                        <button id="export-mementos" class="border border-sage text-sage px-4 py-2 rounded-lg hover:bg-sage hover:text-white transition-colors">
+                            Export Mementos Only
+                        </button>
+                        <button id="export-settings" class="border border-charcoal text-charcoal px-4 py-2 rounded-lg hover:bg-charcoal hover:text-white transition-colors">
+                            Export Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Import Data -->
+                <div class="mb-8">
+                    <h3 class="font-medium text-charcoal mb-4">Import Data</h3>
+                    <p class="text-sm text-charcoal opacity-70 mb-4">Import memento data from a backup file</p>
+                    <div class="drag-drop-area rounded-lg p-8 text-center" id="import-drop-zone">
+                        <div class="text-charcoal opacity-50 mb-4">
+                            <svg class="w-12 h-12 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <p class="text-charcoal mb-2">Drop your backup file here or</p>
+                        <button id="browse-import" class="text-sage hover:text-opacity-80">browse files</button>
+                        <input type="file" id="import-file" accept=".json" class="hidden">
+                    </div>
+                </div>
+
+                <!-- Storage Information -->
+                <div>
+                    <h3 class="font-medium text-charcoal mb-4">Storage Information</h3>
+                    <div class="bg-light rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-charcoal">Used Storage</span>
+                            <span class="text-charcoal font-medium" id="storage-used">2.4 MB</span>
+                        </div>
+                        <div class="w-full bg-white rounded-full h-2">
+                            <div class="bg-sage h-2 rounded-full" style="width: 24%"></div>
+                        </div>
+                        <p class="text-xs text-charcoal opacity-70 mt-2">10 MB limit • 7.6 MB remaining</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy & Security -->
+            <div class="setting-card bg-white rounded-lg shadow-sm border border-light p-6">
+                <h2 class="font-display text-2xl font-semibold text-charcoal mb-6">Privacy & Security</h2>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-charcoal">Data Encryption</h3>
+                            <p class="text-sm text-charcoal opacity-70">Encrypt all data stored locally</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="data-encryption" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-charcoal">Analytics</h3>
+                            <p class="text-sm text-charcoal opacity-70">Help improve Memento by sharing anonymous usage data</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="analytics">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-charcoal">Auto-lock</h3>
+                            <p class="text-sm text-charcoal opacity-70">Lock app after 15 minutes of inactivity</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="auto-lock">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mt-6 pt-6 border-t border-light">
+                    <button id="clear-data" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors mr-4">
+                        Clear All Data
+                    </button>
+                    <button id="reset-settings" class="border border-charcoal text-charcoal px-6 py-2 rounded-lg hover:bg-charcoal hover:text-white transition-colors">
+                        Reset Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Label Modal -->
+    <div id="add-label-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <h3 class="font-display text-xl font-semibold text-charcoal mb-4">Add New Label</h3>
+            <form id="add-label-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-1">Label Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none" placeholder="Enter label name">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-2">Color</label>
+                    <div class="flex space-x-2">
+                        <button type="button" class="color-option w-8 h-8 bg-blue-500 rounded-full border-2 border-white shadow-sm" data-color="blue"></button>
+                        <button type="button" class="color-option w-8 h-8 bg-green-500 rounded-full border-2 border-white shadow-sm" data-color="green"></button>
+                        <button type="button" class="color-option w-8 h-8 bg-purple-500 rounded-full border-2 border-white shadow-sm" data-color="purple"></button>
+                        <button type="button" class="color-option w-8 h-8 bg-yellow-500 rounded-full border-2 border-white shadow-sm" data-color="yellow"></button>
+                        <button type="button" class="color-option w-8 h-8 bg-red-500 rounded-full border-2 border-white shadow-sm" data-color="red"></button>
+                        <button type="button" class="color-option w-8 h-8 bg-gray-500 rounded-full border-2 border-white shadow-sm" data-color="gray"></button>
+                    </div>
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="submit" class="flex-1 bg-sage text-white py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                        Add Label
+                    </button>
+                    <button type="button" id="cancel-add-label" class="flex-1 border border-light text-charcoal py-2 rounded-lg hover:bg-light transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="font-display text-lg">Memento</p>
+            <p class="text-sm opacity-70 mt-2">Building stronger relationships, one connection at a time.</p>
+        </div>
+    </footer>
+
+    <script src="settings.js"></script>
+</body>
+</html>

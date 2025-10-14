@@ -14,20 +14,20 @@
 - [x] Implement filter logic for Memento list
 
 ## Testing & Quality
-- [ ] Add more unit tests for:
+- [x] Add more unit tests for:
   - [x] Domain models
     - [x] Todo model
     - [x] TodosExtension
-  - [ ] Use cases
+  - [x] Use cases
   - [x] ViewModels
     - [x] TodoFormViewModel
     - [x] TodoListViewModel
-  - [ ] Repositories
-- [ ] Add integration tests for:
+  - [x] Repositories
+- [x] Add integration tests for:
   - [x] Database operations (basic test exists)
-  - [ ] Repository implementations
-  - [ ] UI flows
-- [ ] Add widget tests for:
+  - [x] Repository implementations
+  - [x] UI flows
+- [x] Add widget tests for:
   - [x] TodoCard
   - [x] TodoForm
   - [x] TodoList
@@ -103,27 +103,6 @@
 - [ ] Add data export/import
 - [ ] Add undo/redo functionality
 
-Note: Project has excellent foundation with:
-- Clean Architecture implementation
-- Drift database with FTS5 search
-- Riverpod state management
-- Material 3 UI with adaptive layouts
-- Cross-platform support with native database
-- Full CRUD operations for mementos
-- Search functionality
-
-Progress Update (2025-10-14):
-✅ Added comprehensive test suite:
-- Domain model tests for Memento and extensions
-- ViewModel tests for form and list management
-- Widget tests for all UI components
-  - MementoCard component tests
-  - MementoForm input validation
-  - MementoList filtering and state
-  - Search functionality and states
-- Basic database operation test
-- Mocked repository for testing
-
 ## Implement Rich Data Profiles and Complete Persistence
 - [x] Add labels/tagging system with color-coded labels
 - [x] Add timestamped notes system with favorite/pin feature
@@ -137,13 +116,13 @@ Progress Update (2025-10-14):
 - [x] Update structure-ai.md with new models and database schema
 - [x] Fix compilation errors for Value<int> type issues
 - [x] Fix birthday field to use text input with proper date parsing and storage
-- [ ] Update form UI to include labels and notes management
-- [ ] Update detail view to display rich profile information
-- [ ] Add label creation and management functionality
-- [ ] Add notes CRUD operations with timestamps
-- [ ] Implement favorite notes feature
-- [ ] Update search to include labels and notes content
-- [ ] Test complete data persistence across all features
+- [x] Update form UI to include labels and notes management
+- [x] Update detail view to display rich profile information
+- [x] Add label creation and management functionality
+- [x] Add notes CRUD operations with timestamps
+- [x] Implement favorite notes feature
+- [x] Update search to include labels and notes content
+- [x] Test complete data persistence across all features
 
 ## Reminders and Scheduling Implementation
 - [x] Create ScheduledMessage domain model with message types (SMS, Email, WhatsApp)
@@ -157,11 +136,11 @@ Progress Update (2025-10-14):
 - [x] Update app-goal.md with reminders and scheduling feature
 - [x] Update structure-ai.md with new files and connections
 - [x] Update ai-infrastructure-choice.md with notification dependencies
-- [ ] Create scheduled messages list view (UI enhancement)
-- [ ] Create scheduled message form for creating/editing scheduled messages (UI enhancement)
-- [ ] Add scheduled messages management to memento details view (UI enhancement)
-- [ ] Test notification scheduling and delivery (integration testing)
-- [ ] Test complete scheduled message workflow (integration testing)
+- [x] Create scheduled messages list view (UI enhancement)
+- [x] Create scheduled message form for creating/editing scheduled messages (UI enhancement)
+- [x] Add scheduled messages management to memento details view (UI enhancement)
+- [x] Test notification scheduling and delivery (integration testing)
+- [x] Test complete scheduled message workflow (integration testing)
 
 ## UI Integration for Reminders and Scheduling
 - [x] Create scheduled messages list view with filtering and sorting
@@ -172,7 +151,7 @@ Progress Update (2025-10-14):
 - [x] Update main navigation to include scheduled messages access
 - [x] Add floating action button for quick message scheduling
 - [x] Create scheduled message card widget for list display
-- [ ] Add notification permission request flow
+- [x] Add notification permission request flow
 - [x] Update app-goal.md with UI integration completion
 - [x] Update structure-ai.md with new UI files and connections
 
@@ -188,7 +167,7 @@ Progress Update (2025-10-14):
 - [x] Create achievement domain models and service
 - [x] Create achievement dashboard with tabbed interface
 - [x] Create achievement card widget with progress bars and animations
-- [ ] Add data visualization components for statistics and progress
+- [x] Add data visualization components for statistics and progress
 - [ ] Create timeline visualization for interaction history
 - [ ] Enhance search interface with smart suggestions and filters
 - [ ] Add advanced animations and micro-interactions
@@ -197,13 +176,50 @@ Progress Update (2025-10-14):
 - [ ] Add particle effects for achievement celebrations
 - [ ] Implement responsive breakpoints for mobile-first design
 - [ ] Add accessibility enhancements (keyboard navigation, screen reader support)
-- [ ] Update app-goal.md with vision adaptation features
-- [ ] Update structure-ai.md with new design system files
-- [ ] Update ai-infrastructure-choice.md with new dependencies and design choices
+- [x] Update app-goal.md with vision adaptation features
+- [x] Update structure-ai.md with new design system files
+- [x] Update ai-infrastructure-choice.md with new dependencies and design choices
+
+## Website Feature Implementation
+- [x] **Achievements Feature**
+  - [x] Create Achievement, Quest, and Leaderboard models.
+  - [x] Update database schema for achievements, quests, and leaderboard.
+  - [x] Implement AchievementsRepository interface and mock implementation.
+  - [x] Create use cases for getting achievements, quests, and leaderboard.
+  - [x] Create AchievementsDashboard UI with basic layout.
+  - [x] Create AchievementCard, QuestCard, and LeaderboardItem widgets.
+  - [x] Create AchievementsViewModel to manage state.
+  - [x] Integrate AchievementService to check and unlock achievements.
+  - [x] Add route for AchievementsDashboard.
+  - [x] Add button to MementoListPage to navigate to AchievementsDashboard.
+  - [x] Create mappers for Achievement, Quest, and Leaderboard.
+  - [x] Update AchievementsRepositoryImpl to use Drift database.
+  - [x] Update AppDatabase to include initial achievement data.
+  - [x] Implement the logic for tracking progress and unlocking achievements (beyond mock data).
+- [x] **Messages Feature**
+  - [x] Create MessageTemplate domain model.
+  - [x] Add a table for message templates in `schema.drift`.
+  - [x] Create a mapper for `MessageTemplate`.
+  - [x] Update `ScheduledMessagesRepository` and `ScheduledMessagesRepositoryImpl` to include CRUD operations for message templates.
+  - [x] Create use cases for managing message templates.
+  - [x] Update the `ScheduledMessageForm` to allow selecting a template.
+  - [x] Create a UI for managing message templates (`MessageTemplateListView`).
+  - [x] Add a route for `MessageTemplateListView`.
+  - [x] Create a view model for message statistics.
+  - [x] Create a UI widget to display the message statistics chart (`MessageStatisticsChart`).
+  - [x] Create a new view for the Messages feature (`MessagesView`) that displays the chart and message templates.
+  - [x] Add a route for `MessagesView`.
+  - [x] Add a button to the `MementoListPage` to navigate to the messages view.
+- [ ] **Settings Feature**
+  - [ ] Create the settings page with all the options from the website.
+  - [ ] Implement the logic for managing user preferences.
+- [ ] **UI/UX Polishing**
+  - [ ] Replicate the animations and visual effects from the website.
+  - [ ] Ensure the app's design is consistent with the website's design.
 
 Next Priority:
-1. Complete obsolete class cleanup
-2. Add repository implementation tests
-3. Add API documentation for public interfaces
-4. Set up CI/CD pipeline with GitHub Actions
-5. Implement error tracking and analytics
+1. Implement Settings Feature.
+2. Implement UI/UX Polishing.
+3. Add API documentation for public interfaces.
+4. Set up CI/CD pipeline with GitHub Actions.
+5. Implement error tracking and analytics.

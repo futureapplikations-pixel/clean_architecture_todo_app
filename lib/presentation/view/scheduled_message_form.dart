@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../domain/model/scheduled_message.dart';
+import '../../domain/model/message_template.dart';
+import '../../domain/usecase/get_message_templates.dart';
 import '../viewmodel/mementolist/memento_list_with_search.dart';
 
 /// Form for creating or editing scheduled messages
@@ -24,6 +26,7 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
   late final TextEditingController _contentController;
   late MessageType _selectedMessageType;
   late DateTime _scheduledDateTime;
+  MessageTemplate? _selectedTemplate;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -44,6 +47,8 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
 
   @override
   Widget build(BuildContext context) {
+    final messageTemplatesAsync = ref.watch(getMessageTemplatesProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.message == null ? 'Schedule Message' : 'Edit Message'),
@@ -93,6 +98,54 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
               _buildMementoSelection(),
               const SizedBox(height: 16),
             ],
+
+            // Message Template selection
+            messageTemplatesAsync.when(
+              data: (templates) {
+                if (templates.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Message Template',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 8),
+                        DropdownButtonFormField<MessageTemplate>(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Select a template',
+                          ),
+                          value: _selectedTemplate,
+                          items: templates.map((template) {
+                            return DropdownMenuItem(
+                              value: template,
+                              child: Text(template.name),
+                            );
+                          }).toList(),
+                          onChanged: (template) {
+                            setState(() {
+                              _selectedTemplate = template;
+                              if (template != null) {
+                                _contentController.text = template.content;
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stack) => Text('Error loading templates: $error'),
+            ),
+            const SizedBox(height: 16),
 
             // Title field
             TextFormField(

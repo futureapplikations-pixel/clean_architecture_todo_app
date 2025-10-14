@@ -1,4 +1,5 @@
 import '../model/scheduled_message.dart';
+import '../model/message_template.dart';
 
 /// Repository interface for scheduled message operations
 abstract class ScheduledMessagesRepository {
@@ -34,4 +35,11 @@ abstract class ScheduledMessagesRepository {
 
   /// Watch scheduled messages for a specific memento
   Stream<List<ScheduledMessage>> watchScheduledMessagesForMemento(int mementoId);
+
+  // Message Template operations
+  Future<List<MessageTemplate>> getMessageTemplates();
+  Future<MessageTemplate?> getMessageTemplateById(int id);
+  Future<MessageTemplate> insertMessageTemplate(MessageTemplate template);
+  Future<void> updateMessageTemplate(MessageTemplate template);
+  Future<void> deleteMessageTemplate(int id);
 }

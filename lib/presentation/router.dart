@@ -5,6 +5,9 @@ import 'view/memento_details.dart';
 import 'view/memento_list.dart';
 import 'view/scheduled_messages_list.dart';
 import 'view/scheduled_message_form.dart';
+import 'view/achievements_dashboard.dart';
+import 'view/message_template_list_view.dart';
+import 'view/messages_view.dart';
 
 final router = GoRouter(
   routes: [
@@ -36,6 +39,18 @@ final router = GoRouter(
             // TODO: Load the message and pass it to the form
             return const ScheduledMessageForm(mementoId: 0);
           },
+        ),
+        GoRoute(
+          path: 'achievements',
+          builder: (context, state) => const AchievementsDashboard(),
+        ),
+        GoRoute(
+          path: 'message-templates',
+          builder: (context, state) => const MessageTemplateListView(),
+        ),
+        GoRoute(
+          path: 'messages',
+          builder: (context, state) => const MessagesView(),
         ),
       ],
     ),

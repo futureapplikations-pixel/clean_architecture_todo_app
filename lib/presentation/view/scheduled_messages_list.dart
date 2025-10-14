@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../viewmodel/scheduled_messages_list.dart';
+import 'package:clean_architecture_todo_app/presentation/viewmodel/scheduled_messages_list.dart';
 import '../widgets/scheduled_message_card.dart';
 import '../../domain/model/scheduled_message.dart';
 

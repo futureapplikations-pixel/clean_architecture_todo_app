@@ -102,13 +102,31 @@ class MementoListPage extends HookConsumerWidget {
               ),
               child: IconButton(
                 icon: Icon(
-                  Icons.schedule_send,
+                  Icons.emoji_events,
                   color: theme.colorScheme.secondary,
                   size: 20,
                 ),
-                tooltip: 'Scheduled Messages',
+                tooltip: 'Achievements',
                 onPressed: () {
-                  context.go('/scheduled-messages');
+                  context.go('/achievements');
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.secondary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: IconButton(
+                icon: Icon(
+                  Icons.message,
+                  color: theme.colorScheme.secondary,
+                  size: 20,
+                ),
+                tooltip: 'Messages',
+                onPressed: () {
+                  context.go('/messages');
                 },
               ),
             ),

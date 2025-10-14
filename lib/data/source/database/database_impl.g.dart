@@ -1865,6 +1865,2112 @@ class ScheduledMessagesCompanion extends UpdateCompanion<ScheduledMessage> {
   }
 }
 
+class Achievements extends Table with TableInfo<Achievements, Achievement> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Achievements(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'PRIMARY KEY NOT NULL');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
+  late final GeneratedColumn<String> icon = GeneratedColumn<String>(
+      'icon', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+      'category', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _pointsMeta = const VerificationMeta('points');
+  late final GeneratedColumn<int> points = GeneratedColumn<int>(
+      'points', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _unlockedMeta =
+      const VerificationMeta('unlocked');
+  late final GeneratedColumn<int> unlocked = GeneratedColumn<int>(
+      'unlocked', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0',
+      defaultValue: const CustomExpression('0'));
+  static const VerificationMeta _unlockedDateMeta =
+      const VerificationMeta('unlockedDate');
+  late final GeneratedColumn<int> unlockedDate = GeneratedColumn<int>(
+      'unlocked_date', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _progressMeta =
+      const VerificationMeta('progress');
+  late final GeneratedColumn<double> progress = GeneratedColumn<double>(
+      'progress', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0.0',
+      defaultValue: const CustomExpression('0.0'));
+  static const VerificationMeta _requirementMeta =
+      const VerificationMeta('requirement');
+  late final GeneratedColumn<int> requirement = GeneratedColumn<int>(
+      'requirement', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _currentProgressMeta =
+      const VerificationMeta('currentProgress');
+  late final GeneratedColumn<int> currentProgress = GeneratedColumn<int>(
+      'current_progress', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0',
+      defaultValue: const CustomExpression('0'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        description,
+        icon,
+        category,
+        points,
+        unlocked,
+        unlockedDate,
+        progress,
+        requirement,
+        currentProgress
+      ];
+  @override
+  String get aliasedName => _alias ?? 'achievements';
+  @override
+  String get actualTableName => 'achievements';
+  @override
+  VerificationContext validateIntegrity(Insertable<Achievement> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('icon')) {
+      context.handle(
+          _iconMeta, icon.isAcceptableOrUnknown(data['icon']!, _iconMeta));
+    } else if (isInserting) {
+      context.missing(_iconMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('points')) {
+      context.handle(_pointsMeta,
+          points.isAcceptableOrUnknown(data['points']!, _pointsMeta));
+    } else if (isInserting) {
+      context.missing(_pointsMeta);
+    }
+    if (data.containsKey('unlocked')) {
+      context.handle(_unlockedMeta,
+          unlocked.isAcceptableOrUnknown(data['unlocked']!, _unlockedMeta));
+    }
+    if (data.containsKey('unlocked_date')) {
+      context.handle(
+          _unlockedDateMeta,
+          unlockedDate.isAcceptableOrUnknown(
+              data['unlocked_date']!, _unlockedDateMeta));
+    }
+    if (data.containsKey('progress')) {
+      context.handle(_progressMeta,
+          progress.isAcceptableOrUnknown(data['progress']!, _progressMeta));
+    }
+    if (data.containsKey('requirement')) {
+      context.handle(
+          _requirementMeta,
+          requirement.isAcceptableOrUnknown(
+              data['requirement']!, _requirementMeta));
+    } else if (isInserting) {
+      context.missing(_requirementMeta);
+    }
+    if (data.containsKey('current_progress')) {
+      context.handle(
+          _currentProgressMeta,
+          currentProgress.isAcceptableOrUnknown(
+              data['current_progress']!, _currentProgressMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Achievement map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Achievement(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      icon: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}icon'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
+      points: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}points'])!,
+      unlocked: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}unlocked'])!,
+      unlockedDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}unlocked_date']),
+      progress: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}progress'])!,
+      requirement: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}requirement'])!,
+      currentProgress: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}current_progress'])!,
+    );
+  }
+
+  @override
+  Achievements createAlias(String alias) {
+    return Achievements(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class Achievement extends DataClass implements Insertable<Achievement> {
+  final String id;
+  final String name;
+  final String description;
+  final String icon;
+  final String category;
+  final int points;
+  final int unlocked;
+  final int? unlockedDate;
+  final double progress;
+  final int requirement;
+  final int currentProgress;
+  const Achievement(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.icon,
+      required this.category,
+      required this.points,
+      required this.unlocked,
+      this.unlockedDate,
+      required this.progress,
+      required this.requirement,
+      required this.currentProgress});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
+    map['icon'] = Variable<String>(icon);
+    map['category'] = Variable<String>(category);
+    map['points'] = Variable<int>(points);
+    map['unlocked'] = Variable<int>(unlocked);
+    if (!nullToAbsent || unlockedDate != null) {
+      map['unlocked_date'] = Variable<int>(unlockedDate);
+    }
+    map['progress'] = Variable<double>(progress);
+    map['requirement'] = Variable<int>(requirement);
+    map['current_progress'] = Variable<int>(currentProgress);
+    return map;
+  }
+
+  AchievementsCompanion toCompanion(bool nullToAbsent) {
+    return AchievementsCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: Value(description),
+      icon: Value(icon),
+      category: Value(category),
+      points: Value(points),
+      unlocked: Value(unlocked),
+      unlockedDate: unlockedDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unlockedDate),
+      progress: Value(progress),
+      requirement: Value(requirement),
+      currentProgress: Value(currentProgress),
+    );
+  }
+
+  factory Achievement.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Achievement(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      icon: serializer.fromJson<String>(json['icon']),
+      category: serializer.fromJson<String>(json['category']),
+      points: serializer.fromJson<int>(json['points']),
+      unlocked: serializer.fromJson<int>(json['unlocked']),
+      unlockedDate: serializer.fromJson<int?>(json['unlocked_date']),
+      progress: serializer.fromJson<double>(json['progress']),
+      requirement: serializer.fromJson<int>(json['requirement']),
+      currentProgress: serializer.fromJson<int>(json['current_progress']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'icon': serializer.toJson<String>(icon),
+      'category': serializer.toJson<String>(category),
+      'points': serializer.toJson<int>(points),
+      'unlocked': serializer.toJson<int>(unlocked),
+      'unlocked_date': serializer.toJson<int?>(unlockedDate),
+      'progress': serializer.toJson<double>(progress),
+      'requirement': serializer.toJson<int>(requirement),
+      'current_progress': serializer.toJson<int>(currentProgress),
+    };
+  }
+
+  Achievement copyWith(
+          {String? id,
+          String? name,
+          String? description,
+          String? icon,
+          String? category,
+          int? points,
+          int? unlocked,
+          Value<int?> unlockedDate = const Value.absent(),
+          double? progress,
+          int? requirement,
+          int? currentProgress}) =>
+      Achievement(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        icon: icon ?? this.icon,
+        category: category ?? this.category,
+        points: points ?? this.points,
+        unlocked: unlocked ?? this.unlocked,
+        unlockedDate:
+            unlockedDate.present ? unlockedDate.value : this.unlockedDate,
+        progress: progress ?? this.progress,
+        requirement: requirement ?? this.requirement,
+        currentProgress: currentProgress ?? this.currentProgress,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Achievement(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('icon: $icon, ')
+          ..write('category: $category, ')
+          ..write('points: $points, ')
+          ..write('unlocked: $unlocked, ')
+          ..write('unlockedDate: $unlockedDate, ')
+          ..write('progress: $progress, ')
+          ..write('requirement: $requirement, ')
+          ..write('currentProgress: $currentProgress')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, description, icon, category, points,
+      unlocked, unlockedDate, progress, requirement, currentProgress);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Achievement &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.icon == this.icon &&
+          other.category == this.category &&
+          other.points == this.points &&
+          other.unlocked == this.unlocked &&
+          other.unlockedDate == this.unlockedDate &&
+          other.progress == this.progress &&
+          other.requirement == this.requirement &&
+          other.currentProgress == this.currentProgress);
+}
+
+class AchievementsCompanion extends UpdateCompanion<Achievement> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<String> icon;
+  final Value<String> category;
+  final Value<int> points;
+  final Value<int> unlocked;
+  final Value<int?> unlockedDate;
+  final Value<double> progress;
+  final Value<int> requirement;
+  final Value<int> currentProgress;
+  final Value<int> rowid;
+  const AchievementsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.icon = const Value.absent(),
+    this.category = const Value.absent(),
+    this.points = const Value.absent(),
+    this.unlocked = const Value.absent(),
+    this.unlockedDate = const Value.absent(),
+    this.progress = const Value.absent(),
+    this.requirement = const Value.absent(),
+    this.currentProgress = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AchievementsCompanion.insert({
+    required String id,
+    required String name,
+    required String description,
+    required String icon,
+    required String category,
+    required int points,
+    this.unlocked = const Value.absent(),
+    this.unlockedDate = const Value.absent(),
+    this.progress = const Value.absent(),
+    required int requirement,
+    this.currentProgress = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        name = Value(name),
+        description = Value(description),
+        icon = Value(icon),
+        category = Value(category),
+        points = Value(points),
+        requirement = Value(requirement);
+  static Insertable<Achievement> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? icon,
+    Expression<String>? category,
+    Expression<int>? points,
+    Expression<int>? unlocked,
+    Expression<int>? unlockedDate,
+    Expression<double>? progress,
+    Expression<int>? requirement,
+    Expression<int>? currentProgress,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (icon != null) 'icon': icon,
+      if (category != null) 'category': category,
+      if (points != null) 'points': points,
+      if (unlocked != null) 'unlocked': unlocked,
+      if (unlockedDate != null) 'unlocked_date': unlockedDate,
+      if (progress != null) 'progress': progress,
+      if (requirement != null) 'requirement': requirement,
+      if (currentProgress != null) 'current_progress': currentProgress,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AchievementsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? name,
+      Value<String>? description,
+      Value<String>? icon,
+      Value<String>? category,
+      Value<int>? points,
+      Value<int>? unlocked,
+      Value<int?>? unlockedDate,
+      Value<double>? progress,
+      Value<int>? requirement,
+      Value<int>? currentProgress,
+      Value<int>? rowid}) {
+    return AchievementsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      icon: icon ?? this.icon,
+      category: category ?? this.category,
+      points: points ?? this.points,
+      unlocked: unlocked ?? this.unlocked,
+      unlockedDate: unlockedDate ?? this.unlockedDate,
+      progress: progress ?? this.progress,
+      requirement: requirement ?? this.requirement,
+      currentProgress: currentProgress ?? this.currentProgress,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (icon.present) {
+      map['icon'] = Variable<String>(icon.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (points.present) {
+      map['points'] = Variable<int>(points.value);
+    }
+    if (unlocked.present) {
+      map['unlocked'] = Variable<int>(unlocked.value);
+    }
+    if (unlockedDate.present) {
+      map['unlocked_date'] = Variable<int>(unlockedDate.value);
+    }
+    if (progress.present) {
+      map['progress'] = Variable<double>(progress.value);
+    }
+    if (requirement.present) {
+      map['requirement'] = Variable<int>(requirement.value);
+    }
+    if (currentProgress.present) {
+      map['current_progress'] = Variable<int>(currentProgress.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AchievementsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('icon: $icon, ')
+          ..write('category: $category, ')
+          ..write('points: $points, ')
+          ..write('unlocked: $unlocked, ')
+          ..write('unlockedDate: $unlockedDate, ')
+          ..write('progress: $progress, ')
+          ..write('requirement: $requirement, ')
+          ..write('currentProgress: $currentProgress, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Quests extends Table with TableInfo<Quests, Quest> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Quests(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'PRIMARY KEY NOT NULL');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _pointsMeta = const VerificationMeta('points');
+  late final GeneratedColumn<int> points = GeneratedColumn<int>(
+      'points', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _completedMeta =
+      const VerificationMeta('completed');
+  late final GeneratedColumn<int> completed = GeneratedColumn<int>(
+      'completed', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0',
+      defaultValue: const CustomExpression('0'));
+  static const VerificationMeta _progressMeta =
+      const VerificationMeta('progress');
+  late final GeneratedColumn<double> progress = GeneratedColumn<double>(
+      'progress', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0.0',
+      defaultValue: const CustomExpression('0.0'));
+  static const VerificationMeta _requirementMeta =
+      const VerificationMeta('requirement');
+  late final GeneratedColumn<int> requirement = GeneratedColumn<int>(
+      'requirement', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, description, points, completed, progress, requirement];
+  @override
+  String get aliasedName => _alias ?? 'quests';
+  @override
+  String get actualTableName => 'quests';
+  @override
+  VerificationContext validateIntegrity(Insertable<Quest> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('points')) {
+      context.handle(_pointsMeta,
+          points.isAcceptableOrUnknown(data['points']!, _pointsMeta));
+    } else if (isInserting) {
+      context.missing(_pointsMeta);
+    }
+    if (data.containsKey('completed')) {
+      context.handle(_completedMeta,
+          completed.isAcceptableOrUnknown(data['completed']!, _completedMeta));
+    }
+    if (data.containsKey('progress')) {
+      context.handle(_progressMeta,
+          progress.isAcceptableOrUnknown(data['progress']!, _progressMeta));
+    }
+    if (data.containsKey('requirement')) {
+      context.handle(
+          _requirementMeta,
+          requirement.isAcceptableOrUnknown(
+              data['requirement']!, _requirementMeta));
+    } else if (isInserting) {
+      context.missing(_requirementMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Quest map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Quest(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      points: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}points'])!,
+      completed: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}completed'])!,
+      progress: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}progress'])!,
+      requirement: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}requirement'])!,
+    );
+  }
+
+  @override
+  Quests createAlias(String alias) {
+    return Quests(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class Quest extends DataClass implements Insertable<Quest> {
+  final String id;
+  final String name;
+  final String description;
+  final int points;
+  final int completed;
+  final double progress;
+  final int requirement;
+  const Quest(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.points,
+      required this.completed,
+      required this.progress,
+      required this.requirement});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
+    map['points'] = Variable<int>(points);
+    map['completed'] = Variable<int>(completed);
+    map['progress'] = Variable<double>(progress);
+    map['requirement'] = Variable<int>(requirement);
+    return map;
+  }
+
+  QuestsCompanion toCompanion(bool nullToAbsent) {
+    return QuestsCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: Value(description),
+      points: Value(points),
+      completed: Value(completed),
+      progress: Value(progress),
+      requirement: Value(requirement),
+    );
+  }
+
+  factory Quest.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Quest(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      points: serializer.fromJson<int>(json['points']),
+      completed: serializer.fromJson<int>(json['completed']),
+      progress: serializer.fromJson<double>(json['progress']),
+      requirement: serializer.fromJson<int>(json['requirement']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'points': serializer.toJson<int>(points),
+      'completed': serializer.toJson<int>(completed),
+      'progress': serializer.toJson<double>(progress),
+      'requirement': serializer.toJson<int>(requirement),
+    };
+  }
+
+  Quest copyWith(
+          {String? id,
+          String? name,
+          String? description,
+          int? points,
+          int? completed,
+          double? progress,
+          int? requirement}) =>
+      Quest(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        points: points ?? this.points,
+        completed: completed ?? this.completed,
+        progress: progress ?? this.progress,
+        requirement: requirement ?? this.requirement,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Quest(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('points: $points, ')
+          ..write('completed: $completed, ')
+          ..write('progress: $progress, ')
+          ..write('requirement: $requirement')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id, name, description, points, completed, progress, requirement);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Quest &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.points == this.points &&
+          other.completed == this.completed &&
+          other.progress == this.progress &&
+          other.requirement == this.requirement);
+}
+
+class QuestsCompanion extends UpdateCompanion<Quest> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<int> points;
+  final Value<int> completed;
+  final Value<double> progress;
+  final Value<int> requirement;
+  final Value<int> rowid;
+  const QuestsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.points = const Value.absent(),
+    this.completed = const Value.absent(),
+    this.progress = const Value.absent(),
+    this.requirement = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  QuestsCompanion.insert({
+    required String id,
+    required String name,
+    required String description,
+    required int points,
+    this.completed = const Value.absent(),
+    this.progress = const Value.absent(),
+    required int requirement,
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        name = Value(name),
+        description = Value(description),
+        points = Value(points),
+        requirement = Value(requirement);
+  static Insertable<Quest> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<int>? points,
+    Expression<int>? completed,
+    Expression<double>? progress,
+    Expression<int>? requirement,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (points != null) 'points': points,
+      if (completed != null) 'completed': completed,
+      if (progress != null) 'progress': progress,
+      if (requirement != null) 'requirement': requirement,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  QuestsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? name,
+      Value<String>? description,
+      Value<int>? points,
+      Value<int>? completed,
+      Value<double>? progress,
+      Value<int>? requirement,
+      Value<int>? rowid}) {
+    return QuestsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      points: points ?? this.points,
+      completed: completed ?? this.completed,
+      progress: progress ?? this.progress,
+      requirement: requirement ?? this.requirement,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (points.present) {
+      map['points'] = Variable<int>(points.value);
+    }
+    if (completed.present) {
+      map['completed'] = Variable<int>(completed.value);
+    }
+    if (progress.present) {
+      map['progress'] = Variable<double>(progress.value);
+    }
+    if (requirement.present) {
+      map['requirement'] = Variable<int>(requirement.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuestsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('points: $points, ')
+          ..write('completed: $completed, ')
+          ..write('progress: $progress, ')
+          ..write('requirement: $requirement, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Leaderboard extends Table with TableInfo<Leaderboard, LeaderboardData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Leaderboard(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'PRIMARY KEY NOT NULL');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _pointsMeta = const VerificationMeta('points');
+  late final GeneratedColumn<int> points = GeneratedColumn<int>(
+      'points', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _levelMeta = const VerificationMeta('level');
+  late final GeneratedColumn<int> level = GeneratedColumn<int>(
+      'level', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [userId, name, points, level];
+  @override
+  String get aliasedName => _alias ?? 'leaderboard';
+  @override
+  String get actualTableName => 'leaderboard';
+  @override
+  VerificationContext validateIntegrity(Insertable<LeaderboardData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('points')) {
+      context.handle(_pointsMeta,
+          points.isAcceptableOrUnknown(data['points']!, _pointsMeta));
+    } else if (isInserting) {
+      context.missing(_pointsMeta);
+    }
+    if (data.containsKey('level')) {
+      context.handle(
+          _levelMeta, level.isAcceptableOrUnknown(data['level']!, _levelMeta));
+    } else if (isInserting) {
+      context.missing(_levelMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {userId};
+  @override
+  LeaderboardData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LeaderboardData(
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      points: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}points'])!,
+      level: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}level'])!,
+    );
+  }
+
+  @override
+  Leaderboard createAlias(String alias) {
+    return Leaderboard(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class LeaderboardData extends DataClass implements Insertable<LeaderboardData> {
+  final String userId;
+  final String name;
+  final int points;
+  final int level;
+  const LeaderboardData(
+      {required this.userId,
+      required this.name,
+      required this.points,
+      required this.level});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['user_id'] = Variable<String>(userId);
+    map['name'] = Variable<String>(name);
+    map['points'] = Variable<int>(points);
+    map['level'] = Variable<int>(level);
+    return map;
+  }
+
+  LeaderboardCompanion toCompanion(bool nullToAbsent) {
+    return LeaderboardCompanion(
+      userId: Value(userId),
+      name: Value(name),
+      points: Value(points),
+      level: Value(level),
+    );
+  }
+
+  factory LeaderboardData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LeaderboardData(
+      userId: serializer.fromJson<String>(json['user_id']),
+      name: serializer.fromJson<String>(json['name']),
+      points: serializer.fromJson<int>(json['points']),
+      level: serializer.fromJson<int>(json['level']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'user_id': serializer.toJson<String>(userId),
+      'name': serializer.toJson<String>(name),
+      'points': serializer.toJson<int>(points),
+      'level': serializer.toJson<int>(level),
+    };
+  }
+
+  LeaderboardData copyWith(
+          {String? userId, String? name, int? points, int? level}) =>
+      LeaderboardData(
+        userId: userId ?? this.userId,
+        name: name ?? this.name,
+        points: points ?? this.points,
+        level: level ?? this.level,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('LeaderboardData(')
+          ..write('userId: $userId, ')
+          ..write('name: $name, ')
+          ..write('points: $points, ')
+          ..write('level: $level')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(userId, name, points, level);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LeaderboardData &&
+          other.userId == this.userId &&
+          other.name == this.name &&
+          other.points == this.points &&
+          other.level == this.level);
+}
+
+class LeaderboardCompanion extends UpdateCompanion<LeaderboardData> {
+  final Value<String> userId;
+  final Value<String> name;
+  final Value<int> points;
+  final Value<int> level;
+  final Value<int> rowid;
+  const LeaderboardCompanion({
+    this.userId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.points = const Value.absent(),
+    this.level = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LeaderboardCompanion.insert({
+    required String userId,
+    required String name,
+    required int points,
+    required int level,
+    this.rowid = const Value.absent(),
+  })  : userId = Value(userId),
+        name = Value(name),
+        points = Value(points),
+        level = Value(level);
+  static Insertable<LeaderboardData> custom({
+    Expression<String>? userId,
+    Expression<String>? name,
+    Expression<int>? points,
+    Expression<int>? level,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (userId != null) 'user_id': userId,
+      if (name != null) 'name': name,
+      if (points != null) 'points': points,
+      if (level != null) 'level': level,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LeaderboardCompanion copyWith(
+      {Value<String>? userId,
+      Value<String>? name,
+      Value<int>? points,
+      Value<int>? level,
+      Value<int>? rowid}) {
+    return LeaderboardCompanion(
+      userId: userId ?? this.userId,
+      name: name ?? this.name,
+      points: points ?? this.points,
+      level: level ?? this.level,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (points.present) {
+      map['points'] = Variable<int>(points.value);
+    }
+    if (level.present) {
+      map['level'] = Variable<int>(level.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LeaderboardCompanion(')
+          ..write('userId: $userId, ')
+          ..write('name: $name, ')
+          ..write('points: $points, ')
+          ..write('level: $level, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class MessageTemplates extends Table
+    with TableInfo<MessageTemplates, MessageTemplate> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  MessageTemplates(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'PRIMARY KEY AUTOINCREMENT NOT NULL');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _contentMeta =
+      const VerificationMeta('content');
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+      'content', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+      'category', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [id, name, content, category];
+  @override
+  String get aliasedName => _alias ?? 'message_templates';
+  @override
+  String get actualTableName => 'message_templates';
+  @override
+  VerificationContext validateIntegrity(Insertable<MessageTemplate> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('content')) {
+      context.handle(_contentMeta,
+          content.isAcceptableOrUnknown(data['content']!, _contentMeta));
+    } else if (isInserting) {
+      context.missing(_contentMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MessageTemplate map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MessageTemplate(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}content'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
+    );
+  }
+
+  @override
+  MessageTemplates createAlias(String alias) {
+    return MessageTemplates(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class MessageTemplate extends DataClass implements Insertable<MessageTemplate> {
+  final int id;
+  final String name;
+  final String content;
+  final String category;
+  const MessageTemplate(
+      {required this.id,
+      required this.name,
+      required this.content,
+      required this.category});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['content'] = Variable<String>(content);
+    map['category'] = Variable<String>(category);
+    return map;
+  }
+
+  MessageTemplatesCompanion toCompanion(bool nullToAbsent) {
+    return MessageTemplatesCompanion(
+      id: Value(id),
+      name: Value(name),
+      content: Value(content),
+      category: Value(category),
+    );
+  }
+
+  factory MessageTemplate.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MessageTemplate(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      content: serializer.fromJson<String>(json['content']),
+      category: serializer.fromJson<String>(json['category']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'content': serializer.toJson<String>(content),
+      'category': serializer.toJson<String>(category),
+    };
+  }
+
+  MessageTemplate copyWith(
+          {int? id, String? name, String? content, String? category}) =>
+      MessageTemplate(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        content: content ?? this.content,
+        category: category ?? this.category,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('MessageTemplate(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('content: $content, ')
+          ..write('category: $category')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, content, category);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MessageTemplate &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.content == this.content &&
+          other.category == this.category);
+}
+
+class MessageTemplatesCompanion extends UpdateCompanion<MessageTemplate> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> content;
+  final Value<String> category;
+  const MessageTemplatesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.content = const Value.absent(),
+    this.category = const Value.absent(),
+  });
+  MessageTemplatesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String content,
+    required String category,
+  })  : name = Value(name),
+        content = Value(content),
+        category = Value(category);
+  static Insertable<MessageTemplate> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? content,
+    Expression<String>? category,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (content != null) 'content': content,
+      if (category != null) 'category': category,
+    });
+  }
+
+  MessageTemplatesCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? content,
+      Value<String>? category}) {
+    return MessageTemplatesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      content: content ?? this.content,
+      category: category ?? this.category,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MessageTemplatesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('content: $content, ')
+          ..write('category: $category')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class UserSettings extends Table with TableInfo<UserSettings, UserSetting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  UserSettings(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'PRIMARY KEY AUTOINCREMENT NOT NULL');
+  static const VerificationMeta _displayNameMeta =
+      const VerificationMeta('displayName');
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+      'display_name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _timezoneMeta =
+      const VerificationMeta('timezone');
+  late final GeneratedColumn<String> timezone = GeneratedColumn<String>(
+      'timezone', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _dateFormatMeta =
+      const VerificationMeta('dateFormat');
+  late final GeneratedColumn<String> dateFormat = GeneratedColumn<String>(
+      'date_format', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _themeMeta = const VerificationMeta('theme');
+  late final GeneratedColumn<String> theme = GeneratedColumn<String>(
+      'theme', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _accentColorMeta =
+      const VerificationMeta('accentColor');
+  late final GeneratedColumn<int> accentColor = GeneratedColumn<int>(
+      'accent_color', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _messageRemindersMeta =
+      const VerificationMeta('messageReminders');
+  late final GeneratedColumn<int> messageReminders = GeneratedColumn<int>(
+      'message_reminders', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _birthdayRemindersMeta =
+      const VerificationMeta('birthdayReminders');
+  late final GeneratedColumn<int> birthdayReminders = GeneratedColumn<int>(
+      'birthday_reminders', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _achievementNotificationsMeta =
+      const VerificationMeta('achievementNotifications');
+  late final GeneratedColumn<int> achievementNotifications =
+      GeneratedColumn<int>('achievement_notifications', aliasedName, false,
+          type: DriftSqlType.int,
+          requiredDuringInsert: true,
+          $customConstraints: 'NOT NULL');
+  static const VerificationMeta _dailyQuestsMeta =
+      const VerificationMeta('dailyQuests');
+  late final GeneratedColumn<int> dailyQuests = GeneratedColumn<int>(
+      'daily_quests', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _dataEncryptionMeta =
+      const VerificationMeta('dataEncryption');
+  late final GeneratedColumn<int> dataEncryption = GeneratedColumn<int>(
+      'data_encryption', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _analyticsMeta =
+      const VerificationMeta('analytics');
+  late final GeneratedColumn<int> analytics = GeneratedColumn<int>(
+      'analytics', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _autoLockMeta =
+      const VerificationMeta('autoLock');
+  late final GeneratedColumn<int> autoLock = GeneratedColumn<int>(
+      'auto_lock', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        displayName,
+        email,
+        timezone,
+        dateFormat,
+        theme,
+        accentColor,
+        messageReminders,
+        birthdayReminders,
+        achievementNotifications,
+        dailyQuests,
+        dataEncryption,
+        analytics,
+        autoLock
+      ];
+  @override
+  String get aliasedName => _alias ?? 'user_settings';
+  @override
+  String get actualTableName => 'user_settings';
+  @override
+  VerificationContext validateIntegrity(Insertable<UserSetting> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+          _displayNameMeta,
+          displayName.isAcceptableOrUnknown(
+              data['display_name']!, _displayNameMeta));
+    } else if (isInserting) {
+      context.missing(_displayNameMeta);
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('timezone')) {
+      context.handle(_timezoneMeta,
+          timezone.isAcceptableOrUnknown(data['timezone']!, _timezoneMeta));
+    } else if (isInserting) {
+      context.missing(_timezoneMeta);
+    }
+    if (data.containsKey('date_format')) {
+      context.handle(
+          _dateFormatMeta,
+          dateFormat.isAcceptableOrUnknown(
+              data['date_format']!, _dateFormatMeta));
+    } else if (isInserting) {
+      context.missing(_dateFormatMeta);
+    }
+    if (data.containsKey('theme')) {
+      context.handle(
+          _themeMeta, theme.isAcceptableOrUnknown(data['theme']!, _themeMeta));
+    } else if (isInserting) {
+      context.missing(_themeMeta);
+    }
+    if (data.containsKey('accent_color')) {
+      context.handle(
+          _accentColorMeta,
+          accentColor.isAcceptableOrUnknown(
+              data['accent_color']!, _accentColorMeta));
+    } else if (isInserting) {
+      context.missing(_accentColorMeta);
+    }
+    if (data.containsKey('message_reminders')) {
+      context.handle(
+          _messageRemindersMeta,
+          messageReminders.isAcceptableOrUnknown(
+              data['message_reminders']!, _messageRemindersMeta));
+    } else if (isInserting) {
+      context.missing(_messageRemindersMeta);
+    }
+    if (data.containsKey('birthday_reminders')) {
+      context.handle(
+          _birthdayRemindersMeta,
+          birthdayReminders.isAcceptableOrUnknown(
+              data['birthday_reminders']!, _birthdayRemindersMeta));
+    } else if (isInserting) {
+      context.missing(_birthdayRemindersMeta);
+    }
+    if (data.containsKey('achievement_notifications')) {
+      context.handle(
+          _achievementNotificationsMeta,
+          achievementNotifications.isAcceptableOrUnknown(
+              data['achievement_notifications']!,
+              _achievementNotificationsMeta));
+    } else if (isInserting) {
+      context.missing(_achievementNotificationsMeta);
+    }
+    if (data.containsKey('daily_quests')) {
+      context.handle(
+          _dailyQuestsMeta,
+          dailyQuests.isAcceptableOrUnknown(
+              data['daily_quests']!, _dailyQuestsMeta));
+    } else if (isInserting) {
+      context.missing(_dailyQuestsMeta);
+    }
+    if (data.containsKey('data_encryption')) {
+      context.handle(
+          _dataEncryptionMeta,
+          dataEncryption.isAcceptableOrUnknown(
+              data['data_encryption']!, _dataEncryptionMeta));
+    } else if (isInserting) {
+      context.missing(_dataEncryptionMeta);
+    }
+    if (data.containsKey('analytics')) {
+      context.handle(_analyticsMeta,
+          analytics.isAcceptableOrUnknown(data['analytics']!, _analyticsMeta));
+    } else if (isInserting) {
+      context.missing(_analyticsMeta);
+    }
+    if (data.containsKey('auto_lock')) {
+      context.handle(_autoLockMeta,
+          autoLock.isAcceptableOrUnknown(data['auto_lock']!, _autoLockMeta));
+    } else if (isInserting) {
+      context.missing(_autoLockMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  UserSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UserSetting(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      displayName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}display_name'])!,
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      timezone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}timezone'])!,
+      dateFormat: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}date_format'])!,
+      theme: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}theme'])!,
+      accentColor: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}accent_color'])!,
+      messageReminders: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}message_reminders'])!,
+      birthdayReminders: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}birthday_reminders'])!,
+      achievementNotifications: attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}achievement_notifications'])!,
+      dailyQuests: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_quests'])!,
+      dataEncryption: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}data_encryption'])!,
+      analytics: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}analytics'])!,
+      autoLock: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}auto_lock'])!,
+    );
+  }
+
+  @override
+  UserSettings createAlias(String alias) {
+    return UserSettings(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class UserSetting extends DataClass implements Insertable<UserSetting> {
+  final int id;
+  final String displayName;
+  final String email;
+  final String timezone;
+  final String dateFormat;
+  final String theme;
+  final int accentColor;
+  final int messageReminders;
+  final int birthdayReminders;
+  final int achievementNotifications;
+  final int dailyQuests;
+  final int dataEncryption;
+  final int analytics;
+  final int autoLock;
+  const UserSetting(
+      {required this.id,
+      required this.displayName,
+      required this.email,
+      required this.timezone,
+      required this.dateFormat,
+      required this.theme,
+      required this.accentColor,
+      required this.messageReminders,
+      required this.birthdayReminders,
+      required this.achievementNotifications,
+      required this.dailyQuests,
+      required this.dataEncryption,
+      required this.analytics,
+      required this.autoLock});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['display_name'] = Variable<String>(displayName);
+    map['email'] = Variable<String>(email);
+    map['timezone'] = Variable<String>(timezone);
+    map['date_format'] = Variable<String>(dateFormat);
+    map['theme'] = Variable<String>(theme);
+    map['accent_color'] = Variable<int>(accentColor);
+    map['message_reminders'] = Variable<int>(messageReminders);
+    map['birthday_reminders'] = Variable<int>(birthdayReminders);
+    map['achievement_notifications'] = Variable<int>(achievementNotifications);
+    map['daily_quests'] = Variable<int>(dailyQuests);
+    map['data_encryption'] = Variable<int>(dataEncryption);
+    map['analytics'] = Variable<int>(analytics);
+    map['auto_lock'] = Variable<int>(autoLock);
+    return map;
+  }
+
+  UserSettingsCompanion toCompanion(bool nullToAbsent) {
+    return UserSettingsCompanion(
+      id: Value(id),
+      displayName: Value(displayName),
+      email: Value(email),
+      timezone: Value(timezone),
+      dateFormat: Value(dateFormat),
+      theme: Value(theme),
+      accentColor: Value(accentColor),
+      messageReminders: Value(messageReminders),
+      birthdayReminders: Value(birthdayReminders),
+      achievementNotifications: Value(achievementNotifications),
+      dailyQuests: Value(dailyQuests),
+      dataEncryption: Value(dataEncryption),
+      analytics: Value(analytics),
+      autoLock: Value(autoLock),
+    );
+  }
+
+  factory UserSetting.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return UserSetting(
+      id: serializer.fromJson<int>(json['id']),
+      displayName: serializer.fromJson<String>(json['display_name']),
+      email: serializer.fromJson<String>(json['email']),
+      timezone: serializer.fromJson<String>(json['timezone']),
+      dateFormat: serializer.fromJson<String>(json['date_format']),
+      theme: serializer.fromJson<String>(json['theme']),
+      accentColor: serializer.fromJson<int>(json['accent_color']),
+      messageReminders: serializer.fromJson<int>(json['message_reminders']),
+      birthdayReminders: serializer.fromJson<int>(json['birthday_reminders']),
+      achievementNotifications:
+          serializer.fromJson<int>(json['achievement_notifications']),
+      dailyQuests: serializer.fromJson<int>(json['daily_quests']),
+      dataEncryption: serializer.fromJson<int>(json['data_encryption']),
+      analytics: serializer.fromJson<int>(json['analytics']),
+      autoLock: serializer.fromJson<int>(json['auto_lock']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'display_name': serializer.toJson<String>(displayName),
+      'email': serializer.toJson<String>(email),
+      'timezone': serializer.toJson<String>(timezone),
+      'date_format': serializer.toJson<String>(dateFormat),
+      'theme': serializer.toJson<String>(theme),
+      'accent_color': serializer.toJson<int>(accentColor),
+      'message_reminders': serializer.toJson<int>(messageReminders),
+      'birthday_reminders': serializer.toJson<int>(birthdayReminders),
+      'achievement_notifications':
+          serializer.toJson<int>(achievementNotifications),
+      'daily_quests': serializer.toJson<int>(dailyQuests),
+      'data_encryption': serializer.toJson<int>(dataEncryption),
+      'analytics': serializer.toJson<int>(analytics),
+      'auto_lock': serializer.toJson<int>(autoLock),
+    };
+  }
+
+  UserSetting copyWith(
+          {int? id,
+          String? displayName,
+          String? email,
+          String? timezone,
+          String? dateFormat,
+          String? theme,
+          int? accentColor,
+          int? messageReminders,
+          int? birthdayReminders,
+          int? achievementNotifications,
+          int? dailyQuests,
+          int? dataEncryption,
+          int? analytics,
+          int? autoLock}) =>
+      UserSetting(
+        id: id ?? this.id,
+        displayName: displayName ?? this.displayName,
+        email: email ?? this.email,
+        timezone: timezone ?? this.timezone,
+        dateFormat: dateFormat ?? this.dateFormat,
+        theme: theme ?? this.theme,
+        accentColor: accentColor ?? this.accentColor,
+        messageReminders: messageReminders ?? this.messageReminders,
+        birthdayReminders: birthdayReminders ?? this.birthdayReminders,
+        achievementNotifications:
+            achievementNotifications ?? this.achievementNotifications,
+        dailyQuests: dailyQuests ?? this.dailyQuests,
+        dataEncryption: dataEncryption ?? this.dataEncryption,
+        analytics: analytics ?? this.analytics,
+        autoLock: autoLock ?? this.autoLock,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('UserSetting(')
+          ..write('id: $id, ')
+          ..write('displayName: $displayName, ')
+          ..write('email: $email, ')
+          ..write('timezone: $timezone, ')
+          ..write('dateFormat: $dateFormat, ')
+          ..write('theme: $theme, ')
+          ..write('accentColor: $accentColor, ')
+          ..write('messageReminders: $messageReminders, ')
+          ..write('birthdayReminders: $birthdayReminders, ')
+          ..write('achievementNotifications: $achievementNotifications, ')
+          ..write('dailyQuests: $dailyQuests, ')
+          ..write('dataEncryption: $dataEncryption, ')
+          ..write('analytics: $analytics, ')
+          ..write('autoLock: $autoLock')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      displayName,
+      email,
+      timezone,
+      dateFormat,
+      theme,
+      accentColor,
+      messageReminders,
+      birthdayReminders,
+      achievementNotifications,
+      dailyQuests,
+      dataEncryption,
+      analytics,
+      autoLock);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserSetting &&
+          other.id == this.id &&
+          other.displayName == this.displayName &&
+          other.email == this.email &&
+          other.timezone == this.timezone &&
+          other.dateFormat == this.dateFormat &&
+          other.theme == this.theme &&
+          other.accentColor == this.accentColor &&
+          other.messageReminders == this.messageReminders &&
+          other.birthdayReminders == this.birthdayReminders &&
+          other.achievementNotifications == this.achievementNotifications &&
+          other.dailyQuests == this.dailyQuests &&
+          other.dataEncryption == this.dataEncryption &&
+          other.analytics == this.analytics &&
+          other.autoLock == this.autoLock);
+}
+
+class UserSettingsCompanion extends UpdateCompanion<UserSetting> {
+  final Value<int> id;
+  final Value<String> displayName;
+  final Value<String> email;
+  final Value<String> timezone;
+  final Value<String> dateFormat;
+  final Value<String> theme;
+  final Value<int> accentColor;
+  final Value<int> messageReminders;
+  final Value<int> birthdayReminders;
+  final Value<int> achievementNotifications;
+  final Value<int> dailyQuests;
+  final Value<int> dataEncryption;
+  final Value<int> analytics;
+  final Value<int> autoLock;
+  const UserSettingsCompanion({
+    this.id = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.email = const Value.absent(),
+    this.timezone = const Value.absent(),
+    this.dateFormat = const Value.absent(),
+    this.theme = const Value.absent(),
+    this.accentColor = const Value.absent(),
+    this.messageReminders = const Value.absent(),
+    this.birthdayReminders = const Value.absent(),
+    this.achievementNotifications = const Value.absent(),
+    this.dailyQuests = const Value.absent(),
+    this.dataEncryption = const Value.absent(),
+    this.analytics = const Value.absent(),
+    this.autoLock = const Value.absent(),
+  });
+  UserSettingsCompanion.insert({
+    this.id = const Value.absent(),
+    required String displayName,
+    required String email,
+    required String timezone,
+    required String dateFormat,
+    required String theme,
+    required int accentColor,
+    required int messageReminders,
+    required int birthdayReminders,
+    required int achievementNotifications,
+    required int dailyQuests,
+    required int dataEncryption,
+    required int analytics,
+    required int autoLock,
+  })  : displayName = Value(displayName),
+        email = Value(email),
+        timezone = Value(timezone),
+        dateFormat = Value(dateFormat),
+        theme = Value(theme),
+        accentColor = Value(accentColor),
+        messageReminders = Value(messageReminders),
+        birthdayReminders = Value(birthdayReminders),
+        achievementNotifications = Value(achievementNotifications),
+        dailyQuests = Value(dailyQuests),
+        dataEncryption = Value(dataEncryption),
+        analytics = Value(analytics),
+        autoLock = Value(autoLock);
+  static Insertable<UserSetting> custom({
+    Expression<int>? id,
+    Expression<String>? displayName,
+    Expression<String>? email,
+    Expression<String>? timezone,
+    Expression<String>? dateFormat,
+    Expression<String>? theme,
+    Expression<int>? accentColor,
+    Expression<int>? messageReminders,
+    Expression<int>? birthdayReminders,
+    Expression<int>? achievementNotifications,
+    Expression<int>? dailyQuests,
+    Expression<int>? dataEncryption,
+    Expression<int>? analytics,
+    Expression<int>? autoLock,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (displayName != null) 'display_name': displayName,
+      if (email != null) 'email': email,
+      if (timezone != null) 'timezone': timezone,
+      if (dateFormat != null) 'date_format': dateFormat,
+      if (theme != null) 'theme': theme,
+      if (accentColor != null) 'accent_color': accentColor,
+      if (messageReminders != null) 'message_reminders': messageReminders,
+      if (birthdayReminders != null) 'birthday_reminders': birthdayReminders,
+      if (achievementNotifications != null)
+        'achievement_notifications': achievementNotifications,
+      if (dailyQuests != null) 'daily_quests': dailyQuests,
+      if (dataEncryption != null) 'data_encryption': dataEncryption,
+      if (analytics != null) 'analytics': analytics,
+      if (autoLock != null) 'auto_lock': autoLock,
+    });
+  }
+
+  UserSettingsCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? displayName,
+      Value<String>? email,
+      Value<String>? timezone,
+      Value<String>? dateFormat,
+      Value<String>? theme,
+      Value<int>? accentColor,
+      Value<int>? messageReminders,
+      Value<int>? birthdayReminders,
+      Value<int>? achievementNotifications,
+      Value<int>? dailyQuests,
+      Value<int>? dataEncryption,
+      Value<int>? analytics,
+      Value<int>? autoLock}) {
+    return UserSettingsCompanion(
+      id: id ?? this.id,
+      displayName: displayName ?? this.displayName,
+      email: email ?? this.email,
+      timezone: timezone ?? this.timezone,
+      dateFormat: dateFormat ?? this.dateFormat,
+      theme: theme ?? this.theme,
+      accentColor: accentColor ?? this.accentColor,
+      messageReminders: messageReminders ?? this.messageReminders,
+      birthdayReminders: birthdayReminders ?? this.birthdayReminders,
+      achievementNotifications:
+          achievementNotifications ?? this.achievementNotifications,
+      dailyQuests: dailyQuests ?? this.dailyQuests,
+      dataEncryption: dataEncryption ?? this.dataEncryption,
+      analytics: analytics ?? this.analytics,
+      autoLock: autoLock ?? this.autoLock,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (timezone.present) {
+      map['timezone'] = Variable<String>(timezone.value);
+    }
+    if (dateFormat.present) {
+      map['date_format'] = Variable<String>(dateFormat.value);
+    }
+    if (theme.present) {
+      map['theme'] = Variable<String>(theme.value);
+    }
+    if (accentColor.present) {
+      map['accent_color'] = Variable<int>(accentColor.value);
+    }
+    if (messageReminders.present) {
+      map['message_reminders'] = Variable<int>(messageReminders.value);
+    }
+    if (birthdayReminders.present) {
+      map['birthday_reminders'] = Variable<int>(birthdayReminders.value);
+    }
+    if (achievementNotifications.present) {
+      map['achievement_notifications'] =
+          Variable<int>(achievementNotifications.value);
+    }
+    if (dailyQuests.present) {
+      map['daily_quests'] = Variable<int>(dailyQuests.value);
+    }
+    if (dataEncryption.present) {
+      map['data_encryption'] = Variable<int>(dataEncryption.value);
+    }
+    if (analytics.present) {
+      map['analytics'] = Variable<int>(analytics.value);
+    }
+    if (autoLock.present) {
+      map['auto_lock'] = Variable<int>(autoLock.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserSettingsCompanion(')
+          ..write('id: $id, ')
+          ..write('displayName: $displayName, ')
+          ..write('email: $email, ')
+          ..write('timezone: $timezone, ')
+          ..write('dateFormat: $dateFormat, ')
+          ..write('theme: $theme, ')
+          ..write('accentColor: $accentColor, ')
+          ..write('messageReminders: $messageReminders, ')
+          ..write('birthdayReminders: $birthdayReminders, ')
+          ..write('achievementNotifications: $achievementNotifications, ')
+          ..write('dailyQuests: $dailyQuests, ')
+          ..write('dataEncryption: $dataEncryption, ')
+          ..write('analytics: $analytics, ')
+          ..write('autoLock: $autoLock')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$DatabaseImpl extends GeneratedDatabase {
   _$DatabaseImpl(QueryExecutor e) : super(e);
   _$DatabaseImpl.connect(DatabaseConnection c) : super.connect(c);
@@ -1883,6 +3989,11 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
   late final MementoLabels mementoLabels = MementoLabels(this);
   late final Notes notes = Notes(this);
   late final ScheduledMessages scheduledMessages = ScheduledMessages(this);
+  late final Achievements achievements = Achievements(this);
+  late final Quests quests = Quests(this);
+  late final Leaderboard leaderboard = Leaderboard(this);
+  late final MessageTemplates messageTemplates = MessageTemplates(this);
+  late final UserSettings userSettings = UserSettings(this);
   Selectable<SearchMementosResult> _searchMementos(String query) {
     return customSelect(
         'SELECT"result"."id" AS "nested_0.id", "result"."name" AS "nested_0.name", "result"."photo" AS "nested_0.photo", "result"."email" AS "nested_0.email", "result"."phone" AS "nested_0.phone", "result"."context" AS "nested_0.context", "result"."job_title" AS "nested_0.job_title", "result"."company" AS "nested_0.company", "result"."birthday" AS "nested_0.birthday" FROM memento_entries INNER JOIN mementos AS result ON result.id = memento_entries."rowid" WHERE memento_entries MATCH ?1 ORDER BY rank',
@@ -2247,6 +4358,321 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
     );
   }
 
+  Selectable<Achievement> _getAchievements() {
+    return customSelect('SELECT * FROM achievements',
+        variables: [],
+        readsFrom: {
+          achievements,
+        }).asyncMap(achievements.mapFromRow);
+  }
+
+  Selectable<Achievement> _getAchievementById(String id) {
+    return customSelect('SELECT * FROM achievements WHERE id = ?1 LIMIT 1',
+        variables: [
+          Variable<String>(id)
+        ],
+        readsFrom: {
+          achievements,
+        }).asyncMap(achievements.mapFromRow);
+  }
+
+  Future<int> _insertAchievement(
+      String id,
+      String name,
+      String description,
+      String icon,
+      String category,
+      int points,
+      int unlocked,
+      int? unlockedDate,
+      double progress,
+      int requirement,
+      int currentProgress) {
+    return customInsert(
+      'INSERT INTO achievements (id, name, description, icon, category, points, unlocked, unlocked_date, progress, requirement, current_progress) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)',
+      variables: [
+        Variable<String>(id),
+        Variable<String>(name),
+        Variable<String>(description),
+        Variable<String>(icon),
+        Variable<String>(category),
+        Variable<int>(points),
+        Variable<int>(unlocked),
+        Variable<int>(unlockedDate),
+        Variable<double>(progress),
+        Variable<int>(requirement),
+        Variable<int>(currentProgress)
+      ],
+      updates: {achievements},
+    );
+  }
+
+  Future<int> _updateAchievement(
+      String name,
+      String description,
+      String icon,
+      String category,
+      int points,
+      int unlocked,
+      int? unlockedDate,
+      double progress,
+      int requirement,
+      int currentProgress,
+      String id) {
+    return customUpdate(
+      'UPDATE achievements SET name = ?1, description = ?2, icon = ?3, category = ?4, points = ?5, unlocked = ?6, unlocked_date = ?7, progress = ?8, requirement = ?9, current_progress = ?10 WHERE id = ?11',
+      variables: [
+        Variable<String>(name),
+        Variable<String>(description),
+        Variable<String>(icon),
+        Variable<String>(category),
+        Variable<int>(points),
+        Variable<int>(unlocked),
+        Variable<int>(unlockedDate),
+        Variable<double>(progress),
+        Variable<int>(requirement),
+        Variable<int>(currentProgress),
+        Variable<String>(id)
+      ],
+      updates: {achievements},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Selectable<Quest> _getQuests() {
+    return customSelect('SELECT * FROM quests', variables: [], readsFrom: {
+      quests,
+    }).asyncMap(quests.mapFromRow);
+  }
+
+  Selectable<Quest> _getQuestById(String id) {
+    return customSelect('SELECT * FROM quests WHERE id = ?1 LIMIT 1',
+        variables: [
+          Variable<String>(id)
+        ],
+        readsFrom: {
+          quests,
+        }).asyncMap(quests.mapFromRow);
+  }
+
+  Future<int> _insertQuest(String id, String name, String description,
+      int points, int completed, double progress, int requirement) {
+    return customInsert(
+      'INSERT INTO quests (id, name, description, points, completed, progress, requirement) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)',
+      variables: [
+        Variable<String>(id),
+        Variable<String>(name),
+        Variable<String>(description),
+        Variable<int>(points),
+        Variable<int>(completed),
+        Variable<double>(progress),
+        Variable<int>(requirement)
+      ],
+      updates: {quests},
+    );
+  }
+
+  Future<int> _updateQuest(String name, String description, int points,
+      int completed, double progress, int requirement, String id) {
+    return customUpdate(
+      'UPDATE quests SET name = ?1, description = ?2, points = ?3, completed = ?4, progress = ?5, requirement = ?6 WHERE id = ?7',
+      variables: [
+        Variable<String>(name),
+        Variable<String>(description),
+        Variable<int>(points),
+        Variable<int>(completed),
+        Variable<double>(progress),
+        Variable<int>(requirement),
+        Variable<String>(id)
+      ],
+      updates: {quests},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Selectable<LeaderboardData> _getLeaderboard() {
+    return customSelect('SELECT * FROM leaderboard ORDER BY points DESC',
+        variables: [],
+        readsFrom: {
+          leaderboard,
+        }).asyncMap(leaderboard.mapFromRow);
+  }
+
+  Selectable<LeaderboardData> _getLeaderboardEntry(String userId) {
+    return customSelect('SELECT * FROM leaderboard WHERE user_id = ?1 LIMIT 1',
+        variables: [
+          Variable<String>(userId)
+        ],
+        readsFrom: {
+          leaderboard,
+        }).asyncMap(leaderboard.mapFromRow);
+  }
+
+  Future<int> _insertLeaderboardEntry(
+      String userId, String name, int points, int level) {
+    return customInsert(
+      'INSERT INTO leaderboard (user_id, name, points, level) VALUES (?1, ?2, ?3, ?4)',
+      variables: [
+        Variable<String>(userId),
+        Variable<String>(name),
+        Variable<int>(points),
+        Variable<int>(level)
+      ],
+      updates: {leaderboard},
+    );
+  }
+
+  Future<int> _updateLeaderboardEntry(
+      String name, int points, int level, String userId) {
+    return customUpdate(
+      'UPDATE leaderboard SET name = ?1, points = ?2, level = ?3 WHERE user_id = ?4',
+      variables: [
+        Variable<String>(name),
+        Variable<int>(points),
+        Variable<int>(level),
+        Variable<String>(userId)
+      ],
+      updates: {leaderboard},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Selectable<MessageTemplate> _getMessageTemplates() {
+    return customSelect('SELECT * FROM message_templates',
+        variables: [],
+        readsFrom: {
+          messageTemplates,
+        }).asyncMap(messageTemplates.mapFromRow);
+  }
+
+  Selectable<MessageTemplate> _getMessageTemplateById(int id) {
+    return customSelect('SELECT * FROM message_templates WHERE id = ?1 LIMIT 1',
+        variables: [
+          Variable<int>(id)
+        ],
+        readsFrom: {
+          messageTemplates,
+        }).asyncMap(messageTemplates.mapFromRow);
+  }
+
+  Future<int> _insertMessageTemplate(
+      String name, String content, String category) {
+    return customInsert(
+      'INSERT INTO message_templates (name, content, category) VALUES (?1, ?2, ?3)',
+      variables: [
+        Variable<String>(name),
+        Variable<String>(content),
+        Variable<String>(category)
+      ],
+      updates: {messageTemplates},
+    );
+  }
+
+  Future<int> _updateMessageTemplate(
+      String name, String content, String category, int id) {
+    return customUpdate(
+      'UPDATE message_templates SET name = ?1, content = ?2, category = ?3 WHERE id = ?4',
+      variables: [
+        Variable<String>(name),
+        Variable<String>(content),
+        Variable<String>(category),
+        Variable<int>(id)
+      ],
+      updates: {messageTemplates},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> _deleteMessageTemplate(int id) {
+    return customUpdate(
+      'DELETE FROM message_templates WHERE id = ?1',
+      variables: [Variable<int>(id)],
+      updates: {messageTemplates},
+      updateKind: UpdateKind.delete,
+    );
+  }
+
+  Selectable<UserSetting> _getUserSettings() {
+    return customSelect('SELECT * FROM user_settings LIMIT 1',
+        variables: [],
+        readsFrom: {
+          userSettings,
+        }).asyncMap(userSettings.mapFromRow);
+  }
+
+  Future<int> _insertUserSettings(
+      String displayName,
+      String email,
+      String timezone,
+      String dateFormat,
+      String theme,
+      int accentColor,
+      int messageReminders,
+      int birthdayReminders,
+      int achievementNotifications,
+      int dailyQuests,
+      int dataEncryption,
+      int analytics,
+      int autoLock) {
+    return customInsert(
+      'INSERT INTO user_settings (display_name, email, timezone, date_format, theme, accent_color, message_reminders, birthday_reminders, achievement_notifications, daily_quests, data_encryption, analytics, auto_lock) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)',
+      variables: [
+        Variable<String>(displayName),
+        Variable<String>(email),
+        Variable<String>(timezone),
+        Variable<String>(dateFormat),
+        Variable<String>(theme),
+        Variable<int>(accentColor),
+        Variable<int>(messageReminders),
+        Variable<int>(birthdayReminders),
+        Variable<int>(achievementNotifications),
+        Variable<int>(dailyQuests),
+        Variable<int>(dataEncryption),
+        Variable<int>(analytics),
+        Variable<int>(autoLock)
+      ],
+      updates: {userSettings},
+    );
+  }
+
+  Future<int> _updateUserSettings(
+      String displayName,
+      String email,
+      String timezone,
+      String dateFormat,
+      String theme,
+      int accentColor,
+      int messageReminders,
+      int birthdayReminders,
+      int achievementNotifications,
+      int dailyQuests,
+      int dataEncryption,
+      int analytics,
+      int autoLock,
+      int id) {
+    return customUpdate(
+      'UPDATE user_settings SET display_name = ?1, email = ?2, timezone = ?3, date_format = ?4, theme = ?5, accent_color = ?6, message_reminders = ?7, birthday_reminders = ?8, achievement_notifications = ?9, daily_quests = ?10, data_encryption = ?11, analytics = ?12, auto_lock = ?13 WHERE id = ?14',
+      variables: [
+        Variable<String>(displayName),
+        Variable<String>(email),
+        Variable<String>(timezone),
+        Variable<String>(dateFormat),
+        Variable<String>(theme),
+        Variable<int>(accentColor),
+        Variable<int>(messageReminders),
+        Variable<int>(birthdayReminders),
+        Variable<int>(achievementNotifications),
+        Variable<int>(dailyQuests),
+        Variable<int>(dataEncryption),
+        Variable<int>(analytics),
+        Variable<int>(autoLock),
+        Variable<int>(id)
+      ],
+      updates: {userSettings},
+      updateKind: UpdateKind.update,
+    );
+  }
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2260,7 +4686,12 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
         labels,
         mementoLabels,
         notes,
-        scheduledMessages
+        scheduledMessages,
+        achievements,
+        quests,
+        leaderboard,
+        messageTemplates,
+        userSettings
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(

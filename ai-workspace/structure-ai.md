@@ -16,13 +16,15 @@
 - `repository/`: Repository implementations
   - `mementos_impl.dart`: Implements MementosRepository using Drift database
   - `scheduled_messages_impl.dart`: Implements ScheduledMessagesRepository using Drift database
+  - `achievements_impl.dart`: Implements AchievementsRepository using mock data (will be replaced with Drift)
 - `service/`: Services for external integrations
   - `notification_service.dart`: Handles local notifications for scheduled messages
+  - `achievement_service.dart`: Handles achievement tracking and unlocking logic
 - `source/`: Data sources
   - `database/`: Drift SQLite implementation
     - `connection/`: Platform-specific database connections
-    - `sql/schema.drift`: Database schema with FTS5 search, labels, notes, and scheduled_messages tables
-    - `database.dart`: Database interface with label, note, and scheduled message operations
+    - `sql/schema.drift`: Database schema with FTS5 search, labels, notes, scheduled_messages, achievements, quests, and leaderboard tables
+    - `database.dart`: Database interface with label, note, scheduled message, achievement, quest, and leaderboard operations
     - `database_impl.dart`: Drift database implementation with rich profile support and scheduled messages
 
 #### lib/domain/ (Business Logic Layer)
@@ -31,17 +33,24 @@
   - `label.dart`: Label model for color-coded tagging system
   - `note.dart`: Note model for timestamped notes with favorite feature
   - `scheduled_message.dart`: ScheduledMessage model with message types and scheduling logic
+  - `achievement.dart`: Achievement model for gamification
+  - `quest.dart`: Quest model for daily quests and weekly challenges
+  - `leaderboard.dart`: Leaderboard model for user ranking
 - `repository/`: Repository interfaces
   - `mementos.dart`: Memento repository interface
   - `scheduled_messages.dart`: ScheduledMessages repository interface
+  - `achievements.dart`: Achievements repository interface
 - `usecase/`: Business use cases
   - `schedule_message.dart`: Use case for scheduling new messages
   - `update_scheduled_message.dart`: Use case for updating existing scheduled messages
   - `cancel_scheduled_message.dart`: Use case for canceling/deleting scheduled messages
+  - `get_achievements.dart`: Use case for getting achievements data
+  - `get_quests.dart`: Use case for getting quests data
+  - `get_leaderboard.dart`: Use case for getting leaderboard data
 
 #### lib/presentation/ (UI Layer)
 - `app.dart`: Main app configuration
-- `router.dart`: GoRouter configuration with scheduled messages routes
+- `router.dart`: GoRouter configuration with scheduled messages and achievements routes
 - `theme.dart`: Material 3 theme configuration
 - `view/`: UI screens
   - `memento_list.dart`: The main screen that displays the list of mementos with scheduled messages access.
@@ -50,6 +59,7 @@
   - `search_memento_list.dart`: The screen for searching mementos.
   - `scheduled_messages_list.dart`: Screen for displaying and managing scheduled messages with filtering.
   - `scheduled_message_form.dart`: Form for creating and editing scheduled messages with validation.
+  - `achievements_dashboard.dart`: Screen for displaying achievements, quests, and leaderboard.
 - `viewmodel/`: Screen view models
   - `mementoform/`: Memento creation/editing
     - `memento_form.dart`: ViewModel for the memento form.
@@ -60,9 +70,13 @@
     - `search_query_notifier.dart`: Provider for managing search query state.
     - `memento_filter_kind.dart`: Enum for filtering mementos (all, favorites, recent).
   - `scheduled_messages_list.dart`: ViewModel for managing scheduled messages list with reactive updates.
+  - `achievements_viewmodel.dart`: ViewModel for managing achievements, quests, and leaderboard data.
 - `widgets/`: Reusable UI components
   - `memento_card.dart`: Enhanced card widget with edit/delete actions and improved information display.
   - `scheduled_message_card.dart`: Card widget for displaying scheduled messages with status indicators and actions.
+  - `achievement_card.dart`: Card widget for displaying achievements.
+  - `quest_card.dart`: Card widget for displaying quests.
+  - `leaderboard_item.dart`: Widget for displaying leaderboard entries.
 
 ## Key Connections
 
@@ -100,6 +114,7 @@
 - Enhanced contact cards with gradient designs and rich information display
 - Professional empty states with actionable guidance and contextual messaging
 - Sophisticated search bar with integrated controls and result count display
+- Gamification system with achievements, quests, and leaderboard
 
 ### Code Generation
 - Drift: Database code (`*.g.dart`)

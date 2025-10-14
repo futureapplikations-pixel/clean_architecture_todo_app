@@ -35,6 +35,208 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   int get schemaVersion => 1;
 
   @override
+  Future<void> onCreate(Migrator migrator) async {
+    await super.onCreate(migrator);
+    // Insert initial achievements
+    await batch((batch) {
+      batch.insertAll(achievements, [
+        AchievementsCompanion.insert(
+          id: 'first-connection',
+          name: 'First Connection',
+          description: 'Add your first memento',
+          icon: '🔗',
+          category: 'connections',
+          points: 50,
+          unlocked: false,
+          progress: 0,
+          requirement: 1,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'network-builder',
+          name: 'Network Builder',
+          description: 'Add 10 mementos',
+          icon: '🌐',
+          category: 'connections',
+          points: 100,
+          unlocked: false,
+          progress: 0,
+          requirement: 10,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'connection-master',
+          name: 'Connection Master',
+          description: 'Add 25 mementos',
+          icon: '👥',
+          category: 'connections',
+          points: 200,
+          unlocked: false,
+          progress: 0,
+          requirement: 25,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'social-butterfly',
+          name: 'Social Butterfly',
+          description: 'Add 50 mementos',
+          icon: '🦋',
+          category: 'connections',
+          points: 300,
+          unlocked: false,
+          progress: 0,
+          requirement: 50,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'note-taker',
+          name: 'Note Taker',
+          description: 'Add your first note',
+          icon: '📝',
+          category: 'engagement',
+          points: 50,
+          unlocked: false,
+          progress: 0,
+          requirement: 1,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'memory-keeper',
+          name: 'Memory Keeper',
+          description: 'Add 50 notes',
+          icon: '📚',
+          category: 'engagement',
+          points: 150,
+          unlocked: false,
+          progress: 0,
+          requirement: 50,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'communication-expert',
+          name: 'Communication Expert',
+          description: 'Send 25 messages',
+          icon: '📧',
+          category: 'engagement',
+          points: 150,
+          unlocked: false,
+          progress: 0,
+          requirement: 25,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'consistent-connector',
+          name: 'Consistent Connector',
+          description: 'Maintain a 7-day streak',
+          icon: '🔥',
+          category: 'engagement',
+          points: 200,
+          unlocked: false,
+          progress: 0,
+          requirement: 7,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'relationship-architect',
+          name: 'Relationship Architect',
+          description: 'Add notes to 20 different mementos',
+          icon: '🏗️',
+          category: 'engagement',
+          points: 250,
+          unlocked: false,
+          progress: 0,
+          requirement: 20,
+          currentProgress: 0,
+        ),
+        AchievementsCompanion.insert(
+          id: 'master-networker',
+          name: 'Master Networker',
+          description: 'Reach 1000 total points',
+          icon: '⭐',
+          category: 'connections',
+          points: 500,
+          unlocked: false,
+          progress: 0,
+          requirement: 1000,
+          currentProgress: 0,
+        ),
+      ]);
+
+      // Insert initial quests
+      batch.insertAll(quests, [
+        QuestsCompanion.insert(
+          id: 'quest1',
+          name: 'Daily Connector',
+          description: 'Add one new note today',
+          points: 25,
+          completed: false,
+          progress: 0,
+          requirement: 1,
+        ),
+        QuestsCompanion.insert(
+          id: 'quest2',
+          name: 'Network Maintainer',
+          description: 'Review 3 memento profiles',
+          points: 30,
+          completed: false,
+          progress: 0,
+          requirement: 3,
+        ),
+        QuestsCompanion.insert(
+          id: 'quest3',
+          name: 'Message Scheduler',
+          description: 'Schedule a message for tomorrow',
+          points: 40,
+          completed: false,
+          progress: 0,
+          requirement: 1,
+        ),
+      ]);
+
+      // Insert initial leaderboard entries
+      batch.insertAll(leaderboard, [
+        LeaderboardCompanion.insert(
+          userId: 'user',
+          name: 'You',
+          points: 0,
+          level: 1,
+        ),
+        LeaderboardCompanion.insert(
+          userId: 'alex-chen',
+          name: 'Alex Chen',
+          points: 1180,
+          level: 5,
+        ),
+        LeaderboardCompanion.insert(
+          userId: 'sarah-kim',
+          name: 'Sarah Kim',
+          points: 950,
+          level: 4,
+        ),
+      ]);
+
+      // Insert initial message templates
+      batch.insertAll(messageTemplates, [
+        MessageTemplatesCompanion.insert(
+          name: 'Follow-up Meeting',
+          content: 'Hi {name}, it was great meeting you at {event}. I\'d love to continue our conversation about {topic}. Would you be available for a quick call this week?',
+          category: 'networking',
+        ),
+        MessageTemplatesCompanion.insert(
+          name: 'Birthday Wishes',
+          content: 'Happy Birthday, {name}! Wishing you a wonderful day filled with joy and celebration. Hope this year brings you lots of happiness and success.',
+          category: 'personal',
+        ),
+        MessageTemplatesCompanion.insert(
+          name: 'Thank You Note',
+          content: 'Hi {name}, I wanted to thank you for {reason}. Your help and support meant a lot to me. Looking forward to staying in touch!',
+          category: 'professional',
+        ),
+      ]);
+    });
+  }
+
+  @override
   Stream<List<Memento>> watchMementos() => _getMementos().watch();
 
   @override
@@ -227,5 +429,170 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   @override
   Future<void> markScheduledMessageAsSent(int id, DateTime sentAt) {
     return _markScheduledMessageAsSent(sentAt.millisecondsSinceEpoch, id);
+  }
+
+  // Achievement operations
+  @override
+  Future<List<Achievement>> getAchievements() async {
+    final entities = await _getAchievements().get();
+    return entities.map((e) => Achievement(
+      id: e.id,
+      name: e.name,
+      description: e.description,
+      icon: e.icon,
+      category: e.category,
+      points: e.points,
+      unlocked: e.unlocked,
+      unlockedDate: e.unlockedDate != null ? DateTime.fromMillisecondsSinceEpoch(e.unlockedDate!) : null,
+      progress: e.progress,
+      requirement: e.requirement,
+      current: e.currentProgress,
+    )).toList();
+  }
+
+  @override
+  Future<Achievement> getAchievementById(String id) async {
+    final entity = await _getAchievementById(id).getSingle();
+    return Achievement(
+      id: entity.id,
+      name: entity.name,
+      description: entity.description,
+      icon: entity.icon,
+      category: entity.category,
+      points: entity.points,
+      unlocked: entity.unlocked,
+      unlockedDate: entity.unlockedDate != null ? DateTime.fromMillisecondsSinceEpoch(entity.unlockedDate!) : null,
+      progress: entity.progress,
+      requirement: entity.requirement,
+      current: entity.currentProgress,
+    );
+  }
+
+  @override
+  Future<void> updateAchievement(Achievement achievement) async {
+    await _updateAchievement(
+      achievement.id,
+      achievement.name,
+      achievement.description,
+      achievement.icon,
+      achievement.category,
+      achievement.points,
+      achievement.unlocked,
+      achievement.unlockedDate?.millisecondsSinceEpoch,
+      achievement.progress,
+      achievement.requirement,
+      achievement.current,
+    );
+  }
+
+  // Quest operations
+  @override
+  Future<List<Quest>> getQuests() async {
+    final entities = await _getQuests().get();
+    return entities.map((e) => Quest(
+      id: e.id,
+      name: e.name,
+      description: e.description,
+      points: e.points,
+      completed: e.completed,
+      progress: e.progress,
+      requirement: e.requirement,
+    )).toList();
+  }
+
+  @override
+  Future<Quest> getQuestById(String id) async {
+    final entity = await _getQuestById(id).getSingle();
+    return Quest(
+      id: entity.id,
+      name: entity.name,
+      description: entity.description,
+      points: entity.points,
+      completed: entity.completed,
+      progress: entity.progress,
+      requirement: entity.requirement,
+    );
+  }
+
+  @override
+  Future<void> updateQuest(Quest quest) async {
+    await _updateQuest(
+      quest.id,
+      quest.name,
+      quest.description,
+      quest.points,
+      quest.completed,
+      quest.progress,
+      quest.requirement,
+    );
+  }
+
+  // Leaderboard operations
+  @override
+  Future<List<LeaderboardEntry>> getLeaderboard() async {
+    final entities = await _getLeaderboard().get();
+    return entities.map((e) => LeaderboardEntry(
+      name: e.name,
+      points: e.points,
+      level: e.level,
+      isUser: e.userId == 'user',
+    )).toList();
+  }
+
+  // Message Template operations
+  @override
+  Future<List<MessageTemplate>> getMessageTemplates() async {
+    final entities = await _getMessageTemplates().get();
+    return entities.map((e) => MessageTemplate(
+      id: e.id,
+      name: e.name,
+      content: e.content,
+      category: e.category,
+    )).toList();
+  }
+
+  @override
+  Future<MessageTemplate?> getMessageTemplateById(int id) async {
+    final entity = await _getMessageTemplateById(id).getSingleOrNull();
+    if (entity == null) {
+      return null;
+    }
+    return MessageTemplate(
+      id: entity.id,
+      name: entity.name,
+      content: entity.content,
+      category: entity.category,
+    );
+  }
+
+  @override
+  Future<MessageTemplate> insertMessageTemplate(MessageTemplatesCompanion template) async {
+    final id = await _insertMessageTemplate(
+      template.name.value,
+      template.content.value,
+      template.category.value,
+    );
+    final entity = await _getMessageTemplateById(id).getSingle();
+    return MessageTemplate(
+      id: entity.id,
+      name: entity.name,
+      content: entity.content,
+      category: entity.category,
+    );
+  }
+
+  @override
+  Future<void> updateMessageTemplate(int id, MessageTemplatesCompanion template) async {
+    await _updateMessageTemplate(
+      template.name.value,
+      template.content.value,
+      template.category.value,
+      id,
+    );
+  }
+
+  @override
+  Future<void> deleteMessageTemplate(int id) {
+    return _deleteMessageTemplate(id);
   }
 }

@@ -1,7 +1,7 @@
 # AI Infrastructure Choices
 
 ## Architecture Choices
-- **Project Type**: Flutter Clean Architecture Todo App
+- **Project Type**: Flutter Clean Architecture Memento App
 - **Architecture Pattern**: Clean Architecture with 3 layers:
   - Data Layer: Repositories, Data Sources, Entities
   - Domain Layer: Use Cases, Models, Repository Interfaces
@@ -25,7 +25,7 @@
   - Cross-platform support (native/web)
   - Auto-generated queries
 - **Schema Features**:
-  - Todos table with automatic FTS indexing
+  - Mementos table with automatic FTS indexing
   - Due date indexing for efficient queries
   - Triggers for FTS synchronization
 
@@ -39,6 +39,9 @@
 - **Design System**: Material 3
 - **Responsive**: Adaptive layouts for all platforms
 - **Platform Support**: iOS, Android, Web, Linux, macOS, Windows
+- **Animations**: flutter_animate, and other animation libraries to replicate anime.js effects.
+- **Charts**: fl_chart or other charting library to replicate echarts.
+- **Visual Effects**: Custom painters and other libraries to replicate p5.js effects.
 
 ### Code Generation & Tools
 - **Build System**: build_runner 2.4.0
@@ -51,30 +54,42 @@
 - **Static Analysis**: flutter_lints 2.0.0
 - **Testing**: flutter_test SDK
 
+### Gamification
+- **Achievements & Quests**: Custom implementation using Drift for persistence.
+- **Leaderboards**: Custom implementation.
+
 ## Package Dependencies
 ### Core
-- **State**: riverpod, flutter_riverpod, hooks_riverpod
-- **Database**: drift, sqlite3, sqlite3_flutter_libs
-- **Utilities**: equatable, collection, intl
-- **Storage**: path_provider, path
+- **State**: flutter_riverpod: ^2.3.1, riverpod: ^2.3.1, riverpod_annotation: ^2.0.1, hooks_riverpod: ^2.3.2, flutter_hooks: ^0.18.6
+- **Database**: drift: ^2.5.0, sqlite3: ^1.9.3, sqlite3_flutter_libs: ^0.5.13
+- **Utilities**: equatable: ^2.0.5, collection: ^1.17.0, intl: ^0.17.0, path: ^1.8.3
+- **Storage**: path_provider: ^2.0.13
+- **Routing**: go_router: ^6.2.0
+- **HTTP**: http: ^1.5.0
 
 ### Notifications
-- **Local Notifications**: flutter_local_notifications 16.3.2
-- **Timezone Support**: timezone 0.9.2
+- **Local Notifications**: flutter_local_notifications: ^16.3.2
+- **Timezone Support**: timezone: ^0.9.2
+
+### UI
+- **Icons**: cupertino_icons: ^1.0.0
+- **Fonts**: google_fonts: ^6.1.0
 
 ## Implementation Details
 ### Database Schema
-- Todos table with FTS5 integration
+- Mementos table with FTS5 integration
+- Labels, Notes, and ScheduledMessages tables.
 - Automatic indexing of due dates
 - Full CRUD operations
 - Search functionality using FTS5
 
 ### Domain Model
-- Todo entity with:
+- Memento entity with:
   - ID, title, description
   - Completion status
   - Due date
   - List filtering extensions
+- Label, Note, and ScheduledMessage entities.
 
 ## Architecture Choices
 - **Design System**: Corporate Vision Design with Material 3
@@ -90,3 +105,4 @@
 - **2025-10-14 23:08 CEST**: Updated http dependency from ^0.13.5 to ^1.5.0 for google_fonts compatibility
 - **2025-10-14 23:08 CEST**: Added google_fonts ^6.1.0 for vision typography implementation (Playfair Display, Inter)
 - **2025-10-14 23:08 CEST**: Implemented corporate design theme with vision color palette and typography
+- **2025-10-14 23:30 CEST**: Updated dependencies to reflect pubspec.yaml and added notes about UI libraries.

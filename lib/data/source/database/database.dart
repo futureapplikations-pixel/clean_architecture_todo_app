@@ -1,4 +1,5 @@
 import 'database_impl.dart';
+import '../../domain/model/message_template.dart';
 
 abstract class Database {
   Future<List<Memento>> searchMementos(String query);
@@ -38,4 +39,11 @@ abstract class Database {
   Future<void> updateScheduledMessage(int id, ScheduledMessagesCompanion scheduledMessage);
   Future<void> deleteScheduledMessage(int id);
   Future<void> markScheduledMessageAsSent(int id, DateTime sentAt);
+
+  // Message Template operations
+  Future<List<MessageTemplate>> getMessageTemplates();
+  Future<MessageTemplate?> getMessageTemplateById(int id);
+  Future<MessageTemplate> insertMessageTemplate(MessageTemplatesCompanion template);
+  Future<void> updateMessageTemplate(int id, MessageTemplatesCompanion template);
+  Future<void> deleteMessageTemplate(int id);
 }

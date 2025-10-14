@@ -174,3 +174,129 @@ _markScheduledMessageAsSent:
     UPDATE [scheduled_messages]
     SET sent_at = :sentAt
     WHERE id = :id;
+
+CREATE TABLE IF NOT EXISTS [achievements] (
+    [id] TEXT PRIMARY KEY NOT NULL,
+    [name] TEXT NOT NULL,
+    [description] TEXT NOT NULL,
+    [icon] TEXT NOT NULL,
+    [category] TEXT NOT NULL,
+    [points] INTEGER NOT NULL,
+    [unlocked] INTEGER NOT NULL DEFAULT 0,
+    [unlocked_date] INTEGER,
+    [progress] REAL NOT NULL DEFAULT 0.0,
+    [requirement] INTEGER NOT NULL,
+    [current_progress] INTEGER NOT NULL DEFAULT 0
+);
+
+_getAchievements:
+    SELECT * FROM [achievements];
+_getAchievementById:
+    SELECT * FROM [achievements]
+    WHERE id = :id
+    LIMIT 1;
+_insertAchievement:
+    INSERT INTO [achievements] (id, name, description, icon, category, points, unlocked, unlocked_date, progress, requirement, current_progress)
+    VALUES (:id, :name, :description, :icon, :category, :points, :unlocked, :unlockedDate, :progress, :requirement, :currentProgress);
+_updateAchievement:
+    UPDATE [achievements]
+    SET name = :name, description = :description, icon = :icon, category = :category, points = :points, unlocked = :unlocked, unlocked_date = :unlockedDate, progress = :progress, requirement = :requirement, current_progress = :currentProgress
+    WHERE id = :id;
+
+CREATE TABLE IF NOT EXISTS [quests] (
+    [id] TEXT PRIMARY KEY NOT NULL,
+    [name] TEXT NOT NULL,
+    [description] TEXT NOT NULL,
+    [points] INTEGER NOT NULL,
+    [completed] INTEGER NOT NULL DEFAULT 0,
+    [progress] REAL NOT NULL DEFAULT 0.0,
+    [requirement] INTEGER NOT NULL
+);
+
+_getQuests:
+    SELECT * FROM [quests];
+_getQuestById:
+    SELECT * FROM [quests]
+    WHERE id = :id
+    LIMIT 1;
+_insertQuest:
+    INSERT INTO [quests] (id, name, description, points, completed, progress, requirement)
+    VALUES (:id, :name, :description, :points, :completed, :progress, :requirement);
+_updateQuest:
+    UPDATE [quests]
+    SET name = :name, description = :description, points = :points, completed = :completed, progress = :progress, requirement = :requirement
+    WHERE id = :id;
+
+CREATE TABLE IF NOT EXISTS [leaderboard] (
+    [user_id] TEXT PRIMARY KEY NOT NULL,
+    [name] TEXT NOT NULL,
+    [points] INTEGER NOT NULL,
+    [level] INTEGER NOT NULL
+);
+
+_getLeaderboard:
+    SELECT * FROM [leaderboard]
+    ORDER BY points DESC;
+_getLeaderboardEntry:
+    SELECT * FROM [leaderboard]
+    WHERE user_id = :userId
+    LIMIT 1;
+_insertLeaderboardEntry:
+    INSERT INTO [leaderboard] (user_id, name, points, level)
+    VALUES (:userId, :name, :points, :level);
+_updateLeaderboardEntry:
+    UPDATE [leaderboard]
+    SET name = :name, points = :points, level = :level
+    WHERE user_id = :userId;
+
+CREATE TABLE IF NOT EXISTS [message_templates] (
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    [name] TEXT NOT NULL,
+    [content] TEXT NOT NULL,
+    [category] TEXT NOT NULL
+);
+
+_getMessageTemplates:
+    SELECT * FROM [message_templates];
+_getMessageTemplateById:
+    SELECT * FROM [message_templates]
+    WHERE id = :id
+    LIMIT 1;
+_insertMessageTemplate:
+    INSERT INTO [message_templates] (name, content, category)
+    VALUES (:name, :content, :category);
+_updateMessageTemplate:
+    UPDATE [message_templates]
+    SET name = :name, content = :content, category = :category
+    WHERE id = :id;
+_deleteMessageTemplate:
+    DELETE FROM [message_templates]
+    WHERE id = :id;
+
+CREATE TABLE IF NOT EXISTS [user_settings] (
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    [display_name] TEXT NOT NULL,
+    [email] TEXT NOT NULL,
+    [timezone] TEXT NOT NULL,
+    [date_format] TEXT NOT NULL,
+    [theme] TEXT NOT NULL,
+    [accent_color] INTEGER NOT NULL,
+    [message_reminders] INTEGER NOT NULL,
+    [birthday_reminders] INTEGER NOT NULL,
+    [achievement_notifications] INTEGER NOT NULL,
+    [daily_quests] INTEGER NOT NULL,
+    [data_encryption] INTEGER NOT NULL,
+    [analytics] INTEGER NOT NULL,
+    [auto_lock] INTEGER NOT NULL
+);
+
+_getUserSettings:
+    SELECT * FROM [user_settings]
+    LIMIT 1;
+_insertUserSettings:
+    INSERT INTO [user_settings] (display_name, email, timezone, date_format, theme, accent_color, message_reminders, birthday_reminders, achievement_notifications, daily_quests, data_encryption, analytics, auto_lock)
+    VALUES (:displayName, :email, :timezone, :dateFormat, :theme, :accentColor, :messageReminders, :birthdayReminders, :achievementNotifications, :dailyQuests, :dataEncryption, :analytics, :autoLock);
+_updateUserSettings:
+    UPDATE [user_settings]
+    SET display_name = :displayName, email = :email, timezone = :timezone, date_format = :dateFormat, theme = :theme, accent_color = :accentColor, message_reminders = :messageReminders, birthday_reminders = :birthdayReminders, achievement_notifications = :achievementNotifications, daily_quests = :dailyQuests, data_encryption = :dataEncryption, analytics = :analytics, auto_lock = :autoLock
+    WHERE id = :id;

@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/model/memento.dart';
 import '../theme.dart';
-import '../utils/constants.dart';
+import 'package:clean_architecture_todo_app/presentation/utils/constants.dart';
 import '../viewmodel/mementolist/memento_list.dart';
 import '../viewmodel/mementolist/memento_list_with_search.dart';
 
