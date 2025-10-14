@@ -28,7 +28,7 @@ class SearchMementoList extends HookConsumerWidget {
       body: mementos.when(
         data: (mementos) {
           if (mementos.isEmpty) {
-            return const Center(child: Text('No Mementos found'));
+            return const SizedBox.shrink();
           }
           return ListView.builder(
             itemCount: mementos.length,

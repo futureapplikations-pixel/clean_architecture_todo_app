@@ -32,4 +32,3 @@
   - 2025-10-14 15:26 CEST: Added invalidation of MementoListWithSearchViewModel in form viewmodel after create/update/delete operations
   - 2025-10-14 15:26 CEST: Generated updated Riverpod providers with build_runner
 - **Status**: Resolved
-*No active issues*

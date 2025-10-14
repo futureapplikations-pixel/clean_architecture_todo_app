@@ -92,46 +92,7 @@ class MementoListPage extends HookConsumerWidget {
               },
             ),
           ),
-          bottom: searchQuery.isNotEmpty ? PreferredSize(
-            preferredSize: const Size.fromHeight(32),
-            child: Container(
-              padding: const EdgeInsets.only(left: 20, right: 16, bottom: 8),
-              alignment: Alignment.centerLeft,
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Found ',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '${mementosAsync.value?.length ?? 0}',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' results for ',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '"$searchQuery"',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ) : null,
+          bottom: null,
           actions: [
             Container(
               decoration: BoxDecoration(
