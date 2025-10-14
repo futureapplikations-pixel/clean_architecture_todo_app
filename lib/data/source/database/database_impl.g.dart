@@ -62,9 +62,9 @@ class Mementos extends Table with TableInfo<Mementos, Memento> {
       $customConstraints: '');
   static const VerificationMeta _birthdayMeta =
       const VerificationMeta('birthday');
-  late final GeneratedColumn<String> birthday = GeneratedColumn<String>(
+  late final GeneratedColumn<int> birthday = GeneratedColumn<int>(
       'birthday', aliasedName, true,
-      type: DriftSqlType.string,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
       $customConstraints: '');
   @override
@@ -142,7 +142,7 @@ class Mementos extends Table with TableInfo<Mementos, Memento> {
       company: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}company']),
       birthday: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}birthday']),
+          .read(DriftSqlType.int, data['${effectivePrefix}birthday']),
     );
   }
 
@@ -164,7 +164,7 @@ class Memento extends DataClass implements Insertable<Memento> {
   final String? context;
   final String? jobTitle;
   final String? company;
-  final String? birthday;
+  final int? birthday;
   const Memento(
       {required this.id,
       required this.name,
@@ -199,7 +199,7 @@ class Memento extends DataClass implements Insertable<Memento> {
       map['company'] = Variable<String>(company);
     }
     if (!nullToAbsent || birthday != null) {
-      map['birthday'] = Variable<String>(birthday);
+      map['birthday'] = Variable<int>(birthday);
     }
     return map;
   }
@@ -241,7 +241,7 @@ class Memento extends DataClass implements Insertable<Memento> {
       context: serializer.fromJson<String?>(json['context']),
       jobTitle: serializer.fromJson<String?>(json['job_title']),
       company: serializer.fromJson<String?>(json['company']),
-      birthday: serializer.fromJson<String?>(json['birthday']),
+      birthday: serializer.fromJson<int?>(json['birthday']),
     );
   }
   @override
@@ -256,7 +256,7 @@ class Memento extends DataClass implements Insertable<Memento> {
       'context': serializer.toJson<String?>(context),
       'job_title': serializer.toJson<String?>(jobTitle),
       'company': serializer.toJson<String?>(company),
-      'birthday': serializer.toJson<String?>(birthday),
+      'birthday': serializer.toJson<int?>(birthday),
     };
   }
 
@@ -269,7 +269,7 @@ class Memento extends DataClass implements Insertable<Memento> {
           Value<String?> context = const Value.absent(),
           Value<String?> jobTitle = const Value.absent(),
           Value<String?> company = const Value.absent(),
-          Value<String?> birthday = const Value.absent()}) =>
+          Value<int?> birthday = const Value.absent()}) =>
       Memento(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -324,7 +324,7 @@ class MementosCompanion extends UpdateCompanion<Memento> {
   final Value<String?> context;
   final Value<String?> jobTitle;
   final Value<String?> company;
-  final Value<String?> birthday;
+  final Value<int?> birthday;
   const MementosCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -356,7 +356,7 @@ class MementosCompanion extends UpdateCompanion<Memento> {
     Expression<String>? context,
     Expression<String>? jobTitle,
     Expression<String>? company,
-    Expression<String>? birthday,
+    Expression<int>? birthday,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -380,7 +380,7 @@ class MementosCompanion extends UpdateCompanion<Memento> {
       Value<String?>? context,
       Value<String?>? jobTitle,
       Value<String?>? company,
-      Value<String?>? birthday}) {
+      Value<int?>? birthday}) {
     return MementosCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -422,7 +422,7 @@ class MementosCompanion extends UpdateCompanion<Memento> {
       map['company'] = Variable<String>(company.value);
     }
     if (birthday.present) {
-      map['birthday'] = Variable<String>(birthday.value);
+      map['birthday'] = Variable<int>(birthday.value);
     }
     return map;
   }
@@ -1467,7 +1467,7 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
       String? context,
       String? jobTitle,
       String? company,
-      String? birthday) {
+      int? birthday) {
     return customInsert(
       'INSERT INTO mementos (name, photo, email, phone, context, job_title, company, birthday) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)',
       variables: [
@@ -1478,7 +1478,7 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
         Variable<String>(context),
         Variable<String>(jobTitle),
         Variable<String>(company),
-        Variable<String>(birthday)
+        Variable<int>(birthday)
       ],
       updates: {mementos},
     );
@@ -1492,7 +1492,7 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
       String? context,
       String? jobTitle,
       String? company,
-      String? birthday,
+      int? birthday,
       int id) {
     return customUpdate(
       'UPDATE mementos SET name = ?1, photo = ?2, email = ?3, phone = ?4, context = ?5, job_title = ?6, company = ?7, birthday = ?8 WHERE id = ?9',
@@ -1504,7 +1504,7 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
         Variable<String>(context),
         Variable<String>(jobTitle),
         Variable<String>(company),
-        Variable<String>(birthday),
+        Variable<int>(birthday),
         Variable<int>(id)
       ],
       updates: {mementos},

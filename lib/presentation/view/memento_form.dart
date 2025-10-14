@@ -241,30 +241,28 @@ class _MementoFormPageState extends ConsumerState<MementoFormPage> {
                           },
                         ),
                         const SizedBox(height: 16),
-                        DateFormField(
+                        StringFormField(
                           label: 'Birthday',
-                          value: data.birthday,
-                          onChanged: viewModel.setBirthday,
-                          builder: (context, controller, value) {
+                          value: data.birthday != null ? _formatDateForDisplay(data.birthday!) : '',
+                          onChanged: (value) => _handleBirthdayChange(value, viewModel),
+                          builder: (context, controller) {
                             return TextFormField(
                               controller: controller,
-                              readOnly: true,
-                              onTap: () async {
-                                final date = await showDatePicker(
-                                  context: context,
-                                  initialDate: value ?? DateTime.now(),
-                                  firstDate: DateTime.now().pickerStartDate,
-                                  lastDate: DateTime.now().pickerEndDate,
-                                );
-                                if (date != null) {
-                                  viewModel.setBirthday(date);
-                                }
-                              },
                               decoration: const InputDecoration(
                                 icon: Icon(Icons.cake),
-                                labelText: 'Birthday',
+                                labelText: 'Birthday (MM/DD/YYYY)',
+                                hintText: '01/15/1990',
                                 border: OutlineInputBorder(),
                               ),
+                              validator: (value) {
+                                if (value != null && value.isNotEmpty) {
+                                  final date = _parseDate(value);
+                                  if (date == null) {
+                                    return 'Please enter a valid date (MM/DD/YYYY)';
+                                  }
+                                }
+                                return null;
+                              },
                             );
                           },
                         ),
@@ -300,5 +298,44 @@ class _MementoFormPageState extends ConsumerState<MementoFormPage> {
       return true;
     }
     return false;
+  }
+
+  // Helper method to format DateTime for display in text field
+  String _formatDateForDisplay(DateTime date) {
+    return '${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}/${date.year}';
+  }
+
+  // Helper method to handle birthday text input
+  void _handleBirthdayChange(String value, MementoFormViewModel viewModel) {
+    if (value.isEmpty) {
+      // Don't set birthday if empty - let it remain as is
+      return;
+    }
+
+    final parsedDate = _parseDate(value);
+    if (parsedDate != null) {
+      viewModel.setBirthday(parsedDate);
+    }
+  }
+
+  // Helper method to parse date string in MM/DD/YYYY format
+  DateTime? _parseDate(String value) {
+    try {
+      final parts = value.split('/');
+      if (parts.length != 3) return null;
+
+      final month = int.tryParse(parts[0]);
+      final day = int.tryParse(parts[1]);
+      final year = int.tryParse(parts[2]);
+
+      if (month == null || day == null || year == null) return null;
+      if (month < 1 || month > 12) return null;
+      if (day < 1 || day > 31) return null;
+      if (year < 1900 || year > 2100) return null;
+
+      return DateTime(year, month, day);
+    } catch (e) {
+      return null;
+    }
   }
 }

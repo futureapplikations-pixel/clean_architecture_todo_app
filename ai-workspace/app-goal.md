@@ -84,3 +84,9 @@ Memento is a personal relationship management application designed to help users
     - Enhanced MementoMapper to handle rich profile data transformation between database and domain models.
     - Extended repository with comprehensive label and note management operations.
     - All data is now fully persistable with rich relationship profiles supporting the complete feature set.
+12. **Birthday Field Enhancement**
+    - 2025-10-14 21:38 CEST: Improved birthday input to use text field with MM/DD/YYYY format.
+    - Changed database storage from TEXT to INTEGER (timestamp) for better searchability and date operations.
+    - Added proper date parsing and validation for user-friendly text input.
+    - Maintained real date storage in database for advanced querying and date-based operations.
+    - Users can now type birthdays as plain text while data is stored optimally for database searches.

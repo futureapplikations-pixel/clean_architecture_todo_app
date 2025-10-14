@@ -136,6 +136,7 @@ Progress Update (2025-10-14):
 - [x] Update app-goal.md with rich data profiles implementation
 - [x] Update structure-ai.md with new models and database schema
 - [x] Fix compilation errors for Value<int> type issues
+- [x] Fix birthday field to use text input with proper date parsing and storage
 - [ ] Update form UI to include labels and notes management
 - [ ] Update detail view to display rich profile information
 - [ ] Add label creation and management functionality

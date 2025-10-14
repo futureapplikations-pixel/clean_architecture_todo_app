@@ -35,7 +35,7 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
         context: db.Val(context),
         jobTitle: db.Val(jobTitle),
         company: db.Val(company),
-        birthday: db.Val(birthday?.toIso8601String()),
+        birthday: db.Val(birthday?.millisecondsSinceEpoch),
       ),
     );
     return MementoMapper.transformToModel(model);
@@ -120,7 +120,7 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
         context: db.Val(context),
         jobTitle: db.Val(jobTitle),
         company: db.Val(company),
-        birthday: db.Val(birthday?.toIso8601String()),
+        birthday: db.Val(birthday?.millisecondsSinceEpoch),
       ),
     );
   }

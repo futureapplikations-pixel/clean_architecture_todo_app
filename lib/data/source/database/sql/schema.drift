@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS [mementos] (
    [context] TEXT,
    [job_title] TEXT,
    [company] TEXT,
-   [birthday] TEXT
+   [birthday] INTEGER
 );
 
 CREATE VIRTUAL TABLE memento_entries USING fts5 (
