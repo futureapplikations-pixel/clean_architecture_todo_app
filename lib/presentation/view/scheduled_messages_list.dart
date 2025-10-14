@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../viewmodel/scheduled_messages_list.dart';
 import '../widgets/scheduled_message_card.dart';
-import '../../data/repository/scheduled_messages_impl.dart';
+import '../../domain/model/scheduled_message.dart';
 
 /// Screen for displaying a list of scheduled messages
 class ScheduledMessagesListView extends ConsumerStatefulWidget {
@@ -122,11 +122,8 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
   }
 
   void _navigateToCreateForm(BuildContext context) {
-    // For now, show a placeholder since we need a memento ID
-    // In a real implementation, this would be called from a memento details page
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Create message from contact details')),
-    );
+    // Navigate to create form without mementoId - form will handle selection
+    context.go('/scheduled-messages/create/0');
   }
 
   void _navigateToEditForm(BuildContext context, message) {
@@ -171,9 +168,6 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
 }
 
 /// Provider for the scheduled messages list view model
-final scheduledMessagesListViewModelProvider = NotifierProvider<ScheduledMessagesListViewModel, List>(
-  () {
-    // This will be overridden when the provider is used in the app
-    throw UnimplementedError('scheduledMessagesListViewModelProvider must be provided by the app');
-  },
+final scheduledMessagesListViewModelProvider = NotifierProvider<ScheduledMessagesListViewModel, List<ScheduledMessage>>(
+  ScheduledMessagesListViewModel.new,
 );

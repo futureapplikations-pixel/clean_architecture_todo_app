@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../domain/model/scheduled_message.dart';
+import '../viewmodel/mementolist/memento_list_with_search.dart';
 
 /// Form for creating or editing scheduled messages
 class ScheduledMessageForm extends ConsumerStatefulWidget {
@@ -86,6 +87,12 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
               ),
             ),
             const SizedBox(height: 16),
+
+            // Memento selection (only show if mementoId is 0)
+            if (widget.mementoId == 0) ...[
+              _buildMementoSelection(),
+              const SizedBox(height: 16),
+            ],
 
             // Title field
             TextFormField(
@@ -255,5 +262,56 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
       case MessageType.whatsapp:
         return Icons.chat;
     }
+  }
+
+  Widget _buildMementoSelection() {
+    final mementosAsync = ref.watch(mementoListWithSearchViewModelProvider);
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Select Contact',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            mementosAsync.when(
+              data: (mementos) {
+                if (mementos.isEmpty) {
+                  return const Text('No contacts available');
+                }
+                return DropdownButtonFormField<int>(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Choose a contact',
+                  ),
+                  items: mementos.map((memento) {
+                    return DropdownMenuItem(
+                      value: memento.id,
+                      child: Text(memento.name),
+                    );
+                  }).toList(),
+                  validator: (value) {
+                    if (value == null || value == 0) {
+                      return 'Please select a contact';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    // Store selected memento ID for form submission
+                    setState(() {});
+                  },
+                );
+              },
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stack) => Text('Error loading contacts: $error'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -1,18 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/model/scheduled_message.dart';
 import '../../domain/repository/scheduled_messages.dart';
+import '../../data/repository/scheduled_messages_impl.dart';
 
 /// ViewModel for managing scheduled messages list
 class ScheduledMessagesListViewModel extends Notifier<List<ScheduledMessage>> {
-  final ScheduledMessagesRepository _repository;
-
-  ScheduledMessagesListViewModel(this._repository);
-
   @override
   List<ScheduledMessage> build() {
     _loadScheduledMessages();
     return [];
   }
+
+  /// Get the repository from the provider
+  ScheduledMessagesRepository get _repository => ref.read(scheduledMessagesRepositoryProvider);
 
   /// Load all scheduled messages
   Future<void> _loadScheduledMessages() async {
