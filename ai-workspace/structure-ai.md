@@ -24,10 +24,9 @@
 #### lib/domain/ (Business Logic Layer)
 - `model/`: Domain models
   - `memento.dart`: Memento model with business logic
-  - `label.dart`: Label model for categorizing mementos
 - `repository/`: Repository interfaces
   - `mementos.dart`: Memento repository interface
-- `usecase/`: Business use cases
+- `usecase/`: Business use cases (Memento-focused only)
 
 #### lib/presentation/ (UI Layer)
 - `app.dart`: Main app configuration

@@ -65,3 +65,12 @@ Memento is a personal relationship management application designed to help users
    - Added sophisticated empty states with actionable buttons and contextual messaging.
    - Enhanced FAB with gradient design and shadow effects for premium feel.
    - Improved overall visual polish with Material 3 design principles and corporate color scheme.
+10. **Code Cleanup - Obsolete Class Removal**
+    - 2025-10-14 20:10 CEST: Removed all obsolete Todo-related classes and files after Memento refactoring.
+    - Cleaned up use case files (create_todo, delete_todo, get_todo_list, search_todo_list, update_todo, delete_completed_todos).
+    - Removed obsolete Todo-related viewmodel files and generated files.
+    - Removed obsolete Todo-related test files and directories.
+    - Updated app name from TodoApp to MementoApp in main.dart and app.dart.
+    - Removed unused Label-related files (label.dart, label.dart mapper) not used in current Memento app.
+    - Removed obsolete database test file that referenced non-existent Todo methods.
+    - Project now has clean, Memento-focused codebase with no obsolete Todo references.

@@ -83,9 +83,22 @@
 - [x] Add more feature-rich elements and visual polish
 - [x] Improve overall user experience with better animations
 
+## Code Cleanup - Remove Obsolete Classes
+- [x] Analyze codebase to identify all obsolete Todo-related classes
+- [x] Remove obsolete Todo-related use case files and implementations
+- [x] Remove obsolete Todo-related viewmodel files
+- [x] Remove obsolete Todo-related view files
+- [x] Remove obsolete Todo-related test files
+- [x] Remove obsolete Todo-related generated files (.g.dart)
+- [x] Update app name from TodoApp to MementoApp
+- [x] Remove obsolete Label-related files (not used in current Memento app)
+- [x] Remove obsolete database test file
+- [x] Update AI workspace files to reflect cleanup
+- [x] Verify project still builds and runs correctly (web build successful)
+
 ## Optional Enhancements
 - [ ] Add date-based filtering
-- [ ] Add priority levels for todos
+- [ ] Add priority levels for mementos
 - [ ] Add categories/tags
 - [ ] Add sorting options
 - [ ] Add data export/import
@@ -97,23 +110,24 @@ Note: Project has excellent foundation with:
 - Riverpod state management
 - Material 3 UI with adaptive layouts
 - Cross-platform support with native database
-- Full CRUD operations for todos
+- Full CRUD operations for mementos
 - Search functionality
 
-Progress Update (2025-10-12):
+Progress Update (2025-10-14):
 ✅ Added comprehensive test suite:
-- Domain model tests for Todo and extensions
+- Domain model tests for Memento and extensions
 - ViewModel tests for form and list management
 - Widget tests for all UI components
-  - TodoCard component tests
-  - TodoForm input validation
-  - TodoList filtering and state
+  - MementoCard component tests
+  - MementoForm input validation
+  - MementoList filtering and state
   - Search functionality and states
 - Basic database operation test
 - Mocked repository for testing
 
 Next Priority:
-1. Add repository implementation tests
-2. Add API documentation for public interfaces
-3. Set up CI/CD pipeline with GitHub Actions
-4. Implement error tracking and analytics
+1. Complete obsolete class cleanup
+2. Add repository implementation tests
+3. Add API documentation for public interfaces
+4. Set up CI/CD pipeline with GitHub Actions
+5. Implement error tracking and analytics
