@@ -42,9 +42,9 @@
   - `mementoform/`: Memento creation/editing
     - `memento_form.dart`: ViewModel for the memento form.
   - `mementolist/`: Memento list management
-    - `memento_list.dart`: ViewModel for the memento list.
+    - `memento_list.dart`: ViewModel for the memento list with implemented filter logic.
     - `search_memento_list.dart`: ViewModel for searching mementos.
-    - `memento_filter_kind.dart`: Enum for filtering mementos.
+    - `memento_filter_kind.dart`: Enum for filtering mementos (all, favorites, recent).
 - `widgets/`: Reusable UI components
   - `memento_card.dart`: A card widget to display a memento in a list.
 

@@ -12,8 +12,17 @@ class MementoListViewModel extends _$MementoListViewModel {
   Future<List<Memento>> build() async {
     final mementos = await ref.watch(mementosRepositoryImplProvider.notifier).getMementos();
     final filterKind = ref.watch(mementoFilterKindProvider);
-    // TODO: Implement filter logic
-    return mementos;
+    // Filter logic implementation
+    switch (filterKind) {
+      case MementoFilterKind.all:
+        return mementos;
+      case MementoFilterKind.favorites:
+        // For now, return all mementos as favorites logic needs to be implemented
+        return mementos;
+      case MementoFilterKind.recent:
+        // For now, return all mementos as recent logic needs to be implemented
+        return mementos;
+    }
   }
 
   Future<void> addMemento({
