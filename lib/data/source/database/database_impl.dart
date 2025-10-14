@@ -89,4 +89,46 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   Future<List<Memento>> searchMementos(String query) {
     return _searchMementos(query).get().then((value) => value.map((e) => e.result).toList());
   }
+
+  @override
+  Future<List<Label>> getLabels() {
+    return _getLabels().get();
+  }
+
+  @override
+  Stream<List<Label>> watchLabels() {
+    return _getLabels().watch();
+  }
+
+  @override
+  Future<Label> insertLabel(LabelsCompanion label) async {
+    final id = await _insertLabel(
+      label.name.value,
+      label.color.value,
+      label.createdAt.value ?? DateTime.now().toIso8601String(),
+      label.description.value,
+    );
+    return _getLabelById(id).getSingle();
+  }
+
+  @override
+  Future<void> updateLabel(int id, LabelsCompanion label) async {
+    await _updateLabel(
+      label.name.value,
+      label.color.value,
+      label.description.value,
+      id,
+    );
+  }
+
+  @override
+  Future<void> deleteLabel(int id) {
+    return _deleteLabel(id);
+  }
+
+  @override
+  Future<Label?> getLabelById(int id) async {
+    final label = await _getLabelById(id).getSingleOrNull();
+    return label;
+  }
 }

@@ -38,6 +38,7 @@
   - `memento_form.dart`: The screen for creating and editing mementos.
   - `memento_details.dart`: The screen that displays the details of a memento.
   - `search_memento_list.dart`: The screen for searching mementos.
+  - `labels_management.dart`: The screen for managing color-coded labels/tags.
 - `viewmodel/`: Screen view models
   - `mementoform/`: Memento creation/editing
     - `memento_form.dart`: ViewModel for the memento form.
@@ -47,6 +48,8 @@
     - `search_memento_list.dart`: Original ViewModel for searching mementos (now replaced by inline search).
     - `search_query_notifier.dart`: Provider for managing search query state.
     - `memento_filter_kind.dart`: Enum for filtering mementos (all, favorites, recent).
+  - `labels/`: Labels management
+    - `labels_viewmodel.dart`: ViewModel for labels CRUD operations.
 - `widgets/`: Reusable UI components
   - `memento_card.dart`: Enhanced card widget with edit/delete actions and improved information display.
 

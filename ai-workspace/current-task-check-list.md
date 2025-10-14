@@ -17,21 +17,23 @@
 ## Testing & Quality
 - [ ] Add more unit tests for:
   - [x] Domain models
-    - [x] Todo model
-    - [x] TodosExtension
+    - [x] Memento model
+    - [x] Label model
   - [ ] Use cases
   - [x] ViewModels
-    - [x] TodoFormViewModel
-    - [x] TodoListViewModel
+    - [x] MementoFormViewModel
+    - [x] MementoListViewModel
+    - [x] LabelsViewModel
   - [ ] Repositories
 - [ ] Add integration tests for:
   - [x] Database operations (basic test exists)
   - [ ] Repository implementations
   - [ ] UI flows
 - [ ] Add widget tests for:
-  - [x] TodoCard
-  - [x] TodoForm
-  - [x] TodoList
+  - [x] MementoCard
+  - [x] MementoForm
+  - [x] MementoList
+  - [x] LabelsManagement
   - [x] Search functionality
     - [x] Search field interaction
     - [x] Results display
@@ -82,6 +84,18 @@
 - [x] Enhance corporate design with slim, professional look
 - [x] Add more feature-rich elements and visual polish
 - [x] Improve overall user experience with better animations
+
+## Memento App Feature Implementation (Per Specification)
+- [x] Implement Labels/Tags System with color-coded labels
+- [x] Create Labels Management Screen with full CRUD operations
+- [x] Add Labels button to main interface for easy access
+- [x] Fix database mapper and repository implementation issues
+- [ ] Add Details/Notes System with timestamped notes and favorites
+- [ ] Create Settings Screen with theme customization
+- [ ] Implement Data Export/Import functionality (JSON)
+- [ ] Add Reminder System for scheduled messages
+- [ ] Implement Gamification System (achievements, quests)
+- [ ] Enhance Memento Details View with all profile information
 
 ## Optional Enhancements
 - [ ] Add date-based filtering

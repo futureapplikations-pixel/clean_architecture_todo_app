@@ -695,13 +695,28 @@ class Labels extends Table with TableInfo<Labels, Label> {
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
   static const VerificationMeta _colorMeta = const VerificationMeta('color');
-  late final GeneratedColumn<int> color = GeneratedColumn<int>(
+  late final GeneratedColumn<String> color = GeneratedColumn<String>(
       'color', aliasedName, false,
-      type: DriftSqlType.int,
+      type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  late final GeneratedColumn<String> createdAt = GeneratedColumn<String>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
   @override
-  List<GeneratedColumn> get $columns => [id, name, color];
+  List<GeneratedColumn> get $columns =>
+      [id, name, color, createdAt, description];
   @override
   String get aliasedName => _alias ?? 'labels';
   @override
@@ -726,6 +741,18 @@ class Labels extends Table with TableInfo<Labels, Label> {
     } else if (isInserting) {
       context.missing(_colorMeta);
     }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
     return context;
   }
 
@@ -740,7 +767,11 @@ class Labels extends Table with TableInfo<Labels, Label> {
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       color: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}color'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}color'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}created_at'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
     );
   }
 
@@ -756,14 +787,25 @@ class Labels extends Table with TableInfo<Labels, Label> {
 class Label extends DataClass implements Insertable<Label> {
   final int id;
   final String name;
-  final int color;
-  const Label({required this.id, required this.name, required this.color});
+  final String color;
+  final String createdAt;
+  final String? description;
+  const Label(
+      {required this.id,
+      required this.name,
+      required this.color,
+      required this.createdAt,
+      this.description});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    map['color'] = Variable<int>(color);
+    map['color'] = Variable<String>(color);
+    map['created_at'] = Variable<String>(createdAt);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
     return map;
   }
 
@@ -772,6 +814,10 @@ class Label extends DataClass implements Insertable<Label> {
       id: Value(id),
       name: Value(name),
       color: Value(color),
+      createdAt: Value(createdAt),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
     );
   }
 
@@ -781,7 +827,9 @@ class Label extends DataClass implements Insertable<Label> {
     return Label(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      color: serializer.fromJson<int>(json['color']),
+      color: serializer.fromJson<String>(json['color']),
+      createdAt: serializer.fromJson<String>(json['created_at']),
+      description: serializer.fromJson<String?>(json['description']),
     );
   }
   @override
@@ -790,69 +838,100 @@ class Label extends DataClass implements Insertable<Label> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'color': serializer.toJson<int>(color),
+      'color': serializer.toJson<String>(color),
+      'created_at': serializer.toJson<String>(createdAt),
+      'description': serializer.toJson<String?>(description),
     };
   }
 
-  Label copyWith({int? id, String? name, int? color}) => Label(
+  Label copyWith(
+          {int? id,
+          String? name,
+          String? color,
+          String? createdAt,
+          Value<String?> description = const Value.absent()}) =>
+      Label(
         id: id ?? this.id,
         name: name ?? this.name,
         color: color ?? this.color,
+        createdAt: createdAt ?? this.createdAt,
+        description: description.present ? description.value : this.description,
       );
   @override
   String toString() {
     return (StringBuffer('Label(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('color: $color')
+          ..write('color: $color, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, color);
+  int get hashCode => Object.hash(id, name, color, createdAt, description);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Label &&
           other.id == this.id &&
           other.name == this.name &&
-          other.color == this.color);
+          other.color == this.color &&
+          other.createdAt == this.createdAt &&
+          other.description == this.description);
 }
 
 class LabelsCompanion extends UpdateCompanion<Label> {
   final Value<int> id;
   final Value<String> name;
-  final Value<int> color;
+  final Value<String> color;
+  final Value<String> createdAt;
+  final Value<String?> description;
   const LabelsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.color = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.description = const Value.absent(),
   });
   LabelsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    required int color,
+    required String color,
+    required String createdAt,
+    this.description = const Value.absent(),
   })  : name = Value(name),
-        color = Value(color);
+        color = Value(color),
+        createdAt = Value(createdAt);
   static Insertable<Label> custom({
     Expression<int>? id,
     Expression<String>? name,
-    Expression<int>? color,
+    Expression<String>? color,
+    Expression<String>? createdAt,
+    Expression<String>? description,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (color != null) 'color': color,
+      if (createdAt != null) 'created_at': createdAt,
+      if (description != null) 'description': description,
     });
   }
 
   LabelsCompanion copyWith(
-      {Value<int>? id, Value<String>? name, Value<int>? color}) {
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? color,
+      Value<String>? createdAt,
+      Value<String?>? description}) {
     return LabelsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       color: color ?? this.color,
+      createdAt: createdAt ?? this.createdAt,
+      description: description ?? this.description,
     );
   }
 
@@ -866,7 +945,13 @@ class LabelsCompanion extends UpdateCompanion<Label> {
       map['name'] = Variable<String>(name.value);
     }
     if (color.present) {
-      map['color'] = Variable<int>(color.value);
+      map['color'] = Variable<String>(color.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
     }
     return map;
   }
@@ -876,7 +961,9 @@ class LabelsCompanion extends UpdateCompanion<Label> {
     return (StringBuffer('LabelsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('color: $color')
+          ..write('color: $color, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }
@@ -1196,9 +1283,11 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
   }
 
   Selectable<Label> _getLabels() {
-    return customSelect('SELECT * FROM labels', variables: [], readsFrom: {
-      labels,
-    }).asyncMap(labels.mapFromRow);
+    return customSelect('SELECT * FROM labels ORDER BY created_at DESC',
+        variables: [],
+        readsFrom: {
+          labels,
+        }).asyncMap(labels.mapFromRow);
   }
 
   Selectable<Label> _getLabelById(int id) {
@@ -1211,20 +1300,28 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
         }).asyncMap(labels.mapFromRow);
   }
 
-  Future<int> _insertLabel(String name, int color) {
+  Future<int> _insertLabel(
+      String name, String color, String createdAt, String? description) {
     return customInsert(
-      'INSERT INTO labels (name, color) VALUES (?1, ?2)',
-      variables: [Variable<String>(name), Variable<int>(color)],
+      'INSERT INTO labels (name, color, created_at, description) VALUES (?1, ?2, ?3, ?4)',
+      variables: [
+        Variable<String>(name),
+        Variable<String>(color),
+        Variable<String>(createdAt),
+        Variable<String>(description)
+      ],
       updates: {labels},
     );
   }
 
-  Future<int> _updateLabel(String name, int color, int id) {
+  Future<int> _updateLabel(
+      String name, String color, String? description, int id) {
     return customUpdate(
-      'UPDATE labels SET name = ?1, color = ?2 WHERE id = ?3',
+      'UPDATE labels SET name = ?1, color = ?2, description = ?3 WHERE id = ?4',
       variables: [
         Variable<String>(name),
-        Variable<int>(color),
+        Variable<String>(color),
+        Variable<String>(description),
         Variable<int>(id)
       ],
       updates: {labels},

@@ -57,7 +57,9 @@ _deleteAllMementos:
 CREATE TABLE IF NOT EXISTS [labels] (
    [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
    [name] TEXT NOT NULL,
-   [color] INTEGER NOT NULL
+   [color] TEXT NOT NULL,
+   [created_at] TEXT NOT NULL,
+   [description] TEXT
 );
 
 CREATE TABLE IF NOT EXISTS [memento_labels] (
@@ -69,17 +71,17 @@ CREATE TABLE IF NOT EXISTS [memento_labels] (
 );
 
 _getLabels:
-    SELECT * FROM [labels];
+    SELECT * FROM [labels] ORDER BY created_at DESC;
 _getLabelById:
     SELECT * FROM [labels]
     WHERE id = :id
     LIMIT 1;
 _insertLabel:
-    INSERT INTO [labels] (name, color)
-    VALUES (:name, :color);
+    INSERT INTO [labels] (name, color, created_at, description)
+    VALUES (:name, :color, :createdAt, :description);
 _updateLabel:
     UPDATE [labels]
-    SET name = :name, color = :color
+    SET name = :name, color = :color, description = :description
     WHERE id = :id;
 _deleteLabel:
     DELETE FROM [labels]
@@ -94,4 +96,3 @@ _addLabelToMemento:
 _removeLabelFromMemento:
     DELETE FROM memento_labels
     WHERE memento_id = :mementoId AND label_id = :labelId;
-

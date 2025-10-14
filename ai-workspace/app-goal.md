@@ -65,3 +65,11 @@ Memento is a personal relationship management application designed to help users
    - Added sophisticated empty states with actionable buttons and contextual messaging.
    - Enhanced FAB with gradient design and shadow effects for premium feel.
    - Improved overall visual polish with Material 3 design principles and corporate color scheme.
+10. **Labels/Tags System Implementation**
+    - 2025-10-14 15:57 CEST: Implemented complete labels/tags system as per specification.
+    - Created Label domain model with color-coded labels and descriptions.
+    - Added labels management screen with full CRUD operations for labels.
+    - Integrated labels button in main AppBar for easy access to label management.
+    - Enhanced database schema to support labels and memento-label relationships.
+    - Added professional label cards with color indicators and edit/delete functionality.
+    - Fixed database mapper and repository implementation for proper compilation.

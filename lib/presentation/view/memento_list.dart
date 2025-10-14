@@ -10,6 +10,7 @@ import '../widgets/master_detail.dart';
 import 'memento_form.dart';
 import '../widgets/chips_bar.dart';
 import '../widgets/memento_card.dart';
+import 'labels_management.dart';
 
 class MementoListPage extends HookConsumerWidget {
   @override
@@ -133,6 +134,29 @@ class MementoListPage extends HookConsumerWidget {
             ),
           ) : null,
           actions: [
+            Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.secondary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: IconButton(
+                icon: Icon(
+                  Icons.label,
+                  color: theme.colorScheme.secondary,
+                  size: 20,
+                ),
+                tooltip: 'Manage Labels',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const LabelsManagementPage(),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
             Container(
               decoration: BoxDecoration(
                 color: theme.colorScheme.error.withOpacity(0.1),
