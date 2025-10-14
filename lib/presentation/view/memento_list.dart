@@ -102,6 +102,24 @@ class MementoListPage extends HookConsumerWidget {
               ),
               child: IconButton(
                 icon: Icon(
+                  Icons.settings,
+                  color: theme.colorScheme.secondary,
+                  size: 20,
+                ),
+                tooltip: 'Settings',
+                onPressed: () {
+                  context.go('/settings');
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.secondary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: IconButton(
+                icon: Icon(
                   Icons.emoji_events,
                   color: theme.colorScheme.secondary,
                   size: 20,

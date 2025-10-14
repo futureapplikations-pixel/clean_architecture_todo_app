@@ -210,15 +210,25 @@
   - [x] Create a new view for the Messages feature (`MessagesView`) that displays the chart and message templates.
   - [x] Add a route for `MessagesView`.
   - [x] Add a button to the `MementoListPage` to navigate to the messages view.
-- [ ] **Settings Feature**
-  - [ ] Create the settings page with all the options from the website.
-  - [ ] Implement the logic for managing user preferences.
-- [ ] **UI/UX Polishing**
-  - [ ] Replicate the animations and visual effects from the website.
-  - [ ] Ensure the app's design is consistent with the website's design.
+- [x] **Settings Feature**
+  - [x] Create `UserSettings` domain model.
+  - [x] Add a table for user settings in `schema.drift`.
+  - [x] Create a mapper for `UserSettings`.
+  - [x] Create `UserSettingsRepository` interface and implementation.
+  - [x] Create use cases for managing user settings.
+  - [x] Create the settings page UI (`SettingsView`).
+  - [x] Add a route for `SettingsView`.
+  - [x] Add a button to the `MementoListPage` to navigate to the settings view.
+  - [x] Implement the logic for managing user preferences.
+  - [x] Integrate label management.
+  - [ ] Implement data import/export.
+
+## UI/UX Polishing
+- [ ] Replicate the animations and visual effects from the website.
+- [ ] Ensure the app's design is consistent with the website's design.
 
 Next Priority:
-1. Implement Settings Feature.
+1. Implement data import/export in Settings Feature.
 2. Implement UI/UX Polishing.
 3. Add API documentation for public interfaces.
 4. Set up CI/CD pipeline with GitHub Actions.

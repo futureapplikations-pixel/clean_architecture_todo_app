@@ -233,6 +233,25 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
           category: 'professional',
         ),
       ]);
+
+      // Insert initial user settings
+      batch.insertAll(userSettings, [
+        UserSettingsCompanion.insert(
+          displayName: 'Memento User',
+          email: 'user@memento.app',
+          timezone: 'UTC',
+          dateFormat: 'mmddyyyy',
+          theme: 'light',
+          accentColor: 0xFF87A96B, // Sage Green
+          messageReminders: true,
+          birthdayReminders: true,
+          achievementNotifications: true,
+          dailyQuests: true,
+          dataEncryption: true,
+          analytics: false,
+          autoLock: false,
+        ),
+      ]);
     });
   }
 
@@ -594,5 +613,55 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   @override
   Future<void> deleteMessageTemplate(int id) {
     return _deleteMessageTemplate(id);
+  }
+
+  // User Settings operations
+  @override
+  Future<UserSettingsEntity?> getUserSettings() {
+    return _getUserSettings().getSingleOrNull();
+  }
+
+  @override
+  Future<void> insertUserSettings(UserSettingsCompanion settings) {
+    return _insertUserSettings(
+      settings.displayName.value,
+      settings.email.value,
+      settings.timezone.value,
+      settings.dateFormat.value,
+      settings.theme.value,
+      settings.accentColor.value,
+      settings.messageReminders.value,
+      settings.birthdayReminders.value,
+      settings.achievementNotifications.value,
+      settings.dailyQuests.value,
+      settings.dataEncryption.value,
+      settings.analytics.value,
+      settings.autoLock.value,
+    );
+  }
+
+  @override
+  Future<void> updateUserSettings(int id, UserSettingsCompanion settings) {
+    return _updateUserSettings(
+      settings.displayName.value,
+      settings.email.value,
+      settings.timezone.value,
+      settings.dateFormat.value,
+      settings.theme.value,
+      settings.accentColor.value,
+      settings.messageReminders.value,
+      settings.birthdayReminders.value,
+      settings.achievementNotifications.value,
+      settings.dailyQuests.value,
+      settings.dataEncryption.value,
+      settings.analytics.value,
+      settings.autoLock.value,
+      id,
+    );
+  }
+
+  @override
+  Future<void> deleteUserSettings(int id) {
+    return _deleteUserSettings(id);
   }
 }

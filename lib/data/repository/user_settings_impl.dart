@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'dart:convert';
 
 import '../../domain/model/user_settings.dart';
 import '../../domain/repository/user_settings.dart';
@@ -12,6 +13,11 @@ part 'user_settings_impl.g.dart';
 class UserSettingsRepositoryImpl extends _$UserSettingsRepositoryImpl
     implements UserSettingsRepository {
   late final Database database = ref.read(db.databaseProvider);
+
+  @override
+  Future<UserSettings> build() {
+    return getUserSettings();
+  }
 
   @override
   Future<UserSettings> getUserSettings() async {
@@ -86,5 +92,49 @@ class UserSettingsRepositoryImpl extends _$UserSettingsRepositoryImpl
     if (settings != null) {
       await database.deleteUserSettings(settings.id!);
     }
+  }
+
+  @override
+  Future<String> exportData() async {
+    final mementos = await database.getMementos();
+    final notes = await database.getNotes();
+    final scheduledMessages = await database.getScheduledMessages();
+    final messageTemplates = await database.getMessageTemplates();
+    final achievements = await database.getAchievements();
+    final quests = await database.getQuests();
+    final leaderboard = await database.getLeaderboard();
+    final userSettings = await getUserSettings();
+
+    final data = {
+      'mementos': mementos.map((e) => e.toJson()).toList(),
+      'notes': notes.map((e) => e.toJson()).toList(),
+      'scheduledMessages': scheduledMessages.map((e) => e.toJson()).toList(),
+      'messageTemplates': messageTemplates.map((e) => e.toJson()).toList(),
+      'achievements': achievements.map((e) => e.toJson()).toList(),
+      'quests': quests.map((e) => e.toJson()).toList(),
+      'leaderboard': leaderboard.map((e) => e.toJson()).toList(),
+      'userSettings': userSettings.toJson(),
+      'exportDate': DateTime.now().toIso8601String(),
+      'version': '1.0',
+    };
+
+    return jsonEncode(data);
+  }
+
+  @override
+  Future<void> importData(String data) async {
+    final Map<String, dynamic> json = jsonDecode(data);
+
+    // Clear existing data (optional, but good for a clean import)
+    await database.deleteAllMementos();
+    // TODO: Clear other tables as well
+
+    // Import mementos
+    final mementosData = (json['mementos'] as List).cast<Map<String, dynamic>>();
+    for (final mementoJson in mementosData) {
+      await database.insertMemento(db.MementosCompanion.fromJson(mementoJson));
+    }
+
+    // TODO: Import other data (notes, scheduled messages, templates, achievements, quests, leaderboard, user settings)
   }
 }

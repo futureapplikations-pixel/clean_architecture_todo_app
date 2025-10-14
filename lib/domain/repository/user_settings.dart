@@ -4,4 +4,6 @@ abstract class UserSettingsRepository {
   Future<UserSettings> getUserSettings();
   Future<void> updateUserSettings(UserSettings settings);
   Future<void> resetUserSettings();
+  Future<String> exportData();
+  Future<void> importData(String data);
 }

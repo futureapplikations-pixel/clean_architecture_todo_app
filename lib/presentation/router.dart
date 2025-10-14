@@ -8,6 +8,8 @@ import 'view/scheduled_message_form.dart';
 import 'view/achievements_dashboard.dart';
 import 'view/message_template_list_view.dart';
 import 'view/messages_view.dart';
+import 'view/settings_view.dart';
+import 'view/label_management_view.dart';
 
 final router = GoRouter(
   routes: [
@@ -51,6 +53,14 @@ final router = GoRouter(
         GoRoute(
           path: 'messages',
           builder: (context, state) => const MessagesView(),
+        ),
+        GoRoute(
+          path: 'settings',
+          builder: (context, state) => const SettingsView(),
+        ),
+        GoRoute(
+          path: 'label-management',
+          builder: (context, state) => const LabelManagementView(),
         ),
       ],
     ),

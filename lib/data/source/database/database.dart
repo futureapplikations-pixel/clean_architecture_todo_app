@@ -1,5 +1,6 @@
 import 'database_impl.dart';
 import '../../domain/model/message_template.dart';
+import '../../domain/model/user_settings.dart';
 
 abstract class Database {
   Future<List<Memento>> searchMementos(String query);
@@ -46,4 +47,10 @@ abstract class Database {
   Future<MessageTemplate> insertMessageTemplate(MessageTemplatesCompanion template);
   Future<void> updateMessageTemplate(int id, MessageTemplatesCompanion template);
   Future<void> deleteMessageTemplate(int id);
+
+  // User Settings operations
+  Future<UserSettingsEntity?> getUserSettings();
+  Future<void> insertUserSettings(UserSettingsCompanion settings);
+  Future<void> updateUserSettings(int id, UserSettingsCompanion settings);
+  Future<void> deleteUserSettings(int id);
 }
