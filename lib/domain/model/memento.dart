@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+import 'label.dart';
+import 'note.dart';
+
 class Memento extends Equatable {
   final int id;
   final String name;
@@ -10,6 +13,8 @@ class Memento extends Equatable {
   final String? jobTitle;
   final String? company;
   final DateTime? birthday;
+  final List<Label> labels;
+  final List<Note> notes;
 
   const Memento({
     required this.id,
@@ -21,6 +26,8 @@ class Memento extends Equatable {
     this.jobTitle,
     this.company,
     this.birthday,
+    this.labels = const [],
+    this.notes = const [],
   });
 
   @override
@@ -34,5 +41,7 @@ class Memento extends Equatable {
         jobTitle,
         company,
         birthday,
+        labels,
+        notes,
       ];
 }

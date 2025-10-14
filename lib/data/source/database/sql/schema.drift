@@ -95,3 +95,33 @@ _removeLabelFromMemento:
     DELETE FROM memento_labels
     WHERE memento_id = :mementoId AND label_id = :labelId;
 
+CREATE TABLE IF NOT EXISTS [notes] (
+   [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+   [memento_id] INTEGER NOT NULL,
+   [content] TEXT NOT NULL,
+   [created_at] INTEGER NOT NULL,
+   [updated_at] INTEGER,
+   [is_favorite] INTEGER NOT NULL DEFAULT 0,
+   FOREIGN KEY (memento_id) REFERENCES mementos(id)
+);
+
+_getNotes:
+    SELECT * FROM [notes];
+_getNoteById:
+    SELECT * FROM [notes]
+    WHERE id = :id
+    LIMIT 1;
+_getNotesForMemento:
+    SELECT * FROM [notes]
+    WHERE memento_id = :mementoId
+    ORDER BY is_favorite DESC, created_at DESC;
+_insertNote:
+    INSERT INTO [notes] (memento_id, content, created_at, updated_at, is_favorite)
+    VALUES (:mementoId, :content, :createdAt, :updatedAt, :isFavorite);
+_updateNote:
+    UPDATE [notes]
+    SET content = :content, updated_at = :updatedAt, is_favorite = :isFavorite
+    WHERE id = :id;
+_deleteNote:
+    DELETE FROM [notes]
+    WHERE id = :id;

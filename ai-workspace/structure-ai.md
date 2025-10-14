@@ -17,13 +17,15 @@
 - `source/`: Data sources
   - `database/`: Drift SQLite implementation
     - `connection/`: Platform-specific database connections
-    - `sql/schema.drift`: Database schema with FTS5 search
-    - `database.dart`: Database interface
-    - `database_impl.dart`: Drift database implementation
+    - `sql/schema.drift`: Database schema with FTS5 search, labels, and notes tables
+    - `database.dart`: Database interface with label and note operations
+    - `database_impl.dart`: Drift database implementation with rich profile support
 
 #### lib/domain/ (Business Logic Layer)
 - `model/`: Domain models
-  - `memento.dart`: Memento model with business logic
+  - `memento.dart`: Memento model with business logic and rich profile data
+  - `label.dart`: Label model for color-coded tagging system
+  - `note.dart`: Note model for timestamped notes with favorite feature
 - `repository/`: Repository interfaces
   - `mementos.dart`: Memento repository interface
 - `usecase/`: Business use cases (Memento-focused only)
@@ -68,17 +70,19 @@
 
 ### Notable Features
 - Full-text search using SQLite FTS5 with partial match support
-- Drift for type-safe database access
-- Riverpod for state management
-- GoRouter for navigation
-- Material 3 for UI with corporate design aesthetics
-- Cross-platform database support (native/web)
-- Real-time search in main list view with instant filtering
-- Reactive UI updates after CRUD operations
+- Rich data profiles with labels, notes, and comprehensive contact information
+- Color-coded labeling system for flexible contact organization
+- Timestamped notes with favorite/pin feature for detailed relationship tracking
+- Drift for type-safe database access with complete data persistence
+- Riverpod for state management and reactive UI updates
+- GoRouter for navigation with type-safe routing
+- Material 3 for UI with corporate design aesthetics and premium visual effects
+- Cross-platform database support (native/web) with local-first storage
+- Real-time search in main list view with instant filtering and partial match support
+- Reactive UI updates after CRUD operations with proper invalidation
 - Enhanced contact cards with gradient designs and rich information display
-- Professional empty states with actionable guidance
-- Sophisticated search bar with integrated controls
-- Premium visual effects with shadows and gradients
+- Professional empty states with actionable guidance and contextual messaging
+- Sophisticated search bar with integrated controls and result count display
 
 ### Code Generation
 - Drift: Database code (`*.g.dart`)

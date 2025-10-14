@@ -1076,6 +1076,340 @@ class MementoLabelsCompanion extends UpdateCompanion<MementoLabel> {
   }
 }
 
+class Notes extends Table with TableInfo<Notes, Note> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Notes(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'PRIMARY KEY AUTOINCREMENT NOT NULL');
+  static const VerificationMeta _mementoIdMeta =
+      const VerificationMeta('mementoId');
+  late final GeneratedColumn<int> mementoId = GeneratedColumn<int>(
+      'memento_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _contentMeta =
+      const VerificationMeta('content');
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+      'content', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+      'updated_at', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _isFavoriteMeta =
+      const VerificationMeta('isFavorite');
+  late final GeneratedColumn<int> isFavorite = GeneratedColumn<int>(
+      'is_favorite', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0',
+      defaultValue: const CustomExpression('0'));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, mementoId, content, createdAt, updatedAt, isFavorite];
+  @override
+  String get aliasedName => _alias ?? 'notes';
+  @override
+  String get actualTableName => 'notes';
+  @override
+  VerificationContext validateIntegrity(Insertable<Note> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('memento_id')) {
+      context.handle(_mementoIdMeta,
+          mementoId.isAcceptableOrUnknown(data['memento_id']!, _mementoIdMeta));
+    } else if (isInserting) {
+      context.missing(_mementoIdMeta);
+    }
+    if (data.containsKey('content')) {
+      context.handle(_contentMeta,
+          content.isAcceptableOrUnknown(data['content']!, _contentMeta));
+    } else if (isInserting) {
+      context.missing(_contentMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    }
+    if (data.containsKey('is_favorite')) {
+      context.handle(
+          _isFavoriteMeta,
+          isFavorite.isAcceptableOrUnknown(
+              data['is_favorite']!, _isFavoriteMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Note map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Note(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      mementoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}memento_id'])!,
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}content'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}updated_at']),
+      isFavorite: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}is_favorite'])!,
+    );
+  }
+
+  @override
+  Notes createAlias(String alias) {
+    return Notes(attachedDatabase, alias);
+  }
+
+  @override
+  List<String> get customConstraints =>
+      const ['FOREIGN KEY(memento_id)REFERENCES mementos(id)'];
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class Note extends DataClass implements Insertable<Note> {
+  final int id;
+  final int mementoId;
+  final String content;
+  final int createdAt;
+  final int? updatedAt;
+  final int isFavorite;
+  const Note(
+      {required this.id,
+      required this.mementoId,
+      required this.content,
+      required this.createdAt,
+      this.updatedAt,
+      required this.isFavorite});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['memento_id'] = Variable<int>(mementoId);
+    map['content'] = Variable<String>(content);
+    map['created_at'] = Variable<int>(createdAt);
+    if (!nullToAbsent || updatedAt != null) {
+      map['updated_at'] = Variable<int>(updatedAt);
+    }
+    map['is_favorite'] = Variable<int>(isFavorite);
+    return map;
+  }
+
+  NotesCompanion toCompanion(bool nullToAbsent) {
+    return NotesCompanion(
+      id: Value(id),
+      mementoId: Value(mementoId),
+      content: Value(content),
+      createdAt: Value(createdAt),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
+      isFavorite: Value(isFavorite),
+    );
+  }
+
+  factory Note.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Note(
+      id: serializer.fromJson<int>(json['id']),
+      mementoId: serializer.fromJson<int>(json['memento_id']),
+      content: serializer.fromJson<String>(json['content']),
+      createdAt: serializer.fromJson<int>(json['created_at']),
+      updatedAt: serializer.fromJson<int?>(json['updated_at']),
+      isFavorite: serializer.fromJson<int>(json['is_favorite']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'memento_id': serializer.toJson<int>(mementoId),
+      'content': serializer.toJson<String>(content),
+      'created_at': serializer.toJson<int>(createdAt),
+      'updated_at': serializer.toJson<int?>(updatedAt),
+      'is_favorite': serializer.toJson<int>(isFavorite),
+    };
+  }
+
+  Note copyWith(
+          {int? id,
+          int? mementoId,
+          String? content,
+          int? createdAt,
+          Value<int?> updatedAt = const Value.absent(),
+          int? isFavorite}) =>
+      Note(
+        id: id ?? this.id,
+        mementoId: mementoId ?? this.mementoId,
+        content: content ?? this.content,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
+        isFavorite: isFavorite ?? this.isFavorite,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Note(')
+          ..write('id: $id, ')
+          ..write('mementoId: $mementoId, ')
+          ..write('content: $content, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isFavorite: $isFavorite')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, mementoId, content, createdAt, updatedAt, isFavorite);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Note &&
+          other.id == this.id &&
+          other.mementoId == this.mementoId &&
+          other.content == this.content &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isFavorite == this.isFavorite);
+}
+
+class NotesCompanion extends UpdateCompanion<Note> {
+  final Value<int> id;
+  final Value<int> mementoId;
+  final Value<String> content;
+  final Value<int> createdAt;
+  final Value<int?> updatedAt;
+  final Value<int> isFavorite;
+  const NotesCompanion({
+    this.id = const Value.absent(),
+    this.mementoId = const Value.absent(),
+    this.content = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isFavorite = const Value.absent(),
+  });
+  NotesCompanion.insert({
+    this.id = const Value.absent(),
+    required int mementoId,
+    required String content,
+    required int createdAt,
+    this.updatedAt = const Value.absent(),
+    this.isFavorite = const Value.absent(),
+  })  : mementoId = Value(mementoId),
+        content = Value(content),
+        createdAt = Value(createdAt);
+  static Insertable<Note> custom({
+    Expression<int>? id,
+    Expression<int>? mementoId,
+    Expression<String>? content,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? isFavorite,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (mementoId != null) 'memento_id': mementoId,
+      if (content != null) 'content': content,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isFavorite != null) 'is_favorite': isFavorite,
+    });
+  }
+
+  NotesCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? mementoId,
+      Value<String>? content,
+      Value<int>? createdAt,
+      Value<int?>? updatedAt,
+      Value<int>? isFavorite}) {
+    return NotesCompanion(
+      id: id ?? this.id,
+      mementoId: mementoId ?? this.mementoId,
+      content: content ?? this.content,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (mementoId.present) {
+      map['memento_id'] = Variable<int>(mementoId.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (isFavorite.present) {
+      map['is_favorite'] = Variable<int>(isFavorite.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotesCompanion(')
+          ..write('id: $id, ')
+          ..write('mementoId: $mementoId, ')
+          ..write('content: $content, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isFavorite: $isFavorite')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$DatabaseImpl extends GeneratedDatabase {
   _$DatabaseImpl(QueryExecutor e) : super(e);
   _$DatabaseImpl.connect(DatabaseConnection c) : super.connect(c);
@@ -1092,6 +1426,7 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
       'mementos_update');
   late final Labels labels = Labels(this);
   late final MementoLabels mementoLabels = MementoLabels(this);
+  late final Notes notes = Notes(this);
   Selectable<SearchMementosResult> _searchMementos(String query) {
     return customSelect(
         'SELECT"result"."id" AS "nested_0.id", "result"."name" AS "nested_0.name", "result"."photo" AS "nested_0.photo", "result"."email" AS "nested_0.email", "result"."phone" AS "nested_0.phone", "result"."context" AS "nested_0.context", "result"."job_title" AS "nested_0.job_title", "result"."company" AS "nested_0.company", "result"."birthday" AS "nested_0.birthday" FROM memento_entries INNER JOIN mementos AS result ON result.id = memento_entries."rowid" WHERE memento_entries MATCH ?1 ORDER BY rank',
@@ -1270,6 +1605,72 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
     );
   }
 
+  Selectable<Note> _getNotes() {
+    return customSelect('SELECT * FROM notes', variables: [], readsFrom: {
+      notes,
+    }).asyncMap(notes.mapFromRow);
+  }
+
+  Selectable<Note> _getNoteById(int id) {
+    return customSelect('SELECT * FROM notes WHERE id = ?1 LIMIT 1',
+        variables: [
+          Variable<int>(id)
+        ],
+        readsFrom: {
+          notes,
+        }).asyncMap(notes.mapFromRow);
+  }
+
+  Selectable<Note> _getNotesForMemento(int mementoId) {
+    return customSelect(
+        'SELECT * FROM notes WHERE memento_id = ?1 ORDER BY is_favorite DESC, created_at DESC',
+        variables: [
+          Variable<int>(mementoId)
+        ],
+        readsFrom: {
+          notes,
+        }).asyncMap(notes.mapFromRow);
+  }
+
+  Future<int> _insertNote(int mementoId, String content, int createdAt,
+      int? updatedAt, int isFavorite) {
+    return customInsert(
+      'INSERT INTO notes (memento_id, content, created_at, updated_at, is_favorite) VALUES (?1, ?2, ?3, ?4, ?5)',
+      variables: [
+        Variable<int>(mementoId),
+        Variable<String>(content),
+        Variable<int>(createdAt),
+        Variable<int>(updatedAt),
+        Variable<int>(isFavorite)
+      ],
+      updates: {notes},
+    );
+  }
+
+  Future<int> _updateNote(
+      String content, int? updatedAt, int isFavorite, int id) {
+    return customUpdate(
+      'UPDATE notes SET content = ?1, updated_at = ?2, is_favorite = ?3 WHERE id = ?4',
+      variables: [
+        Variable<String>(content),
+        Variable<int>(updatedAt),
+        Variable<int>(isFavorite),
+        Variable<int>(id)
+      ],
+      updates: {notes},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> _deleteNote(int id) {
+    return customUpdate(
+      'DELETE FROM notes WHERE id = ?1',
+      variables: [Variable<int>(id)],
+      updates: {notes},
+      updateKind: UpdateKind.delete,
+    );
+  }
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1281,7 +1682,8 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
         mementosDelete,
         mementosUpdate,
         labels,
-        mementoLabels
+        mementoLabels,
+        notes
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
