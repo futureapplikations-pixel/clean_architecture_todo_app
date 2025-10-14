@@ -65,6 +65,18 @@
 - [x] Update app-goal.md with real-time search feature
 - [x] Update structure-ai.md with modified file connections
 
+## CRUD Operations Enhancement
+- [x] Add edit functionality directly from list items
+- [x] Add delete functionality directly from list items
+- [x] Improve visual feedback for all operations
+- [x] Add confirmation dialogs for destructive operations
+
+## Search Enhancement - Partial Match
+- [x] Implement partial match search for better user experience
+- [x] Add search suggestions/autocomplete functionality
+- [x] Show search results count
+- [ ] Add search history functionality
+
 ## Optional Enhancements
 - [ ] Add date-based filtering
 - [ ] Add priority levels for todos

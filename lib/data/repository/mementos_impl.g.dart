@@ -7,7 +7,7 @@ part of 'mementos_impl.dart';
 // **************************************************************************
 
 String _$mementosRepositoryImplHash() =>
-    r'cce25c79a22e3c2bce2b4b17ecf2f0c8c0f5ecac';
+    r'1a6fb5f6bf34e179a125a9db43204b39ad441aff';
 
 /// See also [MementosRepositoryImpl].
 @ProviderFor(MementosRepositoryImpl)

@@ -66,7 +66,34 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
   @override
   Future<List<Memento>> searchMementos(String query) {
     if (query.isEmpty) return Future.value([]);
-    return database.searchMementos(query).then(MementoMapper.transformToModelList);
+
+    // For partial matches, we'll search with a wildcard at the end
+    // This allows users to see results as they type
+    final searchPattern = '$query*';
+
+    return database.searchMementos(searchPattern).then((results) {
+      // Sort results by relevance (shorter matches first, then alphabetically)
+      final sortedResults = results.map(MementoMapper.transformToModel).toList();
+
+      // Custom sorting for better user experience
+      sortedResults.sort((a, b) {
+        // Prioritize exact matches at the beginning
+        final aStartsWith = a.name.toLowerCase().startsWith(query.toLowerCase());
+        final bStartsWith = b.name.toLowerCase().startsWith(query.toLowerCase());
+
+        if (aStartsWith && !bStartsWith) return -1;
+        if (!aStartsWith && bStartsWith) return 1;
+
+        // Then sort by length (shorter names first)
+        final lengthCompare = a.name.length.compareTo(b.name.length);
+        if (lengthCompare != 0) return lengthCompare;
+
+        // Finally sort alphabetically
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      });
+
+      return sortedResults;
+    });
   }
 
   @override

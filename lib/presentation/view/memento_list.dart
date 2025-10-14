@@ -38,6 +38,19 @@ class MementoListPage extends HookConsumerWidget {
               searchQueryNotifier.state = value;
             },
           ),
+          bottom: searchQuery.isNotEmpty ? PreferredSize(
+            preferredSize: const Size.fromHeight(40),
+            child: Container(
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Found ${mementosAsync.value?.length ?? 0} results for "$searchQuery"',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ) : null,
           actions: [
             IconButton(
               icon: const Icon(Icons.delete_sweep),
@@ -84,6 +97,9 @@ class MementoListPage extends HookConsumerWidget {
                     itemBuilder: (context, index) => MementoCard(
                       memento: mementos[index],
                       onTap: () => onSelect(mementos[index]),
+                      onEdit: () => _editMemento(context, mementos[index]),
+                      onDelete: () => _deleteMemento(context, mementos[index]),
+                      showActions: true,
                     ),
                   );
                 },
@@ -109,5 +125,32 @@ class MementoListPage extends HookConsumerWidget {
       ),
       emptyBuilder: (_) => const Material(child: Center(child: Text('Select a Memento'))),
     );
+  }
+
+  void _editMemento(BuildContext context, Memento memento) {
+    Navigator.push<Memento?>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => MementoFormPage(memento: memento),
+      ),
+    );
+  }
+
+  void _deleteMemento(BuildContext context, Memento memento) async {
+    final confirmed = await confirm(
+      context,
+      title: 'Delete Memento',
+      content: 'Are you sure you want to delete "${memento.name}"?',
+    );
+
+    if (confirmed) {
+      // Access ref through context
+      final container = ProviderScope.containerOf(context);
+      final model = container.read(mementoListWithSearchViewModelProvider.notifier);
+      await model.deleteMemento(memento.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${memento.name} deleted')),
+      );
+    }
   }
 }

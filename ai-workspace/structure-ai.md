@@ -48,7 +48,7 @@
     - `search_query_notifier.dart`: Provider for managing search query state.
     - `memento_filter_kind.dart`: Enum for filtering mementos (all, favorites, recent).
 - `widgets/`: Reusable UI components
-  - `memento_card.dart`: A card widget to display a memento in a list.
+  - `memento_card.dart`: Enhanced card widget with edit/delete actions and improved information display.
 
 ## Key Connections
 

@@ -48,3 +48,13 @@ Memento is a personal relationship management application designed to help users
    - Updated viewmodel to correctly watch search query changes using Riverpod's reactive providers.
    - Simplified UI implementation to eliminate controller conflicts that interfered with search.
    - Search now updates instantly without requiring additional user interactions.
+7. **Enhanced CRUD Operations**
+   - 2025-10-14 15:39 CEST: Added direct edit and delete functionality to list items via popup menu.
+   - Enhanced MementoCard widget with action buttons for better user experience.
+   - Added confirmation dialogs for delete operations to prevent accidental deletions.
+   - Improved visual feedback with snackbar notifications for all operations.
+8. **Partial Match Search Enhancement**
+   - 2025-10-14 15:39 CEST: Implemented intelligent partial match search with wildcard support.
+   - Added search results count display in AppBar for better user feedback.
+   - Enhanced search result sorting for better relevance (exact matches first, then by length).
+   - Users can now see results as they type, making search more interactive and fun.
