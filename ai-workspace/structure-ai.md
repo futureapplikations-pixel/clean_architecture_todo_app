@@ -68,14 +68,18 @@
    - Mappers transform between Entity ↔ Model
 
 ### Notable Features
-- Full-text search using SQLite FTS5
+- Full-text search using SQLite FTS5 with partial match support
 - Drift for type-safe database access
 - Riverpod for state management
 - GoRouter for navigation
-- Material 3 for UI
+- Material 3 for UI with corporate design aesthetics
 - Cross-platform database support (native/web)
 - Real-time search in main list view with instant filtering
 - Reactive UI updates after CRUD operations
+- Enhanced contact cards with gradient designs and rich information display
+- Professional empty states with actionable guidance
+- Sophisticated search bar with integrated controls
+- Premium visual effects with shadows and gradients
 
 ### Code Generation
 - Drift: Database code (`*.g.dart`)
