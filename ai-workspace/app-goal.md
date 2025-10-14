@@ -3,9 +3,9 @@ Memento is a personal relationship management application designed to help users
 
 ## Core Features
 - **Memento Management**: Full CRUD operations for contacts (mementos).
-- **Rich Data Profiles**: Store name, photo, contact info, context, professional details, personal dates, and notes.
+- **Rich Data Profiles**: Store name, photo, contact info, context, professional details, personal dates, notes, and scheduled messages.
 - **Search**: Real-time search across all memento data.
-- **Reminders**: Schedule future messages (SMS, Email, WhatsApp) with local notifications.
+- **Reminders and Scheduling**: Schedule future messages (SMS, Email, WhatsApp) with local notifications and reminder system.
 - **Data Management**: Local-first storage, label management, and JSON import/export.
 - **Gamification**: Achievements, quests, and seasons to encourage engagement.
 - **Settings**: Theme customization and behavior toggles.
@@ -90,3 +90,21 @@ Memento is a personal relationship management application designed to help users
     - Added proper date parsing and validation for user-friendly text input.
     - Maintained real date storage in database for advanced querying and date-based operations.
     - Users can now type birthdays as plain text while data is stored optimally for database searches.
+13. **Reminders and Scheduling System**
+    - 2025-10-14 21:48 CEST: Implemented comprehensive reminders and scheduling system for scheduled messages.
+    - Added ScheduledMessage domain model with support for SMS, Email, and WhatsApp message types.
+    - Created scheduled_messages database table with full CRUD operations and notification support.
+    - Implemented NotificationService for handling local notifications with timezone support.
+    - Added repository layer with ScheduledMessagesRepository interface and implementation.
+    - Created use cases for scheduling, updating, and canceling messages with proper validation.
+    - Updated Memento model to include scheduled messages relationship for complete profile management.
+    - Added notification dependencies (flutter_local_notifications, timezone) to support cross-platform notifications.
+14. **UI Integration for Reminders and Scheduling**
+    - 2025-10-14 21:56 CEST: Integrated reminders and scheduling system into the user interface.
+    - Created ScheduledMessagesListView with filtering, sorting, and empty state handling.
+    - Created ScheduledMessageForm for creating and editing scheduled messages with validation.
+    - Created ScheduledMessageCard widget with status indicators and action buttons.
+    - Added navigation routes for scheduled messages screens with GoRouter integration.
+    - Added scheduled messages access button to main app bar for easy navigation.
+    - Implemented floating action button for quick message scheduling access.
+    - Created viewmodel for managing scheduled messages list with reactive state updates.

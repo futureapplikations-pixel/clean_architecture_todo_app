@@ -12,33 +12,44 @@
 #### lib/data/ (Data Layer)
 - `mapper/`: Data mappers
   - `memento.dart`: Maps between Memento entity and domain model
+  - `scheduled_message.dart`: Maps between ScheduledMessage entity and domain model
 - `repository/`: Repository implementations
   - `mementos_impl.dart`: Implements MementosRepository using Drift database
+  - `scheduled_messages_impl.dart`: Implements ScheduledMessagesRepository using Drift database
+- `service/`: Services for external integrations
+  - `notification_service.dart`: Handles local notifications for scheduled messages
 - `source/`: Data sources
   - `database/`: Drift SQLite implementation
     - `connection/`: Platform-specific database connections
-    - `sql/schema.drift`: Database schema with FTS5 search, labels, and notes tables
-    - `database.dart`: Database interface with label and note operations
-    - `database_impl.dart`: Drift database implementation with rich profile support
+    - `sql/schema.drift`: Database schema with FTS5 search, labels, notes, and scheduled_messages tables
+    - `database.dart`: Database interface with label, note, and scheduled message operations
+    - `database_impl.dart`: Drift database implementation with rich profile support and scheduled messages
 
 #### lib/domain/ (Business Logic Layer)
 - `model/`: Domain models
   - `memento.dart`: Memento model with business logic and rich profile data
   - `label.dart`: Label model for color-coded tagging system
   - `note.dart`: Note model for timestamped notes with favorite feature
+  - `scheduled_message.dart`: ScheduledMessage model with message types and scheduling logic
 - `repository/`: Repository interfaces
   - `mementos.dart`: Memento repository interface
-- `usecase/`: Business use cases (Memento-focused only)
+  - `scheduled_messages.dart`: ScheduledMessages repository interface
+- `usecase/`: Business use cases
+  - `schedule_message.dart`: Use case for scheduling new messages
+  - `update_scheduled_message.dart`: Use case for updating existing scheduled messages
+  - `cancel_scheduled_message.dart`: Use case for canceling/deleting scheduled messages
 
 #### lib/presentation/ (UI Layer)
 - `app.dart`: Main app configuration
-- `router.dart`: GoRouter configuration
+- `router.dart`: GoRouter configuration with scheduled messages routes
 - `theme.dart`: Material 3 theme configuration
 - `view/`: UI screens
-  - `memento_list.dart`: The main screen that displays the list of mementos.
+  - `memento_list.dart`: The main screen that displays the list of mementos with scheduled messages access.
   - `memento_form.dart`: The screen for creating and editing mementos.
   - `memento_details.dart`: The screen that displays the details of a memento.
   - `search_memento_list.dart`: The screen for searching mementos.
+  - `scheduled_messages_list.dart`: Screen for displaying and managing scheduled messages with filtering.
+  - `scheduled_message_form.dart`: Form for creating and editing scheduled messages with validation.
 - `viewmodel/`: Screen view models
   - `mementoform/`: Memento creation/editing
     - `memento_form.dart`: ViewModel for the memento form.
@@ -48,8 +59,10 @@
     - `search_memento_list.dart`: Original ViewModel for searching mementos (now replaced by inline search).
     - `search_query_notifier.dart`: Provider for managing search query state.
     - `memento_filter_kind.dart`: Enum for filtering mementos (all, favorites, recent).
+  - `scheduled_messages_list.dart`: ViewModel for managing scheduled messages list with reactive updates.
 - `widgets/`: Reusable UI components
   - `memento_card.dart`: Enhanced card widget with edit/delete actions and improved information display.
+  - `scheduled_message_card.dart`: Card widget for displaying scheduled messages with status indicators and actions.
 
 ## Key Connections
 
@@ -73,6 +86,10 @@
 - Rich data profiles with labels, notes, and comprehensive contact information
 - Color-coded labeling system for flexible contact organization
 - Timestamped notes with favorite/pin feature for detailed relationship tracking
+- Scheduled messages system with SMS, Email, and WhatsApp support
+- Local notifications for message reminders with timezone support
+- Cross-platform notification support (iOS, Android, Web, Desktop)
+- Complete CRUD operations for scheduled messages with validation
 - Drift for type-safe database access with complete data persistence
 - Riverpod for state management and reactive UI updates
 - GoRouter for navigation with type-safe routing

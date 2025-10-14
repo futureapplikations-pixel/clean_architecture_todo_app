@@ -169,4 +169,63 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
 
   @override
   Future<void> deleteNote(int id) => _deleteNote(id);
+
+  // Scheduled Message operations
+  @override
+  Future<List<ScheduledMessage>> getScheduledMessages() => _getScheduledMessages().get();
+
+  @override
+  Future<ScheduledMessage?> getScheduledMessageById(int id) => _getScheduledMessageById(id).getSingleOrNull();
+
+  @override
+  Future<List<ScheduledMessage>> getScheduledMessagesForMemento(int mementoId) {
+    return _getScheduledMessagesForMemento(mementoId).get();
+  }
+
+  @override
+  Future<List<ScheduledMessage>> getActiveScheduledMessages() {
+    return _getActiveScheduledMessages().get();
+  }
+
+  @override
+  Future<List<ScheduledMessage>> getDueScheduledMessages(DateTime currentTime) {
+    return _getDueScheduledMessages(currentTime.millisecondsSinceEpoch).get();
+  }
+
+  @override
+  Future<ScheduledMessage> insertScheduledMessage(ScheduledMessagesCompanion scheduledMessage) async {
+    final id = await _insertScheduledMessage(
+      scheduledMessage.mementoId.value,
+      scheduledMessage.messageType.value,
+      scheduledMessage.title.value,
+      scheduledMessage.content.value,
+      scheduledMessage.scheduledDateTime.value,
+      scheduledMessage.isActive.value,
+      scheduledMessage.createdAt.value,
+      scheduledMessage.sentAt.value,
+    );
+    return _getScheduledMessageById(id).getSingle();
+  }
+
+  @override
+  Future<void> updateScheduledMessage(int id, ScheduledMessagesCompanion scheduledMessage) async {
+    await _updateScheduledMessage(
+      scheduledMessage.mementoId.value,
+      scheduledMessage.messageType.value,
+      scheduledMessage.title.value,
+      scheduledMessage.content.value,
+      scheduledMessage.scheduledDateTime.value,
+      scheduledMessage.isActive.value,
+      scheduledMessage.sentAt.value,
+      id,
+    );
+  }
+
+  @override
+  Future<void> deleteScheduledMessage(int id) => _deleteScheduledMessage(id);
+
+  @override
+  Future<void> markScheduledMessageAsSent(int id, DateTime sentAt) {
+    return _markScheduledMessageAsSent(sentAt.millisecondsSinceEpoch, id);
+  }
 }

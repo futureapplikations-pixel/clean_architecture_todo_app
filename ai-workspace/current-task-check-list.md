@@ -145,6 +145,37 @@ Progress Update (2025-10-14):
 - [ ] Update search to include labels and notes content
 - [ ] Test complete data persistence across all features
 
+## Reminders and Scheduling Implementation
+- [x] Create ScheduledMessage domain model with message types (SMS, Email, WhatsApp)
+- [x] Update database schema to include scheduled_messages table
+- [x] Create ScheduledMessageMapper for data transformation
+- [x] Create ScheduledMessagesRepository interface and implementation
+- [x] Add local notifications dependency (flutter_local_notifications)
+- [x] Create NotificationService for handling local notifications
+- [x] Create use cases for scheduling, updating, and canceling messages
+- [x] Update Memento model to include scheduled messages relationship
+- [x] Update app-goal.md with reminders and scheduling feature
+- [x] Update structure-ai.md with new files and connections
+- [x] Update ai-infrastructure-choice.md with notification dependencies
+- [ ] Create scheduled messages list view (UI enhancement)
+- [ ] Create scheduled message form for creating/editing scheduled messages (UI enhancement)
+- [ ] Add scheduled messages management to memento details view (UI enhancement)
+- [ ] Test notification scheduling and delivery (integration testing)
+- [ ] Test complete scheduled message workflow (integration testing)
+
+## UI Integration for Reminders and Scheduling
+- [x] Create scheduled messages list view with filtering and sorting
+- [x] Create scheduled message form for creating/editing messages
+- [x] Add scheduled messages tab/section to memento details view
+- [x] Create viewmodel for scheduled messages list management
+- [x] Add navigation routes for scheduled messages screens
+- [x] Update main navigation to include scheduled messages access
+- [x] Add floating action button for quick message scheduling
+- [x] Create scheduled message card widget for list display
+- [ ] Add notification permission request flow
+- [x] Update app-goal.md with UI integration completion
+- [x] Update structure-ai.md with new UI files and connections
+
 Next Priority:
 1. Complete obsolete class cleanup
 2. Add repository implementation tests

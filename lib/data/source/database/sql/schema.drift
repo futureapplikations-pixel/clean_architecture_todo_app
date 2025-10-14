@@ -125,3 +125,52 @@ _updateNote:
 _deleteNote:
     DELETE FROM [notes]
     WHERE id = :id;
+
+CREATE TABLE IF NOT EXISTS [scheduled_messages] (
+   [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+   [memento_id] INTEGER NOT NULL,
+   [message_type] TEXT NOT NULL,
+   [title] TEXT NOT NULL,
+   [content] TEXT NOT NULL,
+   [scheduled_date_time] INTEGER NOT NULL,
+   [is_active] INTEGER NOT NULL DEFAULT 1,
+   [created_at] INTEGER NOT NULL,
+   [sent_at] INTEGER,
+   FOREIGN KEY (memento_id) REFERENCES mementos(id)
+);
+
+_getScheduledMessages:
+    SELECT * FROM [scheduled_messages]
+    ORDER BY scheduled_date_time ASC;
+_getScheduledMessageById:
+    SELECT * FROM [scheduled_messages]
+    WHERE id = :id
+    LIMIT 1;
+_getScheduledMessagesForMemento:
+    SELECT * FROM [scheduled_messages]
+    WHERE memento_id = :mementoId
+    ORDER BY scheduled_date_time ASC;
+_getActiveScheduledMessages:
+    SELECT * FROM [scheduled_messages]
+    WHERE is_active = 1
+    ORDER BY scheduled_date_time ASC;
+_getDueScheduledMessages:
+    SELECT * FROM [scheduled_messages]
+    WHERE scheduled_date_time <= :currentTime
+    AND is_active = 1
+    AND sent_at IS NULL
+    ORDER BY scheduled_date_time ASC;
+_insertScheduledMessage:
+    INSERT INTO [scheduled_messages] (memento_id, message_type, title, content, scheduled_date_time, is_active, created_at, sent_at)
+    VALUES (:mementoId, :messageType, :title, :content, :scheduledDateTime, :isActive, :createdAt, :sentAt);
+_updateScheduledMessage:
+    UPDATE [scheduled_messages]
+    SET memento_id = :mementoId, message_type = :messageType, title = :title, content = :content, scheduled_date_time = :scheduledDateTime, is_active = :isActive, sent_at = :sentAt
+    WHERE id = :id;
+_deleteScheduledMessage:
+    DELETE FROM [scheduled_messages]
+    WHERE id = :id;
+_markScheduledMessageAsSent:
+    UPDATE [scheduled_messages]
+    SET sent_at = :sentAt
+    WHERE id = :id;

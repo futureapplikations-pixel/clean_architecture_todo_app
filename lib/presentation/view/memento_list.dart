@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/model/memento.dart';
 
@@ -94,6 +95,24 @@ class MementoListPage extends HookConsumerWidget {
           ),
           bottom: null,
           actions: [
+            Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.secondary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: IconButton(
+                icon: Icon(
+                  Icons.schedule_send,
+                  color: theme.colorScheme.secondary,
+                  size: 20,
+                ),
+                tooltip: 'Scheduled Messages',
+                onPressed: () {
+                  context.go('/scheduled-messages');
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
             Container(
               decoration: BoxDecoration(
                 color: theme.colorScheme.error.withOpacity(0.1),

@@ -1410,6 +1410,461 @@ class NotesCompanion extends UpdateCompanion<Note> {
   }
 }
 
+class ScheduledMessages extends Table
+    with TableInfo<ScheduledMessages, ScheduledMessage> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ScheduledMessages(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'PRIMARY KEY AUTOINCREMENT NOT NULL');
+  static const VerificationMeta _mementoIdMeta =
+      const VerificationMeta('mementoId');
+  late final GeneratedColumn<int> mementoId = GeneratedColumn<int>(
+      'memento_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _messageTypeMeta =
+      const VerificationMeta('messageType');
+  late final GeneratedColumn<String> messageType = GeneratedColumn<String>(
+      'message_type', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _contentMeta =
+      const VerificationMeta('content');
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+      'content', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _scheduledDateTimeMeta =
+      const VerificationMeta('scheduledDateTime');
+  late final GeneratedColumn<int> scheduledDateTime = GeneratedColumn<int>(
+      'scheduled_date_time', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _isActiveMeta =
+      const VerificationMeta('isActive');
+  late final GeneratedColumn<int> isActive = GeneratedColumn<int>(
+      'is_active', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 1',
+      defaultValue: const CustomExpression('1'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _sentAtMeta = const VerificationMeta('sentAt');
+  late final GeneratedColumn<int> sentAt = GeneratedColumn<int>(
+      'sent_at', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        mementoId,
+        messageType,
+        title,
+        content,
+        scheduledDateTime,
+        isActive,
+        createdAt,
+        sentAt
+      ];
+  @override
+  String get aliasedName => _alias ?? 'scheduled_messages';
+  @override
+  String get actualTableName => 'scheduled_messages';
+  @override
+  VerificationContext validateIntegrity(Insertable<ScheduledMessage> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('memento_id')) {
+      context.handle(_mementoIdMeta,
+          mementoId.isAcceptableOrUnknown(data['memento_id']!, _mementoIdMeta));
+    } else if (isInserting) {
+      context.missing(_mementoIdMeta);
+    }
+    if (data.containsKey('message_type')) {
+      context.handle(
+          _messageTypeMeta,
+          messageType.isAcceptableOrUnknown(
+              data['message_type']!, _messageTypeMeta));
+    } else if (isInserting) {
+      context.missing(_messageTypeMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('content')) {
+      context.handle(_contentMeta,
+          content.isAcceptableOrUnknown(data['content']!, _contentMeta));
+    } else if (isInserting) {
+      context.missing(_contentMeta);
+    }
+    if (data.containsKey('scheduled_date_time')) {
+      context.handle(
+          _scheduledDateTimeMeta,
+          scheduledDateTime.isAcceptableOrUnknown(
+              data['scheduled_date_time']!, _scheduledDateTimeMeta));
+    } else if (isInserting) {
+      context.missing(_scheduledDateTimeMeta);
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('sent_at')) {
+      context.handle(_sentAtMeta,
+          sentAt.isAcceptableOrUnknown(data['sent_at']!, _sentAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ScheduledMessage map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ScheduledMessage(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      mementoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}memento_id'])!,
+      messageType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}message_type'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}content'])!,
+      scheduledDateTime: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}scheduled_date_time'])!,
+      isActive: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}is_active'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      sentAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sent_at']),
+    );
+  }
+
+  @override
+  ScheduledMessages createAlias(String alias) {
+    return ScheduledMessages(attachedDatabase, alias);
+  }
+
+  @override
+  List<String> get customConstraints =>
+      const ['FOREIGN KEY(memento_id)REFERENCES mementos(id)'];
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class ScheduledMessage extends DataClass
+    implements Insertable<ScheduledMessage> {
+  final int id;
+  final int mementoId;
+  final String messageType;
+  final String title;
+  final String content;
+  final int scheduledDateTime;
+  final int isActive;
+  final int createdAt;
+  final int? sentAt;
+  const ScheduledMessage(
+      {required this.id,
+      required this.mementoId,
+      required this.messageType,
+      required this.title,
+      required this.content,
+      required this.scheduledDateTime,
+      required this.isActive,
+      required this.createdAt,
+      this.sentAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['memento_id'] = Variable<int>(mementoId);
+    map['message_type'] = Variable<String>(messageType);
+    map['title'] = Variable<String>(title);
+    map['content'] = Variable<String>(content);
+    map['scheduled_date_time'] = Variable<int>(scheduledDateTime);
+    map['is_active'] = Variable<int>(isActive);
+    map['created_at'] = Variable<int>(createdAt);
+    if (!nullToAbsent || sentAt != null) {
+      map['sent_at'] = Variable<int>(sentAt);
+    }
+    return map;
+  }
+
+  ScheduledMessagesCompanion toCompanion(bool nullToAbsent) {
+    return ScheduledMessagesCompanion(
+      id: Value(id),
+      mementoId: Value(mementoId),
+      messageType: Value(messageType),
+      title: Value(title),
+      content: Value(content),
+      scheduledDateTime: Value(scheduledDateTime),
+      isActive: Value(isActive),
+      createdAt: Value(createdAt),
+      sentAt:
+          sentAt == null && nullToAbsent ? const Value.absent() : Value(sentAt),
+    );
+  }
+
+  factory ScheduledMessage.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ScheduledMessage(
+      id: serializer.fromJson<int>(json['id']),
+      mementoId: serializer.fromJson<int>(json['memento_id']),
+      messageType: serializer.fromJson<String>(json['message_type']),
+      title: serializer.fromJson<String>(json['title']),
+      content: serializer.fromJson<String>(json['content']),
+      scheduledDateTime: serializer.fromJson<int>(json['scheduled_date_time']),
+      isActive: serializer.fromJson<int>(json['is_active']),
+      createdAt: serializer.fromJson<int>(json['created_at']),
+      sentAt: serializer.fromJson<int?>(json['sent_at']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'memento_id': serializer.toJson<int>(mementoId),
+      'message_type': serializer.toJson<String>(messageType),
+      'title': serializer.toJson<String>(title),
+      'content': serializer.toJson<String>(content),
+      'scheduled_date_time': serializer.toJson<int>(scheduledDateTime),
+      'is_active': serializer.toJson<int>(isActive),
+      'created_at': serializer.toJson<int>(createdAt),
+      'sent_at': serializer.toJson<int?>(sentAt),
+    };
+  }
+
+  ScheduledMessage copyWith(
+          {int? id,
+          int? mementoId,
+          String? messageType,
+          String? title,
+          String? content,
+          int? scheduledDateTime,
+          int? isActive,
+          int? createdAt,
+          Value<int?> sentAt = const Value.absent()}) =>
+      ScheduledMessage(
+        id: id ?? this.id,
+        mementoId: mementoId ?? this.mementoId,
+        messageType: messageType ?? this.messageType,
+        title: title ?? this.title,
+        content: content ?? this.content,
+        scheduledDateTime: scheduledDateTime ?? this.scheduledDateTime,
+        isActive: isActive ?? this.isActive,
+        createdAt: createdAt ?? this.createdAt,
+        sentAt: sentAt.present ? sentAt.value : this.sentAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ScheduledMessage(')
+          ..write('id: $id, ')
+          ..write('mementoId: $mementoId, ')
+          ..write('messageType: $messageType, ')
+          ..write('title: $title, ')
+          ..write('content: $content, ')
+          ..write('scheduledDateTime: $scheduledDateTime, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('sentAt: $sentAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, mementoId, messageType, title, content,
+      scheduledDateTime, isActive, createdAt, sentAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ScheduledMessage &&
+          other.id == this.id &&
+          other.mementoId == this.mementoId &&
+          other.messageType == this.messageType &&
+          other.title == this.title &&
+          other.content == this.content &&
+          other.scheduledDateTime == this.scheduledDateTime &&
+          other.isActive == this.isActive &&
+          other.createdAt == this.createdAt &&
+          other.sentAt == this.sentAt);
+}
+
+class ScheduledMessagesCompanion extends UpdateCompanion<ScheduledMessage> {
+  final Value<int> id;
+  final Value<int> mementoId;
+  final Value<String> messageType;
+  final Value<String> title;
+  final Value<String> content;
+  final Value<int> scheduledDateTime;
+  final Value<int> isActive;
+  final Value<int> createdAt;
+  final Value<int?> sentAt;
+  const ScheduledMessagesCompanion({
+    this.id = const Value.absent(),
+    this.mementoId = const Value.absent(),
+    this.messageType = const Value.absent(),
+    this.title = const Value.absent(),
+    this.content = const Value.absent(),
+    this.scheduledDateTime = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.sentAt = const Value.absent(),
+  });
+  ScheduledMessagesCompanion.insert({
+    this.id = const Value.absent(),
+    required int mementoId,
+    required String messageType,
+    required String title,
+    required String content,
+    required int scheduledDateTime,
+    this.isActive = const Value.absent(),
+    required int createdAt,
+    this.sentAt = const Value.absent(),
+  })  : mementoId = Value(mementoId),
+        messageType = Value(messageType),
+        title = Value(title),
+        content = Value(content),
+        scheduledDateTime = Value(scheduledDateTime),
+        createdAt = Value(createdAt);
+  static Insertable<ScheduledMessage> custom({
+    Expression<int>? id,
+    Expression<int>? mementoId,
+    Expression<String>? messageType,
+    Expression<String>? title,
+    Expression<String>? content,
+    Expression<int>? scheduledDateTime,
+    Expression<int>? isActive,
+    Expression<int>? createdAt,
+    Expression<int>? sentAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (mementoId != null) 'memento_id': mementoId,
+      if (messageType != null) 'message_type': messageType,
+      if (title != null) 'title': title,
+      if (content != null) 'content': content,
+      if (scheduledDateTime != null) 'scheduled_date_time': scheduledDateTime,
+      if (isActive != null) 'is_active': isActive,
+      if (createdAt != null) 'created_at': createdAt,
+      if (sentAt != null) 'sent_at': sentAt,
+    });
+  }
+
+  ScheduledMessagesCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? mementoId,
+      Value<String>? messageType,
+      Value<String>? title,
+      Value<String>? content,
+      Value<int>? scheduledDateTime,
+      Value<int>? isActive,
+      Value<int>? createdAt,
+      Value<int?>? sentAt}) {
+    return ScheduledMessagesCompanion(
+      id: id ?? this.id,
+      mementoId: mementoId ?? this.mementoId,
+      messageType: messageType ?? this.messageType,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      scheduledDateTime: scheduledDateTime ?? this.scheduledDateTime,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      sentAt: sentAt ?? this.sentAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (mementoId.present) {
+      map['memento_id'] = Variable<int>(mementoId.value);
+    }
+    if (messageType.present) {
+      map['message_type'] = Variable<String>(messageType.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
+    if (scheduledDateTime.present) {
+      map['scheduled_date_time'] = Variable<int>(scheduledDateTime.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<int>(isActive.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (sentAt.present) {
+      map['sent_at'] = Variable<int>(sentAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ScheduledMessagesCompanion(')
+          ..write('id: $id, ')
+          ..write('mementoId: $mementoId, ')
+          ..write('messageType: $messageType, ')
+          ..write('title: $title, ')
+          ..write('content: $content, ')
+          ..write('scheduledDateTime: $scheduledDateTime, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('sentAt: $sentAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$DatabaseImpl extends GeneratedDatabase {
   _$DatabaseImpl(QueryExecutor e) : super(e);
   _$DatabaseImpl.connect(DatabaseConnection c) : super.connect(c);
@@ -1427,6 +1882,7 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
   late final Labels labels = Labels(this);
   late final MementoLabels mementoLabels = MementoLabels(this);
   late final Notes notes = Notes(this);
+  late final ScheduledMessages scheduledMessages = ScheduledMessages(this);
   Selectable<SearchMementosResult> _searchMementos(String query) {
     return customSelect(
         'SELECT"result"."id" AS "nested_0.id", "result"."name" AS "nested_0.name", "result"."photo" AS "nested_0.photo", "result"."email" AS "nested_0.email", "result"."phone" AS "nested_0.phone", "result"."context" AS "nested_0.context", "result"."job_title" AS "nested_0.job_title", "result"."company" AS "nested_0.company", "result"."birthday" AS "nested_0.birthday" FROM memento_entries INNER JOIN mementos AS result ON result.id = memento_entries."rowid" WHERE memento_entries MATCH ?1 ORDER BY rank',
@@ -1671,6 +2127,126 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
     );
   }
 
+  Selectable<ScheduledMessage> _getScheduledMessages() {
+    return customSelect(
+        'SELECT * FROM scheduled_messages ORDER BY scheduled_date_time ASC',
+        variables: [],
+        readsFrom: {
+          scheduledMessages,
+        }).asyncMap(scheduledMessages.mapFromRow);
+  }
+
+  Selectable<ScheduledMessage> _getScheduledMessageById(int id) {
+    return customSelect(
+        'SELECT * FROM scheduled_messages WHERE id = ?1 LIMIT 1',
+        variables: [
+          Variable<int>(id)
+        ],
+        readsFrom: {
+          scheduledMessages,
+        }).asyncMap(scheduledMessages.mapFromRow);
+  }
+
+  Selectable<ScheduledMessage> _getScheduledMessagesForMemento(int mementoId) {
+    return customSelect(
+        'SELECT * FROM scheduled_messages WHERE memento_id = ?1 ORDER BY scheduled_date_time ASC',
+        variables: [
+          Variable<int>(mementoId)
+        ],
+        readsFrom: {
+          scheduledMessages,
+        }).asyncMap(scheduledMessages.mapFromRow);
+  }
+
+  Selectable<ScheduledMessage> _getActiveScheduledMessages() {
+    return customSelect(
+        'SELECT * FROM scheduled_messages WHERE is_active = 1 ORDER BY scheduled_date_time ASC',
+        variables: [],
+        readsFrom: {
+          scheduledMessages,
+        }).asyncMap(scheduledMessages.mapFromRow);
+  }
+
+  Selectable<ScheduledMessage> _getDueScheduledMessages(int currentTime) {
+    return customSelect(
+        'SELECT * FROM scheduled_messages WHERE scheduled_date_time <= ?1 AND is_active = 1 AND sent_at IS NULL ORDER BY scheduled_date_time ASC',
+        variables: [
+          Variable<int>(currentTime)
+        ],
+        readsFrom: {
+          scheduledMessages,
+        }).asyncMap(scheduledMessages.mapFromRow);
+  }
+
+  Future<int> _insertScheduledMessage(
+      int mementoId,
+      String messageType,
+      String title,
+      String content,
+      int scheduledDateTime,
+      int isActive,
+      int createdAt,
+      int? sentAt) {
+    return customInsert(
+      'INSERT INTO scheduled_messages (memento_id, message_type, title, content, scheduled_date_time, is_active, created_at, sent_at) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)',
+      variables: [
+        Variable<int>(mementoId),
+        Variable<String>(messageType),
+        Variable<String>(title),
+        Variable<String>(content),
+        Variable<int>(scheduledDateTime),
+        Variable<int>(isActive),
+        Variable<int>(createdAt),
+        Variable<int>(sentAt)
+      ],
+      updates: {scheduledMessages},
+    );
+  }
+
+  Future<int> _updateScheduledMessage(
+      int mementoId,
+      String messageType,
+      String title,
+      String content,
+      int scheduledDateTime,
+      int isActive,
+      int? sentAt,
+      int id) {
+    return customUpdate(
+      'UPDATE scheduled_messages SET memento_id = ?1, message_type = ?2, title = ?3, content = ?4, scheduled_date_time = ?5, is_active = ?6, sent_at = ?7 WHERE id = ?8',
+      variables: [
+        Variable<int>(mementoId),
+        Variable<String>(messageType),
+        Variable<String>(title),
+        Variable<String>(content),
+        Variable<int>(scheduledDateTime),
+        Variable<int>(isActive),
+        Variable<int>(sentAt),
+        Variable<int>(id)
+      ],
+      updates: {scheduledMessages},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> _deleteScheduledMessage(int id) {
+    return customUpdate(
+      'DELETE FROM scheduled_messages WHERE id = ?1',
+      variables: [Variable<int>(id)],
+      updates: {scheduledMessages},
+      updateKind: UpdateKind.delete,
+    );
+  }
+
+  Future<int> _markScheduledMessageAsSent(int? sentAt, int id) {
+    return customUpdate(
+      'UPDATE scheduled_messages SET sent_at = ?1 WHERE id = ?2',
+      variables: [Variable<int>(sentAt), Variable<int>(id)],
+      updates: {scheduledMessages},
+      updateKind: UpdateKind.update,
+    );
+  }
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1683,7 +2259,8 @@ abstract class _$DatabaseImpl extends GeneratedDatabase {
         mementosUpdate,
         labels,
         mementoLabels,
-        notes
+        notes,
+        scheduledMessages
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(

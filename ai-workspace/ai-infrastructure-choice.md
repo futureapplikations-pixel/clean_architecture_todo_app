@@ -58,6 +58,10 @@
 - **Utilities**: equatable, collection, intl
 - **Storage**: path_provider, path
 
+### Notifications
+- **Local Notifications**: flutter_local_notifications 16.3.2
+- **Timezone Support**: timezone 0.9.2
+
 ## Implementation Details
 ### Database Schema
 - Todos table with FTS5 integration
@@ -76,3 +80,4 @@
 - **2025-10-12**: Initial analysis of existing project structure and architecture
 - **2025-10-12**: Documentation of current architecture and technical stack
 - **2025-10-12 00:00**: Initial project setup with clean architecture structure (data, domain, presentation layers)
+- **2025-10-14 21:47 CEST**: Added flutter_local_notifications 16.3.2 and timezone 0.9.2 for implementing scheduled message reminders and notifications
