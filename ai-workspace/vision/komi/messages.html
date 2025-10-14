@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Memento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sage-green: #87A96B;
+            --warm-charcoal: #4A4A4A;
+            --soft-gold: #D4AF37;
+            --off-white: #FAFAFA;
+            --deep-charcoal: #2C2C2C;
+            --light-gray: #E8E8E8;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--off-white);
+            color: var(--deep-charcoal);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-sage { background-color: var(--sage-green); }
+        .bg-charcoal { background-color: var(--warm-charcoal); }
+        .bg-gold { background-color: var(--soft-gold); }
+        .text-sage { color: var(--sage-green); }
+        .text-charcoal { color: var(--warm-charcoal); }
+        .text-gold { color: var(--soft-gold); }
+        .border-sage { border-color: var(--sage-green); }
+        .border-light { border-color: var(--light-gray); }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background-color: rgba(250, 250, 250, 0.9);
+        }
+        
+        .message-card {
+            transition: all 0.3s ease;
+        }
+        
+        .message-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-scheduled {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #856404;
+        }
+        
+        .status-sent {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #155724;
+        }
+        
+        .status-failed {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #721c24;
+        }
+        
+        .compose-area {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .template-card {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .template-card:hover {
+            background-color: rgba(135, 169, 107, 0.05);
+            border-color: var(--sage-green);
+        }
+        
+        .recipient-chip {
+            background-color: var(--sage-green);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stats-chart {
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="nav-blur border-b border-light sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="font-display text-2xl font-bold text-sage">Memento</h1>
+                    <span class="ml-2 text-sm text-charcoal">Relationship Manager</span>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="text-charcoal hover:text-sage transition-colors">Dashboard</a>
+                    <a href="memento.html" class="text-charcoal hover:text-sage transition-colors">Mementos</a>
+                    <a href="messages.html" class="text-sage font-medium border-b-2 border-sage pb-1">Messages</a>
+                    <a href="achievements.html" class="text-charcoal hover:text-sage transition-colors">Achievements</a>
+                    <a href="settings.html" class="text-charcoal hover:text-sage transition-colors">Settings</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-white border-b border-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="font-display text-3xl font-bold text-charcoal mb-2">Message Center</h1>
+                    <p class="text-charcoal opacity-70">Schedule and manage your communications</p>
+                </div>
+                <button id="compose-message-btn" class="bg-sage text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors font-medium">
+                    + Compose Message
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column - Message Lists -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Scheduled Messages -->
+                <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="font-display text-xl font-semibold text-charcoal">Scheduled Messages</h2>
+                        <span id="scheduled-count" class="bg-sage text-white px-3 py-1 rounded-full text-sm">0</span>
+                    </div>
+                    <div id="scheduled-messages" class="space-y-4">
+                        <!-- Scheduled messages will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Sent Messages -->
+                <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="font-display text-xl font-semibold text-charcoal">Sent Messages</h2>
+                        <span id="sent-count" class="bg-gold text-white px-3 py-1 rounded-full text-sm">0</span>
+                    </div>
+                    <div id="sent-messages" class="space-y-4">
+                        <!-- Sent messages will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Message Statistics Chart -->
+                <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                    <h2 class="font-display text-xl font-semibold text-charcoal mb-6">Message Statistics</h2>
+                    <div id="messages-chart" class="stats-chart"></div>
+                </div>
+            </div>
+
+            <!-- Right Column - Quick Actions & Templates -->
+            <div class="space-y-6">
+                <!-- Quick Compose -->
+                <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                    <h3 class="font-display text-lg font-semibold text-charcoal mb-4">Quick Compose</h3>
+                    <form id="quick-compose-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal mb-2">Recipient</label>
+                            <select id="quick-recipient" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                                <option value="">Select a memento...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal mb-2">Message Type</label>
+                            <select id="quick-message-type" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                                <option value="email">Email</option>
+                                <option value="sms">SMS</option>
+                                <option value="whatsapp">WhatsApp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal mb-2">Message</label>
+                            <textarea id="quick-message" rows="4" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none resize-none" placeholder="Type your message..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-sage text-white py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                            Send Now
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Message Templates -->
+                <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                    <h3 class="font-display text-lg font-semibold text-charcoal mb-4">Message Templates</h3>
+                    <div id="message-templates" class="space-y-3">
+                        <!-- Templates will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                    <h3 class="font-display text-lg font-semibold text-charcoal mb-4">Recent Activity</h3>
+                    <div id="recent-activity" class="space-y-3">
+                        <!-- Recent activity will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Compose Message Modal -->
+    <div id="compose-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 p-6 max-h-[90vh] overflow-y-auto">
+            <h3 class="font-display text-2xl font-semibold text-charcoal mb-6">Compose Message</h3>
+            <form id="compose-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Recipient</label>
+                        <select name="recipient" required class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                            <option value="">Select a memento...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Message Type</label>
+                        <select name="type" required class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                            <option value="email">Email</option>
+                            <option value="sms">SMS</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-2">Subject (for Email)</label>
+                    <input type="text" name="subject" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-2">Message</label>
+                    <textarea name="content" rows="6" required class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none resize-none compose-area"></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Schedule For</label>
+                        <input type="datetime-local" name="scheduledFor" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                        <p class="text-xs text-charcoal opacity-70 mt-1">Leave empty to send immediately</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Priority</label>
+                        <select name="priority" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                            <option value="normal">Normal</option>
+                            <option value="high">High</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-3 pt-4">
+                    <button type="submit" class="flex-1 bg-sage text-white py-3 rounded-lg hover:bg-opacity-90 transition-colors font-medium">
+                        Send Message
+                    </button>
+                    <button type="button" id="cancel-compose" class="flex-1 border border-light text-charcoal py-3 rounded-lg hover:bg-light transition-colors font-medium">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="font-display text-lg">Memento</p>
+            <p class="text-sm opacity-70 mt-2">Building stronger relationships, one connection at a time.</p>
+        </div>
+    </footer>
+
+    <script src="messages.js"></script>
+</body>
+</html>

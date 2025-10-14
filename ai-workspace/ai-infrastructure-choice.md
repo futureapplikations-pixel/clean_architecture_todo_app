@@ -76,8 +76,17 @@
   - Due date
   - List filtering extensions
 
+## Architecture Choices
+- **Design System**: Corporate Vision Design with Material 3
+  - Color Palette: Sage Green (#87A96B), Warm Charcoal (#4A4A4A), Soft Gold (#D4AF37)
+  - Typography: Playfair Display (headings), Inter (body text), JetBrains Mono (technical elements)
+  - Visual Effects: Advanced animations, micro-interactions, and professional styling
+
 ## Changelog
 - **2025-10-12**: Initial analysis of existing project structure and architecture
 - **2025-10-12**: Documentation of current architecture and technical stack
 - **2025-10-12 00:00**: Initial project setup with clean architecture structure (data, domain, presentation layers)
 - **2025-10-14 21:47 CEST**: Added flutter_local_notifications 16.3.2 and timezone 0.9.2 for implementing scheduled message reminders and notifications
+- **2025-10-14 23:08 CEST**: Updated http dependency from ^0.13.5 to ^1.5.0 for google_fonts compatibility
+- **2025-10-14 23:08 CEST**: Added google_fonts ^6.1.0 for vision typography implementation (Playfair Display, Inter)
+- **2025-10-14 23:08 CEST**: Implemented corporate design theme with vision color palette and typography

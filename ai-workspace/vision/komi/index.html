@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memento - Personal Relationship Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sage-green: #87A96B;
+            --warm-charcoal: #4A4A4A;
+            --soft-gold: #D4AF37;
+            --off-white: #FAFAFA;
+            --deep-charcoal: #2C2C2C;
+            --light-gray: #E8E8E8;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--off-white);
+            color: var(--deep-charcoal);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-sage { background-color: var(--sage-green); }
+        .bg-charcoal { background-color: var(--warm-charcoal); }
+        .bg-gold { background-color: var(--soft-gold); }
+        .text-sage { color: var(--sage-green); }
+        .text-charcoal { color: var(--warm-charcoal); }
+        .text-gold { color: var(--soft-gold); }
+        .border-sage { border-color: var(--sage-green); }
+        .border-light { border-color: var(--light-gray); }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(135, 169, 107, 0.1) 0%, rgba(250, 250, 250, 0.9) 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .search-focus {
+            transition: all 0.3s ease;
+        }
+        
+        .search-focus:focus {
+            box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.1);
+            border-color: var(--sage-green);
+        }
+        
+        .label-badge {
+            background-color: rgba(135, 169, 107, 0.1);
+            color: var(--sage-green);
+            border: 1px solid rgba(135, 169, 107, 0.2);
+        }
+        
+        .achievement-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .network-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 0;
+        }
+        
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background-color: rgba(250, 250, 250, 0.9);
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, rgba(135, 169, 107, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Network Background Animation -->
+    <div id="network-background" class="network-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-blur border-b border-light sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="font-display text-2xl font-bold text-sage">Memento</h1>
+                    <span class="ml-2 text-sm text-charcoal">Relationship Manager</span>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="text-sage font-medium border-b-2 border-sage pb-1">Dashboard</a>
+                    <a href="memento.html" class="text-charcoal hover:text-sage transition-colors">Mementos</a>
+                    <a href="messages.html" class="text-charcoal hover:text-sage transition-colors">Messages</a>
+                    <a href="achievements.html" class="text-charcoal hover:text-sage transition-colors">Achievements</a>
+                    <a href="settings.html" class="text-charcoal hover:text-sage transition-colors">Settings</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg py-12 content-overlay">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="font-display text-4xl font-bold text-charcoal mb-4">Strengthen Your Connections</h2>
+                <p class="text-lg text-charcoal max-w-2xl mx-auto">Keep track of important information about the people in your life. Remember the details that matter and build stronger relationships.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 content-overlay">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Left Sidebar - Search & Filters -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-sm border border-light p-6 sticky top-24">
+                    <h3 class="font-display text-xl font-semibold text-charcoal mb-4">Find Mementos</h3>
+                    
+                    <!-- Search Input -->
+                    <div class="mb-6">
+                        <input 
+                            type="text" 
+                            id="search-input"
+                            placeholder="Search by name, context, company..."
+                            class="w-full px-4 py-3 border border-light rounded-lg search-focus outline-none"
+                        >
+                        <div class="mt-2 text-sm text-charcoal">
+                            <span id="search-results-count">24</span> mementos found
+                        </div>
+                    </div>
+                    
+                    <!-- Label Filters -->
+                    <div class="mb-6">
+                        <h4 class="font-medium text-charcoal mb-3">Filter by Labels</h4>
+                        <div class="space-y-2" id="label-filters">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="label-checkbox mr-2" data-label="family">
+                                <span class="label-badge px-2 py-1 rounded-full text-xs">Family</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="label-checkbox mr-2" data-label="work">
+                                <span class="label-badge px-2 py-1 rounded-full text-xs">Work</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="label-checkbox mr-2" data-label="friends">
+                                <span class="label-badge px-2 py-1 rounded-full text-xs">Friends</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="label-checkbox mr-2" data-label="networking">
+                                <span class="label-badge px-2 py-1 rounded-full text-xs">Networking</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="label-checkbox mr-2" data-label="clients">
+                                <span class="label-badge px-2 py-1 rounded-full text-xs">Clients</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="space-y-3">
+                        <button id="add-memento-btn" class="w-full bg-sage text-white py-3 rounded-lg hover:bg-opacity-90 transition-colors">
+                            + Add New Memento
+                        </button>
+                        <button id="export-data-btn" class="w-full border border-sage text-sage py-3 rounded-lg hover:bg-sage hover:text-white transition-colors">
+                            Export Data
+                        </button>
+                        <button id="import-data-btn" class="w-full border border-charcoal text-charcoal py-3 rounded-lg hover:bg-charcoal hover:text-white transition-colors">
+                            Import Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Center - Memento Grid -->
+            <div class="lg:col-span-2">
+                <div class="mb-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-display text-2xl font-semibold text-charcoal">Your Mementos</h3>
+                        <div class="flex space-x-2">
+                            <button id="grid-view-btn" class="p-2 bg-sage text-white rounded-lg">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                            </button>
+                            <button id="list-view-btn" class="p-2 border border-light text-charcoal rounded-lg hover:bg-light">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="memento-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Memento cards will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Right Sidebar - Stats & Activity -->
+            <div class="lg:col-span-1">
+                <div class="space-y-6">
+                    <!-- Quick Stats -->
+                    <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                        <h3 class="font-display text-xl font-semibold text-charcoal mb-4">Quick Stats</h3>
+                        <div class="space-y-4">
+                            <div class="stats-card p-4 rounded-lg">
+                                <div class="text-2xl font-bold text-sage">24</div>
+                                <div class="text-sm text-charcoal">Total Mementos</div>
+                            </div>
+                            <div class="stats-card p-4 rounded-lg">
+                                <div class="text-2xl font-bold text-sage">156</div>
+                                <div class="text-sm text-charcoal">Notes Added</div>
+                            </div>
+                            <div class="stats-card p-4 rounded-lg">
+                                <div class="text-2xl font-bold text-sage">42</div>
+                                <div class="text-sm text-charcoal">Messages Sent</div>
+                            </div>
+                            <div class="stats-card p-4 rounded-lg">
+                                <div class="text-2xl font-bold text-sage">7</div>
+                                <div class="text-sm text-charcoal">Day Streak</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-lg shadow-sm border border-light p-6">
+                        <h3 class="font-display text-xl font-semibold text-charcoal mb-4">Recent Activity</h3>
+                        <div class="space-y-3" id="recent-activity">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-2 h-2 bg-sage rounded-full mt-2"></div>
+                                <div>
+                                    <div class="text-sm font-medium text-charcoal">Added note to Sarah Chen</div>
+                                    <div class="text-xs text-charcoal opacity-70">2 hours ago</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-2 h-2 bg-gold rounded-full mt-2"></div>
+                                <div>
+                                    <div class="text-sm font-medium text-charcoal">Achievement unlocked!</div>
+                                    <div class="text-xs text-charcoal opacity-70">5 hours ago</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-2 h-2 bg-sage rounded-full mt-2"></div>
+                                <div>
+                                    <div class="text-sm font-medium text-charcoal">Scheduled message to Mike Johnson</div>
+                                    <div class="text-xs text-charcoal opacity-70">1 day ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievement Notification -->
+                    <div class="bg-gold bg-opacity-10 border border-gold border-opacity-30 rounded-lg p-6 achievement-pulse">
+                        <div class="flex items-center space-x-3">
+                            <img src="resources/achievement-badge.png" alt="Achievement" class="w-12 h-12">
+                            <div>
+                                <div class="font-medium text-charcoal">Connection Master</div>
+                                <div class="text-sm text-charcoal opacity-70">Unlocked for adding 20 mementos!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Memento Modal -->
+    <div id="add-memento-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <h3 class="font-display text-xl font-semibold text-charcoal mb-4">Add New Memento</h3>
+            <form id="add-memento-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-1">Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-1">Email</label>
+                    <input type="email" name="email" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-1">Context</label>
+                    <textarea name="context" rows="3" class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none" placeholder="How did you meet this person?"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-charcoal mb-1">Labels</label>
+                    <select name="labels" multiple class="w-full px-3 py-2 border border-light rounded-lg focus:border-sage outline-none">
+                        <option value="family">Family</option>
+                        <option value="work">Work</option>
+                        <option value="friends">Friends</option>
+                        <option value="networking">Networking</option>
+                        <option value="clients">Clients</option>
+                    </select>
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="submit" class="flex-1 bg-sage text-white py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                        Add Memento
+                    </button>
+                    <button type="button" id="cancel-add-memento" class="flex-1 border border-light text-charcoal py-2 rounded-lg hover:bg-light transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="font-display text-lg">Memento</p>
+            <p class="text-sm opacity-70 mt-2">Building stronger relationships, one connection at a time.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
