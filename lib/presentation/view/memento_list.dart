@@ -1,27 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/model/memento.dart';
 
-import '../viewmodel/mementolist/memento_list.dart';
+import '../viewmodel/mementolist/memento_list_with_search.dart';
 import '../widgets/actions.dart';
 import '../widgets/master_detail.dart';
-import 'search_memento_list.dart';
 import 'memento_form.dart';
 import '../widgets/chips_bar.dart';
 import '../widgets/memento_card.dart';
 
-class MementoListPage extends ConsumerWidget {
+class MementoListPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final mementos = ref.watch(mementoListViewModelProvider);
+
+    // Watch the search query provider
+    final searchQuery = ref.watch(searchQueryNotifierProvider);
+    final searchQueryNotifier = ref.watch(searchQueryNotifierProvider.notifier);
+
+    // Watch the combined viewmodel with search functionality
+    final mementosAsync = ref.watch(mementoListWithSearchViewModelProvider);
+
     return MasterDetailWidget<Memento>(
       listWidth: 400,
-      items: mementos.valueOrNull ?? [],
+      items: mementosAsync.valueOrNull ?? [],
       listBuilder: (context, mementos, current, onSelect) => Scaffold(
         appBar: AppBar(
-          title: const Text('Memento'),
+          title: TextField(
+            decoration: const InputDecoration(
+              hintText: 'Search Mementos...',
+              border: InputBorder.none,
+              icon: Icon(Icons.search),
+            ),
+            onChanged: (value) {
+              searchQueryNotifier.state = value;
+            },
+          ),
           actions: [
             IconButton(
               icon: const Icon(Icons.delete_sweep),
@@ -34,21 +50,20 @@ class MementoListPage extends ConsumerWidget {
                   content: 'Delete all mementos?',
                 );
                 if (deleteAll) {
-                  final model = ref.watch(mementoListViewModelProvider.notifier);
+                  final model = ref.watch(mementoListWithSearchViewModelProvider.notifier);
                   await model.deleteAllMementos();
                   messenger.showSnackBar(const SnackBar(content: Text('All mementos deleted')));
                 }
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              tooltip: 'Search Mementos',
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const SearchMementoList(),
-                ),
+            if (searchQuery.isNotEmpty)
+              IconButton(
+                icon: const Icon(Icons.clear),
+                tooltip: 'Clear Search',
+                onPressed: () {
+                  searchQueryNotifier.state = '';
+                },
               ),
-            ),
           ],
         ),
         body: Column(

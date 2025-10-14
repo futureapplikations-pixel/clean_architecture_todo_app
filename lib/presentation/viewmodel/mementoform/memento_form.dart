@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../domain/model/memento.dart';
 import '../mementolist/memento_list.dart';
+import '../mementolist/memento_list_with_search.dart';
 
 part 'memento_form.g.dart';
 
@@ -11,6 +12,8 @@ typedef FormData = Map<String, dynamic>;
 class MementoFormViewModel extends _$MementoFormViewModel {
   late final MementoListViewModel mementoListViewModel =
       ref.watch(mementoListViewModelProvider.notifier);
+  late final MementoListWithSearchViewModel mementoListWithSearchViewModel =
+      ref.watch(mementoListWithSearchViewModelProvider.notifier);
   FormData _formData = {};
   bool _edited = false;
 
@@ -32,7 +35,7 @@ class MementoFormViewModel extends _$MementoFormViewModel {
     };
   }
 
-  Future<void> createOrUpdateMemento() {
+  Future<void> createOrUpdateMemento() async {
     final id = _formData.id;
     final name = _formData.name;
 
@@ -41,7 +44,7 @@ class MementoFormViewModel extends _$MementoFormViewModel {
     }
 
     if (!isNew) {
-      return mementoListViewModel.updateMemento(
+      await mementoListViewModel.updateMemento(
         id!,
         name: name,
         photo: _formData.photo,
@@ -52,8 +55,10 @@ class MementoFormViewModel extends _$MementoFormViewModel {
         company: _formData.company,
         birthday: _formData.birthday,
       );
+      // Invalidate the search viewmodel as well
+      ref.invalidate(mementoListWithSearchViewModelProvider);
     } else {
-      return mementoListViewModel.addMemento(
+      await mementoListViewModel.addMemento(
         name: name,
         photo: _formData.photo,
         email: _formData.email,
@@ -63,13 +68,17 @@ class MementoFormViewModel extends _$MementoFormViewModel {
         company: _formData.company,
         birthday: _formData.birthday,
       );
+      // Invalidate the search viewmodel as well
+      ref.invalidate(mementoListWithSearchViewModelProvider);
     }
   }
 
   Future<void> deleteMemento() async {
     if (isNew) return;
     final id = _formData.id;
-    return mementoListViewModel.deleteMemento(id!);
+    await mementoListViewModel.deleteMemento(id!);
+    // Invalidate the search viewmodel as well
+    ref.invalidate(mementoListWithSearchViewModelProvider);
   }
 
   bool canDelete() => !isNew;

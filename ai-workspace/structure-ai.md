@@ -42,20 +42,13 @@
   - `mementoform/`: Memento creation/editing
     - `memento_form.dart`: ViewModel for the memento form.
   - `mementolist/`: Memento list management
-    - `memento_list.dart`: ViewModel for the memento list with implemented filter logic.
-    - `search_memento_list.dart`: ViewModel for searching mementos.
+    - `memento_list.dart`: Original ViewModel for the memento list with implemented filter logic.
+    - `memento_list_with_search.dart`: Combined ViewModel for memento list with real-time search functionality.
+    - `search_memento_list.dart`: Original ViewModel for searching mementos (now replaced by inline search).
+    - `search_query_notifier.dart`: Provider for managing search query state.
     - `memento_filter_kind.dart`: Enum for filtering mementos (all, favorites, recent).
 - `widgets/`: Reusable UI components
   - `memento_card.dart`: A card widget to display a memento in a list.
-
-### Platform Directories
-- Platform-specific configurations for:
-  - Android (Gradle)
-  - iOS (Swift/Storyboards)
-  - Web (index.html)
-  - Linux (CMake)
-  - macOS (Cocoa)
-  - Windows (CMake)
 
 ## Key Connections
 
@@ -81,8 +74,19 @@
 - GoRouter for navigation
 - Material 3 for UI
 - Cross-platform database support (native/web)
+- Real-time search in main list view with instant filtering
+- Reactive UI updates after CRUD operations
 
 ### Code Generation
 - Drift: Database code (`*.g.dart`)
 - Riverpod: ViewModels/Providers (`*.g.dart`)
 - JSON: Serialization (`*.g.dart`)
+
+### Platform Directories
+- Platform-specific configurations for:
+  - Android (Gradle)
+  - iOS (Swift/Storyboards)
+  - Web (index.html)
+  - Linux (CMake)
+  - macOS (Cocoa)
+  - Windows (CMake)

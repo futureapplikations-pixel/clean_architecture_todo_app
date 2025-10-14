@@ -32,3 +32,19 @@ Memento is a personal relationship management application designed to help users
    - Web platform build verified and working.
    - Android APK build verified and working.
    - Filter logic implemented for Memento list view.
+4. **Real-time Search**
+   - 2025-10-14 15:21 CEST: Implemented real-time search functionality in the main memento list.
+   - Added search text field to AppBar for instant search results.
+   - Created combined viewmodel (MementoListWithSearchViewModel) that handles both regular listing and search.
+   - Added search query state management with SearchQueryNotifier provider.
+   - Included clear search button for better UX.
+   - Search uses existing FTS5 database functionality for fast, full-text search.
+5. **UI Update Fix**
+   - 2025-10-14 15:26 CEST: Fixed issue where new items didn't appear immediately after creation.
+   - Added proper invalidation of search viewmodel after CRUD operations in form viewmodel.
+   - Ensured real-time UI updates when adding, updating, or deleting mementos.
+6. **Real-time Search Fix**
+   - 2025-10-14 15:32 CEST: Fixed real-time search functionality to properly filter results as user types.
+   - Updated viewmodel to correctly watch search query changes using Riverpod's reactive providers.
+   - Simplified UI implementation to eliminate controller conflicts that interfered with search.
+   - Search now updates instantly without requiring additional user interactions.
