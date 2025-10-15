@@ -1,14 +1,16 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clean_architecture_todo_app/data/mapper/achievement.dart';
 import 'package:clean_architecture_todo_app/data/mapper/leaderboard.dart';
 import 'package:clean_architecture_todo_app/data/mapper/quest.dart';
 import 'package:clean_architecture_todo_app/data/source/database/database.dart';
+import 'package:clean_architecture_todo_app/data/source/database/database_impl.dart' as db;
 import 'package:clean_architecture_todo_app/domain/model/achievement.dart';
 import 'package:clean_architecture_todo_app/domain/model/leaderboard.dart';
 import 'package:clean_architecture_todo_app/domain/model/quest.dart';
 import 'package:clean_architecture_todo_app/domain/repository/achievements.dart';
 
 class AchievementsRepositoryImpl implements AchievementsRepository {
-  final AppDatabase _database;
+  final Database _database;
 
   AchievementsRepositoryImpl(this._database);
 
@@ -20,13 +22,13 @@ class AchievementsRepositoryImpl implements AchievementsRepository {
 
   @override
   Future<List<Achievement>> getAchievements() async {
-    final entities = await _database.getAchievements().get();
+    final entities = await _database.getAchievements();
     return entities.map(AchievementMapper.fromAchievementEntity).toList();
   }
 
   @override
   Future<List<LeaderboardEntry>> getLeaderboard() async {
-    final entities = await _database.getLeaderboard().get();
+    final entities = await _database.getLeaderboard();
     return entities.map(LeaderboardMapper.fromLeaderboardEntity).toList();
   }
 
@@ -38,7 +40,7 @@ class AchievementsRepositoryImpl implements AchievementsRepository {
 
   @override
   Future<List<Quest>> getQuests() async {
-    final entities = await _database.getQuests().get();
+    final entities = await _database.getQuests();
     return entities.map(QuestMapper.fromQuestEntity).toList();
   }
 
@@ -52,3 +54,8 @@ class AchievementsRepositoryImpl implements AchievementsRepository {
     await _database.updateQuest(QuestMapper.toQuestEntity(quest));
   }
 }
+
+final achievementsRepositoryProvider = Provider<AchievementsRepository>((ref) {
+  final database = ref.watch(db.databaseProvider);
+  return AchievementsRepositoryImpl(database);
+});

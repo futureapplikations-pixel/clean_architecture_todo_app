@@ -45,6 +45,6 @@ class ScheduleMessage {
 
 /// Provider for ScheduleMessage use case
 final scheduleMessageProvider = Provider<ScheduleMessage>((ref) {
-  final repository = ref.watch(scheduledMessagesRepositoryProvider);
+  final repository = ref.watch(scheduledMessagesRepositoryImplProvider);
   return ScheduleMessage(repository);
 });

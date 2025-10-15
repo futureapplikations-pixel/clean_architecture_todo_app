@@ -110,10 +110,48 @@ class UserSettingsRepositoryImpl extends _$UserSettingsRepositoryImpl
       'notes': notes.map((e) => e.toJson()).toList(),
       'scheduledMessages': scheduledMessages.map((e) => e.toJson()).toList(),
       'messageTemplates': messageTemplates.map((e) => e.toJson()).toList(),
-      'achievements': achievements.map((e) => e.toJson()).toList(),
-      'quests': quests.map((e) => e.toJson()).toList(),
-      'leaderboard': leaderboard.map((e) => e.toJson()).toList(),
-      'userSettings': userSettings.toJson(),
+      'achievements': achievements.map((e) => {
+        'id': e.id,
+        'name': e.name,
+        'description': e.description,
+        'icon': e.icon,
+        'category': e.category,
+        'points': e.points,
+        'unlocked': e.unlocked,
+        'unlockedDate': e.unlockedDate?.millisecondsSinceEpoch,
+        'progress': e.progress,
+        'requirement': e.requirement,
+        'current': e.current,
+      }).toList(),
+      'quests': quests.map((e) => {
+        'id': e.id,
+        'name': e.name,
+        'description': e.description,
+        'points': e.points,
+        'completed': e.completed,
+        'progress': e.progress,
+        'requirement': e.requirement,
+      }).toList(),
+      'leaderboard': leaderboard.map((e) => {
+        'name': e.name,
+        'points': e.points,
+        'level': e.level,
+      }).toList(),
+      'userSettings': {
+        'displayName': userSettings.displayName,
+        'email': userSettings.email,
+        'timezone': userSettings.timezone,
+        'dateFormat': userSettings.dateFormat.name,
+        'theme': userSettings.theme.name,
+        'accentColor': userSettings.accentColor.value,
+        'messageReminders': userSettings.messageReminders,
+        'birthdayReminders': userSettings.birthdayReminders,
+        'achievementNotifications': userSettings.achievementNotifications,
+        'dailyQuests': userSettings.dailyQuests,
+        'dataEncryption': userSettings.dataEncryption,
+        'analytics': userSettings.analytics,
+        'autoLock': userSettings.autoLock,
+      },
       'exportDate': DateTime.now().toIso8601String(),
       'version': '1.0',
     };
@@ -132,7 +170,16 @@ class UserSettingsRepositoryImpl extends _$UserSettingsRepositoryImpl
     // Import mementos
     final mementosData = (json['mementos'] as List).cast<Map<String, dynamic>>();
     for (final mementoJson in mementosData) {
-      await database.insertMemento(db.MementosCompanion.fromJson(mementoJson));
+      await database.insertMemento(db.MementosCompanion(
+        name: db.Val(mementoJson['name'] as String),
+        photo: db.Val(mementoJson['photo'] as String?),
+        email: db.Val(mementoJson['email'] as String?),
+        phone: db.Val(mementoJson['phone'] as String?),
+        context: db.Val(mementoJson['context'] as String?),
+        jobTitle: db.Val(mementoJson['job_title'] as String?),
+        company: db.Val(mementoJson['company'] as String?),
+        birthday: db.Val(mementoJson['birthday'] as int?),
+      ));
     }
 
     // TODO: Import other data (notes, scheduled messages, templates, achievements, quests, leaderboard, user settings)

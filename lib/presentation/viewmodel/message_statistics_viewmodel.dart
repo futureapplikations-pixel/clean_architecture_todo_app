@@ -75,6 +75,6 @@ class MessageStatisticsViewModel extends StateNotifier<AsyncValue<MessageStatist
 
 final messageStatisticsViewModelProvider = StateNotifierProvider.autoDispose<
     MessageStatisticsViewModel, AsyncValue<MessageStatisticsState>>((ref) {
-  final repository = ref.watch(scheduledMessagesRepositoryProvider);
+  final repository = ref.watch(scheduledMessagesRepositoryImplProvider);
   return MessageStatisticsViewModel(repository);
 });

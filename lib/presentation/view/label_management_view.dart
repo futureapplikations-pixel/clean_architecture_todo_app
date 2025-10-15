@@ -28,7 +28,8 @@ class _LabelManagementViewState extends ConsumerState<LabelManagementView> {
 
   @override
   Widget build(BuildContext context) {
-    final labelsAsync = ref.watch(mementosRepositoryProvider.select((repo) => repo.getLabels()));
+    final mementosRepo = ref.watch(mementosRepositoryImplProvider);
+    final labelsAsync = mementosRepo.getLabels();
 
     return Scaffold(
       appBar: AppBar(
@@ -117,7 +118,7 @@ class _LabelManagementViewState extends ConsumerState<LabelManagementView> {
           ElevatedButton(
             onPressed: () async {
               if (_labelNameController.text.isNotEmpty) {
-                await ref.read(mementosRepositoryProvider).createLabel(
+                await ref.read(mementosRepositoryImplProvider).createLabel(
                       _labelNameController.text,
                       _selectedColor.value,
                     );
@@ -181,7 +182,7 @@ class _LabelManagementViewState extends ConsumerState<LabelManagementView> {
           ElevatedButton(
             onPressed: () async {
               if (_labelNameController.text.isNotEmpty) {
-                await ref.read(mementosRepositoryProvider).updateLabel(
+                await ref.read(mementosRepositoryImplProvider).updateLabel(
                       label.id!,
                       _labelNameController.text,
                       _selectedColor.value,
@@ -210,7 +211,7 @@ class _LabelManagementViewState extends ConsumerState<LabelManagementView> {
           ),
           ElevatedButton(
             onPressed: () async {
-              await ref.read(mementosRepositoryProvider).deleteLabel(id);
+              await ref.read(mementosRepositoryImplProvider).deleteLabel(id);
               Navigator.of(context).pop();
             },
             child: const Text('Delete'),

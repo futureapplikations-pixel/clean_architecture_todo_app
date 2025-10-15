@@ -85,8 +85,8 @@ class AchievementService {
 
 final achievementServiceProvider = Provider<AchievementService>((ref) {
   final achievementsRepository = ref.watch(achievementsRepositoryProvider);
-  final mementosRepository = ref.watch(mementosRepositoryProvider);
-  final scheduledMessagesRepository = ref.watch(scheduledMessagesRepositoryProvider);
+  final mementosRepository = ref.watch(mementosRepositoryImplProvider);
+  final scheduledMessagesRepository = ref.watch(scheduledMessagesRepositoryImplProvider);
   return AchievementService(
     achievementsRepository,
     mementosRepository,

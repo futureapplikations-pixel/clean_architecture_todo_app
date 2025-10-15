@@ -11,6 +11,6 @@ class GetMessageTemplates {
 }
 
 final getMessageTemplatesProvider = Provider<GetMessageTemplates>((ref) {
-  final repository = ref.watch(scheduledMessagesRepositoryProvider);
+  final repository = ref.watch(scheduledMessagesRepositoryImplProvider);
   return GetMessageTemplates(repository);
 });

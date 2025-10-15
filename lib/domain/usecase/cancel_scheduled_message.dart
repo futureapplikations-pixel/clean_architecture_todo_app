@@ -22,6 +22,6 @@ class CancelScheduledMessage {
 
 /// Provider for CancelScheduledMessage use case
 final cancelScheduledMessageProvider = Provider<CancelScheduledMessage>((ref) {
-  final repository = ref.watch(scheduledMessagesRepositoryProvider);
+  final repository = ref.watch(scheduledMessagesRepositoryImplProvider);
   return CancelScheduledMessage(repository);
 });

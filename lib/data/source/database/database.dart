@@ -1,6 +1,9 @@
 import 'database_impl.dart';
-import '../../domain/model/message_template.dart';
-import '../../domain/model/user_settings.dart';
+import '../../../domain/model/message_template.dart' as domain;
+import '../../../domain/model/user_settings.dart';
+import '../../../domain/model/achievement.dart' as domain_achievement;
+import '../../../domain/model/quest.dart' as domain_quest;
+import '../../../domain/model/leaderboard.dart' as domain_leaderboard;
 
 abstract class Database {
   Future<List<Memento>> searchMementos(String query);
@@ -53,4 +56,17 @@ abstract class Database {
   Future<void> insertUserSettings(UserSettingsCompanion settings);
   Future<void> updateUserSettings(int id, UserSettingsCompanion settings);
   Future<void> deleteUserSettings(int id);
+
+  // Achievement operations
+  Future<List<domain_achievement.Achievement>> getAchievements();
+  Future<domain_achievement.Achievement> getAchievementById(String id);
+  Future<void> updateAchievement(domain_achievement.Achievement achievement);
+
+  // Quest operations
+  Future<List<domain_quest.Quest>> getQuests();
+  Future<domain_quest.Quest> getQuestById(String id);
+  Future<void> updateQuest(domain_quest.Quest quest);
+
+  // Leaderboard operations
+  Future<List<domain_leaderboard.LeaderboardEntry>> getLeaderboard();
 }

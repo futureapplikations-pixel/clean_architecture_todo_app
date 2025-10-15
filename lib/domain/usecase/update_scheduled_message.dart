@@ -32,6 +32,6 @@ class UpdateScheduledMessage {
 
 /// Provider for UpdateScheduledMessage use case
 final updateScheduledMessageProvider = Provider<UpdateScheduledMessage>((ref) {
-  final repository = ref.watch(scheduledMessagesRepositoryProvider);
+  final repository = ref.watch(scheduledMessagesRepositoryImplProvider);
   return UpdateScheduledMessage(repository);
 });

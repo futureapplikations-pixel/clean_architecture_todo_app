@@ -11,6 +11,6 @@ class UpdateMessageTemplate {
 }
 
 final updateMessageTemplateProvider = Provider<UpdateMessageTemplate>((ref) {
-  final repository = ref.watch(scheduledMessagesRepositoryProvider);
+  final repository = ref.watch(scheduledMessagesRepositoryImplProvider);
   return UpdateMessageTemplate(repository);
 });
