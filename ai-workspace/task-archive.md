@@ -35,3 +35,13 @@
   - `lib/presentation/widgets/achievement_card.dart`
   - `lib/presentation/widgets/scheduled_message_card.dart`
   - `lib/presentation/widgets/memento_card.dart`
+
+## Feature: Create a mechanism to prevent mistakes when modifying web/index.html
+- **Completion Date**: 2025-10-16
+- **Execution Plan**:
+  - [x] Add guidelines for modifying the `web/index.html` file to the `ai-workspace/ai-infrastructure-choice.md` file.
+  - [x] Add comments to the `web/index.html` file to mark the dangerous zones.
+- **Description**: This feature creates a mechanism to prevent mistakes when modifying the `web/index.html` file. Guidelines for modifying the file have been added to the `ai-workspace/ai-infrastructure-choice.md` file, and comments have been added to the `web/index.html` file to mark the dangerous zones.
+- **Files Involved**:
+  - `ai-workspace/ai-infrastructure-choice.md`
+  - `web/index.html`

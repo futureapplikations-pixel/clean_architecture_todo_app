@@ -91,3 +91,15 @@
 - **2025-10-14 23:08 CEST**: Added google_fonts ^6.1.0 for vision typography implementation (Playfair Display, Inter)
 - **2025-10-14 23:08 CEST**: Implemented corporate design theme with vision color palette and typography
 - **2025-10-16 22:00 CEST**: Added collection package for improved data handling.
+
+## Web Development Guidelines
+
+### Modifying web/index.html
+
+The `web/index.html` file is critical for the correct initialization of the Flutter web app. Modifying this file can easily lead to startup errors. Therefore, the following guidelines must be followed when modifying this file:
+
+1.  **Always read the `web/index.html` file before modifying it.** This will ensure that you have the correct content and can create a valid `old_string` for the `replace` tool.
+2.  **Always verify the content of the `web/index.html` file after modifying it.** This will ensure that the `replace` tool has worked as expected.
+3.  **Never assume that a file exists.** Always use the `list_directory` tool to verify that a file exists before trying to read or copy it.
+4.  **When copying a file, always read the entire file.** Use a large `limit` value with the `read_file` tool to ensure that the entire file is read.
+5.  **Do not modify the Flutter initialization script.** The initialization script is the most dangerous zone in the `web/index.html` file. It is responsible for loading the Flutter app and is very sensitive to changes. Do not modify this script unless you are absolutely sure what you are doing.
