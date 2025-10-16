@@ -36,7 +36,10 @@ class ScheduledMessage {
   bool get isScheduledForFuture => scheduledDateTime.isAfter(DateTime.now());
 
   /// Check if the message is due to be sent (within next minute)
-  bool get isDue => scheduledDateTime.isBefore(DateTime.now().add(const Duration(minutes: 1))) && isActive;
+  bool get isDue =>
+      scheduledDateTime
+          .isBefore(DateTime.now().add(const Duration(minutes: 1))) &&
+      isActive;
 
   /// Check if the message has been sent
   bool get isSent => sentAt != null;

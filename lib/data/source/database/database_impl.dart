@@ -41,7 +41,8 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   Future<List<Memento>> getMementos() => _getMementos().get();
 
   @override
-  Future<Memento?> getMementoById(int id) => _getMementoById(id).getSingleOrNull();
+  Future<Memento?> getMementoById(int id) =>
+      _getMementoById(id).getSingleOrNull();
 
   @override
   Future<void> deleteMemento(int id) => _deleteMemento(id);
@@ -87,7 +88,9 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
 
   @override
   Future<List<Memento>> searchMementos(String query) {
-    return _searchMementos(query).get().then((value) => value.map((e) => e.result).toList());
+    return _searchMementos(query)
+        .get()
+        .then((value) => value.map((e) => e.result).toList());
   }
 
   // Label operations
@@ -172,10 +175,12 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
 
   // Scheduled Message operations
   @override
-  Future<List<ScheduledMessage>> getScheduledMessages() => _getScheduledMessages().get();
+  Future<List<ScheduledMessage>> getScheduledMessages() =>
+      _getScheduledMessages().get();
 
   @override
-  Future<ScheduledMessage?> getScheduledMessageById(int id) => _getScheduledMessageById(id).getSingleOrNull();
+  Future<ScheduledMessage?> getScheduledMessageById(int id) =>
+      _getScheduledMessageById(id).getSingleOrNull();
 
   @override
   Future<List<ScheduledMessage>> getScheduledMessagesForMemento(int mementoId) {
@@ -193,7 +198,8 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   }
 
   @override
-  Future<ScheduledMessage> insertScheduledMessage(ScheduledMessagesCompanion scheduledMessage) async {
+  Future<ScheduledMessage> insertScheduledMessage(
+      ScheduledMessagesCompanion scheduledMessage) async {
     final id = await _insertScheduledMessage(
       scheduledMessage.mementoId.value,
       scheduledMessage.messageType.value,
@@ -208,7 +214,8 @@ class DatabaseImpl extends _$DatabaseImpl implements Database {
   }
 
   @override
-  Future<void> updateScheduledMessage(int id, ScheduledMessagesCompanion scheduledMessage) async {
+  Future<void> updateScheduledMessage(
+      int id, ScheduledMessagesCompanion scheduledMessage) async {
     await _updateScheduledMessage(
       scheduledMessage.mementoId.value,
       scheduledMessage.messageType.value,

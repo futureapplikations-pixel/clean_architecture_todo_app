@@ -18,5 +18,6 @@ class Note extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, mementoId, content, createdAt, updatedAt, isFavorite];
+  List<Object?> get props =>
+      [id, mementoId, content, createdAt, updatedAt, isFavorite];
 }

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../domain/model/scheduled_message.dart';
 import '../viewmodel/mementolist/memento_list_with_search.dart';
+import '../viewmodel/scheduled_message_form.dart';
+import '../viewmodel/scheduled_messages_list.dart';
 
 /// Form for creating or editing scheduled messages
 class ScheduledMessageForm extends ConsumerStatefulWidget {
@@ -16,7 +18,8 @@ class ScheduledMessageForm extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ScheduledMessageForm> createState() => _ScheduledMessageFormState();
+  ConsumerState<ScheduledMessageForm> createState() =>
+      _ScheduledMessageFormState();
 }
 
 class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
@@ -24,15 +27,19 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
   late final TextEditingController _contentController;
   late MessageType _selectedMessageType;
   late DateTime _scheduledDateTime;
+  int? _selectedMementoId;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.message?.title ?? '');
-    _contentController = TextEditingController(text: widget.message?.content ?? '');
+    _contentController =
+        TextEditingController(text: widget.message?.content ?? '');
     _selectedMessageType = widget.message?.messageType ?? MessageType.sms;
-    _scheduledDateTime = widget.message?.scheduledDateTime ?? DateTime.now().add(const Duration(hours: 1));
+    _scheduledDateTime = widget.message?.scheduledDateTime ??
+        DateTime.now().add(const Duration(hours: 1));
+    _selectedMementoId = widget.mementoId != 0 ? widget.mementoId : null;
   }
 
   @override
@@ -44,9 +51,25 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(scheduledMessageFormProvider, (previous, next) {
+      next.when(
+        data: (_) {
+          ref.read(scheduledMessagesListViewModelProvider.notifier).refresh();
+          Navigator.of(context).pop();
+        },
+        error: (error, stackTrace) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: $error')),
+          );
+        },
+        loading: () {},
+      );
+    });
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.message == null ? 'Schedule Message' : 'Edit Message'),
+        title:
+            Text(widget.message == null ? 'Schedule Message' : 'Edit Message'),
       ),
       body: Form(
         key: _formKey,
@@ -147,7 +170,8 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
                           child: OutlinedButton.icon(
                             onPressed: () => _selectDate(context),
                             icon: const Icon(Icons.calendar_today),
-                            label: Text(DateFormat('MMM dd, yyyy').format(_scheduledDateTime)),
+                            label: Text(DateFormat('MMM dd, yyyy')
+                                .format(_scheduledDateTime)),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -155,7 +179,8 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
                           child: OutlinedButton.icon(
                             onPressed: () => _selectTime(context),
                             icon: const Icon(Icons.access_time),
-                            label: Text(DateFormat('HH:mm').format(_scheduledDateTime)),
+                            label: Text(
+                                DateFormat('HH:mm').format(_scheduledDateTime)),
                           ),
                         ),
                       ],
@@ -183,7 +208,9 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
               child: ElevatedButton.icon(
                 onPressed: _submitForm,
                 icon: Icon(widget.message == null ? Icons.send : Icons.save),
-                label: Text(widget.message == null ? 'Schedule Message' : 'Update Message'),
+                label: Text(widget.message == null
+                    ? 'Schedule Message'
+                    : 'Update Message'),
               ),
             ),
           ],
@@ -239,17 +266,32 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
         return;
       }
 
-      // TODO: Save the message using the use case
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            widget.message == null
-                ? 'Message scheduled successfully!'
-                : 'Message updated successfully!'
-          ),
-        ),
-      );
-      Navigator.of(context).pop();
+      final mementoId = _selectedMementoId;
+      if (mementoId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select a contact')),
+        );
+        return;
+      }
+
+      final notifier = ref.read(scheduledMessageFormProvider.notifier);
+      if (widget.message == null) {
+        notifier.addMessage(
+          mementoId: mementoId,
+          messageType: _selectedMessageType,
+          title: _titleController.text,
+          content: _contentController.text,
+          scheduledDateTime: _scheduledDateTime,
+        );
+      } else {
+        final updatedMessage = widget.message!.copyWith(
+          title: _titleController.text,
+          content: _contentController.text,
+          messageType: _selectedMessageType,
+          scheduledDateTime: _scheduledDateTime,
+        );
+        notifier.updateMessage(updatedMessage);
+      }
     }
   }
 
@@ -284,6 +326,7 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
                   return const Text('No contacts available');
                 }
                 return DropdownButtonFormField<int>(
+                  value: _selectedMementoId,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Choose a contact',
@@ -301,8 +344,9 @@ class _ScheduledMessageFormState extends ConsumerState<ScheduledMessageForm> {
                     return null;
                   },
                   onChanged: (value) {
-                    // Store selected memento ID for form submission
-                    setState(() {});
+                    setState(() {
+                      _selectedMementoId = value;
+                    });
                   },
                 );
               },

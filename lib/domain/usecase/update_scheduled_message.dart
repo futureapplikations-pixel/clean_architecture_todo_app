@@ -10,7 +10,7 @@ class UpdateScheduledMessage {
   const UpdateScheduledMessage(this._repository);
 
   /// Execute the use case
-  Future<void> execute(ScheduledMessage message) async {
+  Future<void> call(ScheduledMessage message) async {
     // Validate input
     if (message.id == null) {
       throw ArgumentError('Message ID is required for update');

@@ -1,34 +1,24 @@
-# Task Archive
+# Completed Features
 
-## Completed Features
-
-### Project Analysis (2025-10-14)
-- **Feature**: Complete project analysis and documentation
-- **Completion Date**: 2025-10-14 15:11 CEST
+## Feature: Scheduled Messages UI Enhancements
+- **Completion Date**: 2025-10-16 22:00 CEST
 - **Execution Plan**:
-  - [x] Create AI workspace directory
-  - [x] Initialize tracking files
-  - [x] Review existing codebase
-  - [x] Document architecture and infrastructure
-  - [x] Analyze and document project structure
-- **Description**: Comprehensive analysis of the Flutter clean architecture project, documenting the Memento app structure, dependencies, and current state.
+  - [x] Enhance Memento details view to display scheduled messages.
+  - [x] Redesign scheduled messages list to be grouped by status.
+  - [x] Implement create/update logic in the scheduled message form.
+  - [x] Resolve TODOs in the router and view models.
+  - [x] Add `collection` package.
+  - [x] Format codebase.
+- **Description**: This feature improves the user interface for managing scheduled messages. The Memento details view now displays a list of scheduled messages for each contact. The scheduled messages list is now grouped by status (Due, Scheduled, and Sent) for better organization. The form for creating and editing scheduled messages is now fully functional, allowing users to save and update messages. All related TODOs in the codebase have been resolved.
 - **Files Involved**:
-  - `ai-workspace/app-goal.md`: Updated with project purpose and implemented features
-  - `ai-workspace/ai-infrastructure-choice.md`: Documented current architecture and technology stack
-  - `ai-workspace/structure-ai.md`: Detailed file structure and interconnections
-  - `ai-workspace/current-task-check-list.md`: Created comprehensive task tracking
-
-### Code Quality & Platform Verification (2025-10-14)
-- **Feature**: Clean build, TODO removal, and platform verification
-- **Completion Date**: 2025-10-14 15:11 CEST
-- **Execution Plan**:
-  - [x] Run clean build and verify no errors
-  - [x] Remove all TODO comments and implement missing functionality
-  - [x] Verify web platform builds successfully
-  - [x] Verify Android APK builds successfully
-  - [x] Implement filter logic for Memento list
-- **Description**: Completed clean build process, removed all TODO comments, implemented missing filter functionality, and verified both web and Android platforms build successfully.
-- **Files Involved**:
-  - `lib/presentation/viewmodel/mementolist/memento_list.dart`: Implemented filter logic for Memento list
-  - `ai-workspace/app-goal.md`: Updated with code quality completion
-  - `ai-workspace/current-task-check-list.md`: Updated progress tracking
+  - `lib/presentation/view/memento_details.dart`
+  - `lib/presentation/view/scheduled_messages_list.dart`
+  - `lib/presentation/view/scheduled_message_form.dart`
+  - `lib/presentation/viewmodel/scheduled_message_form.dart`
+  - `lib/presentation/router.dart`
+  - `lib/presentation/viewmodel/scheduled_messages_list.dart`
+  - `pubspec.yaml`
+  - `ai-workspace/app-goal.md`
+  - `ai-workspace/structure-ai.md`
+  - `ai-workspace/ai-infrastructure-choice.md`
+  - `ai-workspace/current-task-check-list.md`

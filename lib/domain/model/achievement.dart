@@ -44,7 +44,8 @@ class Achievement extends Equatable {
 
   bool get isUnlocked => unlockedAt != null;
   bool get isCompleted => progress >= maxProgress;
-  double get progressPercentage => maxProgress > 0 ? (progress / maxProgress) * 100 : 0;
+  double get progressPercentage =>
+      maxProgress > 0 ? (progress / maxProgress) * 100 : 0;
 
   Achievement copyWith({
     String? id,
@@ -102,7 +103,8 @@ class AchievementRequirement extends Equatable {
   final int currentValue;
 
   bool get isCompleted => currentValue >= target;
-  double get progressPercentage => target > 0 ? (currentValue / target) * 100 : 0;
+  double get progressPercentage =>
+      target > 0 ? (currentValue / target) * 100 : 0;
 
   AchievementRequirement copyWith({
     AchievementRequirementType? type,

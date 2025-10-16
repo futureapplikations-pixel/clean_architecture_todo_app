@@ -12,7 +12,8 @@ class ScheduledMessagesListViewModel extends Notifier<List<ScheduledMessage>> {
   }
 
   /// Get the repository from the provider
-  ScheduledMessagesRepository get _repository => ref.read(scheduledMessagesRepositoryProvider);
+  ScheduledMessagesRepository get _repository =>
+      ref.read(scheduledMessagesRepositoryProvider);
 
   /// Load all scheduled messages
   Future<void> _loadScheduledMessages() async {
@@ -73,6 +74,6 @@ class ScheduledMessagesListViewModel extends Notifier<List<ScheduledMessage>> {
 
 /// Provider for ScheduledMessagesListViewModel
 final scheduledMessagesListViewModelProvider =
-    NotifierProvider<ScheduledMessagesListViewModel, List<ScheduledMessage>>(() {
-  throw UnimplementedError('scheduledMessagesListViewModelProvider must be overridden');
-});
+    NotifierProvider<ScheduledMessagesListViewModel, List<ScheduledMessage>>(
+  ScheduledMessagesListViewModel.new,
+);

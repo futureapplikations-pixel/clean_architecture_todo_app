@@ -14,7 +14,9 @@ class MementoMapper {
       context: memento.context,
       jobTitle: memento.jobTitle,
       company: memento.company,
-      birthday: memento.birthday != null ? DateTime.fromMillisecondsSinceEpoch(memento.birthday!) : null,
+      birthday: memento.birthday != null
+          ? DateTime.fromMillisecondsSinceEpoch(memento.birthday!)
+          : null,
       labels: [], // TODO: Load labels from database
       notes: [], // TODO: Load notes from database
     );
@@ -42,7 +44,9 @@ class MementoMapper {
       mementoId: note.mementoId,
       content: note.content,
       createdAt: DateTime.fromMillisecondsSinceEpoch(note.createdAt),
-      updatedAt: note.updatedAt != null ? DateTime.fromMillisecondsSinceEpoch(note.updatedAt!) : null,
+      updatedAt: note.updatedAt != null
+          ? DateTime.fromMillisecondsSinceEpoch(note.updatedAt!)
+          : null,
       isFavorite: note.isFavorite == 1,
     );
   }

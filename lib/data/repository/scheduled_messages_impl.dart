@@ -24,7 +24,8 @@ class ScheduledMessagesRepositoryImpl implements ScheduledMessagesRepository {
   }
 
   @override
-  Future<List<domain.ScheduledMessage>> getScheduledMessagesForMemento(int mementoId) async {
+  Future<List<domain.ScheduledMessage>> getScheduledMessagesForMemento(
+      int mementoId) async {
     final entities = await _database.getScheduledMessagesForMemento(mementoId);
     return ScheduledMessageMapper.fromEntityList(entities);
   }
@@ -42,7 +43,8 @@ class ScheduledMessagesRepositoryImpl implements ScheduledMessagesRepository {
   }
 
   @override
-  Future<domain.ScheduledMessage> insertScheduledMessage(domain.ScheduledMessage message) async {
+  Future<domain.ScheduledMessage> insertScheduledMessage(
+      domain.ScheduledMessage message) async {
     final entity = await _database.insertScheduledMessage(
       ScheduledMessageMapper.toInsertCompanion(message),
     );
@@ -76,7 +78,8 @@ class ScheduledMessagesRepositoryImpl implements ScheduledMessagesRepository {
   }
 
   @override
-  Stream<List<domain.ScheduledMessage>> watchScheduledMessagesForMemento(int mementoId) {
+  Stream<List<domain.ScheduledMessage>> watchScheduledMessagesForMemento(
+      int mementoId) {
     // Note: Drift doesn't have a direct watch method for custom queries
     // This would need to be implemented using a custom stream or periodic updates
     // For now, returning an empty stream as a placeholder
@@ -85,7 +88,8 @@ class ScheduledMessagesRepositoryImpl implements ScheduledMessagesRepository {
 }
 
 /// Provider for ScheduledMessagesRepository
-final scheduledMessagesRepositoryProvider = Provider<ScheduledMessagesRepository>((ref) {
+final scheduledMessagesRepositoryProvider =
+    Provider<ScheduledMessagesRepository>((ref) {
   final database = ref.watch(databaseProvider);
   return ScheduledMessagesRepositoryImpl(database);
 });

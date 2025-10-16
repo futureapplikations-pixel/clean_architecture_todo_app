@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum MementoFilterKind { all, favorites, recent }
 
-final mementoFilterKindProvider =
-    StateNotifierProvider.autoDispose<MementoFilterKindViewModel, MementoFilterKind>(
+final mementoFilterKindProvider = StateNotifierProvider.autoDispose<
+    MementoFilterKindViewModel, MementoFilterKind>(
   (_) => MementoFilterKindViewModel(),
 );
 

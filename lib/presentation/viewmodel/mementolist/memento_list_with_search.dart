@@ -24,16 +24,21 @@ class MementoListWithSearchViewModel extends _$MementoListWithSearchViewModel {
 
     if (searchQuery.trim().isEmpty) {
       // Return all mementos when no search query
-      final mementos = await ref.watch(mementosRepositoryImplProvider.notifier).getMementos();
+      final mementos = await ref
+          .watch(mementosRepositoryImplProvider.notifier)
+          .getMementos();
       return _applyFilter(mementos, filterKind);
     } else {
       // Return search results
-      final mementos = await ref.watch(mementosRepositoryImplProvider.notifier).searchMementos(searchQuery);
+      final mementos = await ref
+          .watch(mementosRepositoryImplProvider.notifier)
+          .searchMementos(searchQuery);
       return _applyFilter(mementos, filterKind);
     }
   }
 
-  List<Memento> _applyFilter(List<Memento> mementos, MementoFilterKind filterKind) {
+  List<Memento> _applyFilter(
+      List<Memento> mementos, MementoFilterKind filterKind) {
     // Filter logic implementation
     switch (filterKind) {
       case MementoFilterKind.all:

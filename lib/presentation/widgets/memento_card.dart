@@ -4,9 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/model/memento.dart';
 import '../theme.dart';
-import '../utils/constants.dart';
-import '../viewmodel/mementolist/memento_list.dart';
-import '../viewmodel/mementolist/memento_list_with_search.dart';
 
 class MementoCard extends ConsumerStatefulWidget {
   const MementoCard({
@@ -182,14 +179,17 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                         Icon(
                                           Icons.business,
                                           size: 16,
-                                          color: AppTheme.softGold.withOpacity(0.8),
+                                          color: AppTheme.softGold
+                                              .withOpacity(0.8),
                                         ),
                                         const SizedBox(width: 6),
                                         Expanded(
                                           child: Text(
                                             widget.memento.company!,
-                                            style: theme.textTheme.bodyMedium?.copyWith(
-                                              color: theme.colorScheme.onSurfaceVariant,
+                                            style: theme.textTheme.bodyMedium
+                                                ?.copyWith(
+                                              color: theme
+                                                  .colorScheme.onSurfaceVariant,
                                               fontWeight: FontWeight.w500,
                                               fontFamily: 'Inter',
                                             ),
@@ -206,13 +206,15 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                         Icon(
                                           Icons.email,
                                           size: 16,
-                                          color: AppTheme.sageGreen.withOpacity(0.9),
+                                          color: AppTheme.sageGreen
+                                              .withOpacity(0.9),
                                         ),
                                         const SizedBox(width: 6),
                                         Expanded(
                                           child: Text(
                                             widget.memento.email!,
-                                            style: theme.textTheme.bodyMedium?.copyWith(
+                                            style: theme.textTheme.bodyMedium
+                                                ?.copyWith(
                                               color: AppTheme.sageGreen,
                                               fontWeight: FontWeight.w500,
                                               fontFamily: 'Inter',
@@ -230,12 +232,14 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                         Icon(
                                           Icons.phone,
                                           size: 16,
-                                          color: AppTheme.warmCharcoal.withOpacity(0.8),
+                                          color: AppTheme.warmCharcoal
+                                              .withOpacity(0.8),
                                         ),
                                         const SizedBox(width: 6),
                                         Text(
                                           widget.memento.phone!,
-                                          style: theme.textTheme.bodyMedium?.copyWith(
+                                          style: theme.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppTheme.warmCharcoal,
                                             fontWeight: FontWeight.w500,
                                             fontFamily: 'Inter',
@@ -244,27 +248,33 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                       ],
                                     ),
                                   ],
-                                  if (widget.memento.context != null && widget.memento.context!.isNotEmpty) ...[
+                                  if (widget.memento.context != null &&
+                                      widget.memento.context!.isNotEmpty) ...[
                                     const SizedBox(height: 8),
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
                                             AppTheme.softGold.withOpacity(0.1),
-                                            AppTheme.sageGreen.withOpacity(0.05),
+                                            AppTheme.sageGreen
+                                                .withOpacity(0.05),
                                           ],
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                         border: Border.all(
-                                          color: AppTheme.softGold.withOpacity(0.2),
+                                          color: AppTheme.softGold
+                                              .withOpacity(0.2),
                                           width: 1,
                                         ),
                                       ),
                                       child: Text(
                                         widget.memento.context!,
-                                        style: theme.textTheme.bodySmall?.copyWith(
-                                          color: theme.colorScheme.onSecondaryContainer,
+                                        style:
+                                            theme.textTheme.bodySmall?.copyWith(
+                                          color: theme
+                                              .colorScheme.onSecondaryContainer,
                                           fontStyle: FontStyle.italic,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w400,
@@ -297,7 +307,8 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                   ),
                                   child: PopupMenuButton<String>(
                                     padding: EdgeInsets.zero,
-                                    constraints: const BoxConstraints(minWidth: 140),
+                                    constraints:
+                                        const BoxConstraints(minWidth: 140),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -324,7 +335,8 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                             const SizedBox(width: 10),
                                             Text(
                                               'Edit',
-                                              style: theme.textTheme.bodyMedium?.copyWith(
+                                              style: theme.textTheme.bodyMedium
+                                                  ?.copyWith(
                                                 color: AppTheme.sageGreen,
                                                 fontWeight: FontWeight.w500,
                                                 fontFamily: 'Inter',
@@ -345,7 +357,8 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                             const SizedBox(width: 10),
                                             Text(
                                               'Delete',
-                                              style: theme.textTheme.bodyMedium?.copyWith(
+                                              style: theme.textTheme.bodyMedium
+                                                  ?.copyWith(
                                                 color: theme.colorScheme.error,
                                                 fontWeight: FontWeight.w500,
                                                 fontFamily: 'Inter',
@@ -361,7 +374,8 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                         Icons.more_vert,
                                         color: _isHovered
                                             ? AppTheme.warmCharcoal
-                                            : theme.colorScheme.onSurfaceVariant,
+                                            : theme
+                                                .colorScheme.onSurfaceVariant,
                                         size: 22,
                                       ),
                                     ),

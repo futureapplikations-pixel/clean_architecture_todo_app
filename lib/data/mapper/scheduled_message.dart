@@ -15,7 +15,8 @@ class ScheduledMessageMapper {
       ),
       title: entity.title,
       content: entity.content,
-      scheduledDateTime: DateTime.fromMillisecondsSinceEpoch(entity.scheduledDateTime),
+      scheduledDateTime:
+          DateTime.fromMillisecondsSinceEpoch(entity.scheduledDateTime),
       isActive: entity.isActive == 1,
       createdAt: DateTime.fromMillisecondsSinceEpoch(entity.createdAt),
       sentAt: entity.sentAt != null
@@ -25,7 +26,8 @@ class ScheduledMessageMapper {
   }
 
   /// Convert domain model to database entity for insertion
-  static db.ScheduledMessagesCompanion toInsertCompanion(ScheduledMessage message) {
+  static db.ScheduledMessagesCompanion toInsertCompanion(
+      ScheduledMessage message) {
     return db.ScheduledMessagesCompanion.insert(
       mementoId: message.mementoId,
       messageType: message.messageType.name,
@@ -39,13 +41,15 @@ class ScheduledMessageMapper {
   }
 
   /// Convert domain model to database entity for update
-  static db.ScheduledMessagesCompanion toUpdateCompanion(ScheduledMessage message) {
+  static db.ScheduledMessagesCompanion toUpdateCompanion(
+      ScheduledMessage message) {
     return db.ScheduledMessagesCompanion(
       mementoId: Value(message.mementoId),
       messageType: Value(message.messageType.name),
       title: Value(message.title),
       content: Value(message.content),
-      scheduledDateTime: Value(message.scheduledDateTime.millisecondsSinceEpoch),
+      scheduledDateTime:
+          Value(message.scheduledDateTime.millisecondsSinceEpoch),
       isActive: Value(message.isActive ? 1 : 0),
       createdAt: Value(message.createdAt.millisecondsSinceEpoch),
       sentAt: Value(message.sentAt?.millisecondsSinceEpoch),
@@ -53,7 +57,8 @@ class ScheduledMessageMapper {
   }
 
   /// Convert list of database entities to domain models
-  static List<ScheduledMessage> fromEntityList(List<db.ScheduledMessage> entities) {
+  static List<ScheduledMessage> fromEntityList(
+      List<db.ScheduledMessage> entities) {
     return entities.map(fromEntity).toList();
   }
 }

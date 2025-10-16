@@ -7,7 +7,8 @@ import 'package:timezone/data/latest.dart' as tz_data;
 class NotificationService {
   static const String _channelId = 'scheduled_messages';
   static const String _channelName = 'Scheduled Messages';
-  static const String _channelDescription = 'Notifications for scheduled messages';
+  static const String _channelDescription =
+      'Notifications for scheduled messages';
 
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
 
@@ -27,14 +28,16 @@ class NotificationService {
       requestSoundPermission: true,
     );
 
-    const InitializationSettings initializationSettings = InitializationSettings(
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
 
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) {
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) {
         // Handle notification tap
         _onNotificationTap(notificationResponse);
       },
@@ -55,7 +58,8 @@ class NotificationService {
     );
 
     await _flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
 
@@ -138,7 +142,8 @@ class NotificationService {
     // This could navigate to the specific message or perform other actions
     // For now, we'll just print the payload
     if (notificationResponse.payload != null) {
-      print('Notification tapped with payload: ${notificationResponse.payload}');
+      print(
+          'Notification tapped with payload: ${notificationResponse.payload}');
     }
   }
 
@@ -159,7 +164,8 @@ class NotificationService {
         _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>();
     if (androidImplementation != null) {
-      return await androidImplementation.requestNotificationsPermission() ?? false;
+      return await androidImplementation.requestNotificationsPermission() ??
+          false;
     }
     return true; // Assume granted for iOS
   }
@@ -168,7 +174,8 @@ class NotificationService {
 /// Provider for NotificationService
 final notificationServiceProvider = Provider<NotificationService>((ref) {
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  final notificationService = NotificationService(flutterLocalNotificationsPlugin);
+  final notificationService =
+      NotificationService(flutterLocalNotificationsPlugin);
 
   // Initialize the service
   notificationService.initialize();

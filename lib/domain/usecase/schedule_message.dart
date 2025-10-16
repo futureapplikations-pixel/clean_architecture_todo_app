@@ -10,7 +10,7 @@ class ScheduleMessage {
   const ScheduleMessage(this._repository);
 
   /// Execute the use case
-  Future<ScheduledMessage> execute({
+  Future<ScheduledMessage> call({
     required int mementoId,
     required MessageType messageType,
     required String title,

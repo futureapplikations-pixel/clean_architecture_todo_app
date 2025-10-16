@@ -34,8 +34,10 @@ abstract class Database {
   Future<List<ScheduledMessage>> getScheduledMessagesForMemento(int mementoId);
   Future<List<ScheduledMessage>> getActiveScheduledMessages();
   Future<List<ScheduledMessage>> getDueScheduledMessages(DateTime currentTime);
-  Future<ScheduledMessage> insertScheduledMessage(ScheduledMessagesCompanion scheduledMessage);
-  Future<void> updateScheduledMessage(int id, ScheduledMessagesCompanion scheduledMessage);
+  Future<ScheduledMessage> insertScheduledMessage(
+      ScheduledMessagesCompanion scheduledMessage);
+  Future<void> updateScheduledMessage(
+      int id, ScheduledMessagesCompanion scheduledMessage);
   Future<void> deleteScheduledMessage(int id);
   Future<void> markScheduledMessageAsSent(int id, DateTime sentAt);
 }

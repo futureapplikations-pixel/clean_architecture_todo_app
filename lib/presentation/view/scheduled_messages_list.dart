@@ -10,14 +10,17 @@ class ScheduledMessagesListView extends ConsumerStatefulWidget {
   const ScheduledMessagesListView({super.key});
 
   @override
-  ConsumerState<ScheduledMessagesListView> createState() => _ScheduledMessagesListViewState();
+  ConsumerState<ScheduledMessagesListView> createState() =>
+      _ScheduledMessagesListViewState();
 }
 
-class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesListView> {
+class _ScheduledMessagesListViewState
+    extends ConsumerState<ScheduledMessagesListView> {
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(scheduledMessagesListViewModelProvider);
-    final viewModel = ref.watch(scheduledMessagesListViewModelProvider.notifier);
+    final viewModel =
+        ref.watch(scheduledMessagesListViewModelProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +65,7 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
       ),
       body: messages.isEmpty
           ? _buildEmptyState()
-          : _buildMessagesList(messages, viewModel),
+          : _buildMessagesList(context, messages, viewModel),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _navigateToCreateForm(context),
         icon: const Icon(Icons.add),
@@ -90,8 +93,8 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
           Text(
             'Schedule your first message to get started',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.outline,
-            ),
+                  color: Theme.of(context).colorScheme.outline,
+                ),
           ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
@@ -104,20 +107,47 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
     );
   }
 
-  Widget _buildMessagesList(List messages, ScheduledMessagesListViewModel viewModel) {
-    return ListView.builder(
-      itemCount: messages.length,
-      itemBuilder: (context, index) {
-        final message = messages[index];
-        return ScheduledMessageCard(
-          message: message,
-          onEdit: () => _navigateToEditForm(context, message),
-          onDelete: () => _showDeleteConfirmation(context, viewModel, message),
-          onMarkAsSent: message.isSent
-              ? null
-              : () => _markAsSent(context, viewModel, message),
-        );
-      },
+  Widget _buildMessagesList(
+      BuildContext context,
+      List<ScheduledMessage> messages,
+      ScheduledMessagesListViewModel viewModel) {
+    final dueMessages = messages.where((m) => m.isDue).toList();
+    final scheduledMessages =
+        messages.where((m) => !m.isDue && !m.isSent).toList();
+    final sentMessages = messages.where((m) => m.isSent).toList();
+
+    return ListView(
+      children: [
+        if (dueMessages.isNotEmpty)
+          _buildMessageSection(context, 'Due', dueMessages, viewModel),
+        if (scheduledMessages.isNotEmpty)
+          _buildMessageSection(
+              context, 'Scheduled', scheduledMessages, viewModel),
+        if (sentMessages.isNotEmpty)
+          _buildMessageSection(context, 'Sent', sentMessages, viewModel),
+      ],
+    );
+  }
+
+  Widget _buildMessageSection(
+      BuildContext context,
+      String title,
+      List<ScheduledMessage> messages,
+      ScheduledMessagesListViewModel viewModel) {
+    return ExpansionTile(
+      title: Text(title, style: Theme.of(context).textTheme.headlineSmall),
+      initiallyExpanded: true,
+      children: messages
+          .map((message) => ScheduledMessageCard(
+                message: message,
+                onEdit: () => _navigateToEditForm(context, message),
+                onDelete: () =>
+                    _showDeleteConfirmation(context, viewModel, message),
+                onMarkAsSent: message.isSent
+                    ? null
+                    : () => _markAsSent(context, viewModel, message),
+              ))
+          .toList(),
     );
   }
 
@@ -126,11 +156,12 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
     context.go('/scheduled-messages/create/0');
   }
 
-  void _navigateToEditForm(BuildContext context, message) {
+  void _navigateToEditForm(BuildContext context, ScheduledMessage message) {
     context.go('/scheduled-messages/edit/${message.id}');
   }
 
-  void _showDeleteConfirmation(BuildContext context, ScheduledMessagesListViewModel viewModel, message) {
+  void _showDeleteConfirmation(BuildContext context,
+      ScheduledMessagesListViewModel viewModel, ScheduledMessage message) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -143,7 +174,7 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
           ),
           TextButton(
             onPressed: () {
-              viewModel.deleteMessage(message.id);
+              viewModel.deleteMessage(message.id!);
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Deleted "${message.title}"')),
@@ -159,15 +190,13 @@ class _ScheduledMessagesListViewState extends ConsumerState<ScheduledMessagesLis
     );
   }
 
-  void _markAsSent(BuildContext context, ScheduledMessagesListViewModel viewModel, message) {
-    viewModel.markMessageAsSent(message.id);
+  void _markAsSent(BuildContext context,
+      ScheduledMessagesListViewModel viewModel, ScheduledMessage message) {
+    viewModel.markMessageAsSent(message.id!);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Marked "${message.title}" as sent')),
     );
   }
 }
 
-/// Provider for the scheduled messages list view model
-final scheduledMessagesListViewModelProvider = NotifierProvider<ScheduledMessagesListViewModel, List<ScheduledMessage>>(
-  ScheduledMessagesListViewModel.new,
-);
+

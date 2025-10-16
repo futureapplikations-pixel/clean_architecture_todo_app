@@ -10,7 +10,8 @@ part 'memento_list.g.dart';
 class MementoListViewModel extends _$MementoListViewModel {
   @override
   Future<List<Memento>> build() async {
-    final mementos = await ref.watch(mementosRepositoryImplProvider.notifier).getMementos();
+    final mementos =
+        await ref.watch(mementosRepositoryImplProvider.notifier).getMementos();
     final filterKind = ref.watch(mementoFilterKindProvider);
     // Filter logic implementation
     switch (filterKind) {

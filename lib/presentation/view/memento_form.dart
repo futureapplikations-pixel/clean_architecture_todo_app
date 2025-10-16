@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/model/memento.dart';
-import '../utils/constants.dart';
 import '../viewmodel/mementoform/memento_form.dart';
 import '../widgets/actions.dart';
 import '../widgets/article.dart';
@@ -40,7 +39,8 @@ class _MementoFormPageState extends ConsumerState<MementoFormPage> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.memento != widget.memento) {
       _formKey.currentState?.reset();
-      viewModel = ref.watch(mementoFormViewModelProvider(widget.memento).notifier);
+      viewModel =
+          ref.watch(mementoFormViewModelProvider(widget.memento).notifier);
     }
   }
 
@@ -96,20 +96,22 @@ class _MementoFormPageState extends ConsumerState<MementoFormPage> {
                 });
               }
             },
-            onWillPop: () async {
-              final modified = viewModel.isEdited;
-              if (modified) {
-                return confirm(
-                  context,
-                  title: 'Discard changes?',
-                  content: 'Are you sure you want to discard your changes?',
-                );
+            canPop: !viewModel.isEdited,
+            onPopInvoked: (didPop) async {
+              if (didPop) return;
+              final confirmPop = await confirm(
+                context,
+                title: 'Discard changes?',
+                content: 'Are you sure you want to discard your changes?',
+              );
+              if (confirmPop && context.mounted) {
+                Navigator.of(context).pop();
               }
-              return true;
             },
             autovalidateMode: AutovalidateMode.always,
             child: Container(
-              padding: const EdgeInsets.only(left: 16, top: 24, right: 16, bottom: 16),
+              padding: const EdgeInsets.only(
+                  left: 16, top: 24, right: 16, bottom: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -243,8 +245,11 @@ class _MementoFormPageState extends ConsumerState<MementoFormPage> {
                         const SizedBox(height: 16),
                         StringFormField(
                           label: 'Birthday',
-                          value: data.birthday != null ? _formatDateForDisplay(data.birthday!) : '',
-                          onChanged: (value) => _handleBirthdayChange(value, viewModel),
+                          value: data.birthday != null
+                              ? _formatDateForDisplay(data.birthday!)
+                              : '',
+                          onChanged: (value) =>
+                              _handleBirthdayChange(value, viewModel),
                           builder: (context, controller) {
                             return TextFormField(
                               controller: controller,

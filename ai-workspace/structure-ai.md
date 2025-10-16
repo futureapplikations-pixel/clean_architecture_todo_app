@@ -46,10 +46,10 @@
 - `view/`: UI screens
   - `memento_list.dart`: The main screen that displays the list of mementos with scheduled messages access.
   - `memento_form.dart`: The screen for creating and editing mementos.
-  - `memento_details.dart`: The screen that displays the details of a memento.
+  - `memento_details.dart`: The screen that displays the details of a memento and its scheduled messages.
   - `search_memento_list.dart`: The screen for searching mementos.
-  - `scheduled_messages_list.dart`: Screen for displaying and managing scheduled messages with filtering.
-  - `scheduled_message_form.dart`: Form for creating and editing scheduled messages with validation.
+  - `scheduled_messages_list.dart`: Screen for displaying and managing scheduled messages with filtering, grouped by status.
+  - `scheduled_message_form.dart`: Form for creating and editing scheduled messages with validation and a dedicated view model.
 - `viewmodel/`: Screen view models
   - `mementoform/`: Memento creation/editing
     - `memento_form.dart`: ViewModel for the memento form.
@@ -60,6 +60,7 @@
     - `search_query_notifier.dart`: Provider for managing search query state.
     - `memento_filter_kind.dart`: Enum for filtering mementos (all, favorites, recent).
   - `scheduled_messages_list.dart`: ViewModel for managing scheduled messages list with reactive updates.
+  - `scheduled_message_form.dart`: ViewModel for managing the scheduled message form state.
 - `widgets/`: Reusable UI components
   - `memento_card.dart`: Enhanced card widget with edit/delete actions and improved information display.
   - `scheduled_message_card.dart`: Card widget for displaying scheduled messages with status indicators and actions.
@@ -110,7 +111,7 @@
 - Platform-specific configurations for:
   - Android (Gradle)
   - iOS (Swift/Storyboards)
-  - Web (index.html)
+  - Web (index.html) - updated with modern initialization script and service worker versioning
   - Linux (CMake)
   - macOS (Cocoa)
   - Windows (CMake)

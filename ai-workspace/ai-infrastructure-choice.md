@@ -90,3 +90,4 @@
 - **2025-10-14 23:08 CEST**: Updated http dependency from ^0.13.5 to ^1.5.0 for google_fonts compatibility
 - **2025-10-14 23:08 CEST**: Added google_fonts ^6.1.0 for vision typography implementation (Playfair Display, Inter)
 - **2025-10-14 23:08 CEST**: Implemented corporate design theme with vision color palette and typography
+- **2025-10-16 22:00 CEST**: Added collection package for improved data handling.

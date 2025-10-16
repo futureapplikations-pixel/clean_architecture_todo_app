@@ -30,7 +30,8 @@ class AchievementDashboard extends ConsumerStatefulWidget {
   const AchievementDashboard({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<AchievementDashboard> createState() => _AchievementDashboardState();
+  ConsumerState<AchievementDashboard> createState() =>
+      _AchievementDashboardState();
 }
 
 class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
@@ -70,7 +71,8 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
             children: [
               // Stats Overview
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -91,10 +93,10 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
                     _buildStatCard(
                       'Total Points',
                       ref.watch(totalPointsProvider).when(
-                        data: (points) => points.toString(),
-                        loading: () => '...',
-                        error: (_, __) => '0',
-                      ),
+                            data: (points) => points.toString(),
+                            loading: () => '...',
+                            error: (_, __) => '0',
+                          ),
                       Icons.stars,
                       AppTheme.softGold,
                     ),
@@ -106,10 +108,11 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
                     _buildStatCard(
                       'Unlocked',
                       ref.watch(unlockedAchievementsProvider).when(
-                        data: (achievements) => achievements.length.toString(),
-                        loading: () => '...',
-                        error: (_, __) => '0',
-                      ),
+                            data: (achievements) =>
+                                achievements.length.toString(),
+                            loading: () => '...',
+                            error: (_, __) => '0',
+                          ),
                       Icons.emoji_events,
                       AppTheme.sageGreen,
                     ),
@@ -121,10 +124,11 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
                     _buildStatCard(
                       'Total',
                       ref.watch(allAchievementsProvider).when(
-                        data: (achievements) => achievements.length.toString(),
-                        loading: () => '...',
-                        error: (_, __) => '0',
-                      ),
+                            data: (achievements) =>
+                                achievements.length.toString(),
+                            loading: () => '...',
+                            error: (_, __) => '0',
+                          ),
                       Icons.workspace_premium,
                       AppTheme.warmCharcoal,
                     ),
@@ -165,7 +169,8 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
     );
   }
 
-  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
+  Widget _buildStatCard(
+      String title, String value, IconData icon, Color color) {
     return Column(
       children: [
         Icon(icon, color: color, size: 24),
@@ -173,17 +178,17 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
         Text(
           value,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w700,
-            color: color,
-          ),
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w700,
+                color: color,
+              ),
         ),
         Text(
           title,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            fontFamily: 'Inter',
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
+                fontFamily: 'Inter',
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
         ),
       ],
     );
@@ -191,79 +196,83 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
 
   Widget _buildAllAchievementsTab() {
     return ref.watch(allAchievementsProvider).when(
-      data: (achievements) => _buildAchievementGrid(achievements),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(
-        child: Text(
-          'Error loading achievements: $error',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.error,
+          data: (achievements) => _buildAchievementGrid(achievements),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Text(
+              'Error loading achievements: $error',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+            ),
           ),
-        ),
-      ),
-    );
+        );
   }
 
   Widget _buildUnlockedAchievementsTab() {
     return ref.watch(unlockedAchievementsProvider).when(
-      data: (achievements) => achievements.isEmpty
-          ? _buildEmptyState('No achievements unlocked yet', 'Complete tasks to unlock your first achievement!')
-          : _buildAchievementGrid(achievements),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(
-        child: Text(
-          'Error loading achievements: $error',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.error,
+          data: (achievements) => achievements.isEmpty
+              ? _buildEmptyState('No achievements unlocked yet',
+                  'Complete tasks to unlock your first achievement!')
+              : _buildAchievementGrid(achievements),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Text(
+              'Error loading achievements: $error',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+            ),
           ),
-        ),
-      ),
-    );
+        );
   }
 
   Widget _buildCategoryTab(AchievementCategory category) {
     return ref.watch(allAchievementsProvider).when(
-      data: (achievements) {
-        final categoryAchievements = achievements
-            .where((achievement) => achievement.category == category)
-            .toList();
-        return categoryAchievements.isEmpty
-            ? _buildEmptyState('No achievements in this category', 'Check back later for new achievements!')
-            : _buildAchievementGrid(categoryAchievements);
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(
-        child: Text(
-          'Error loading achievements: $error',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.error,
+          data: (achievements) {
+            final categoryAchievements = achievements
+                .where((achievement) => achievement.category == category)
+                .toList();
+            return categoryAchievements.isEmpty
+                ? _buildEmptyState('No achievements in this category',
+                    'Check back later for new achievements!')
+                : _buildAchievementGrid(categoryAchievements);
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Text(
+              'Error loading achievements: $error',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+            ),
           ),
-        ),
-      ),
-    );
+        );
   }
 
   Widget _buildProgressTab() {
     return ref.watch(allAchievementsProvider).when(
-      data: (achievements) {
-        final inProgressAchievements = achievements
-            .where((achievement) => !achievement.isUnlocked && achievement.progress > 0)
-            .toList();
+          data: (achievements) {
+            final inProgressAchievements = achievements
+                .where((achievement) =>
+                    !achievement.isUnlocked && achievement.progress > 0)
+                .toList();
 
-        return inProgressAchievements.isEmpty
-            ? _buildEmptyState('No achievements in progress', 'Start completing tasks to see progress here!')
-            : _buildAchievementGrid(inProgressAchievements);
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(
-        child: Text(
-          'Error loading achievements: $error',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.error,
+            return inProgressAchievements.isEmpty
+                ? _buildEmptyState('No achievements in progress',
+                    'Start completing tasks to see progress here!')
+                : _buildAchievementGrid(inProgressAchievements);
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Text(
+              'Error loading achievements: $error',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+            ),
           ),
-        ),
-      ),
-    );
+        );
   }
 
   Widget _buildAchievementGrid(List<Achievement> achievements) {
@@ -296,17 +305,17 @@ class _AchievementDashboardState extends ConsumerState<AchievementDashboard>
           Text(
             title,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontFamily: 'Inter',
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
+                  fontFamily: 'Inter',
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
           ),
           const SizedBox(height: 8),
           Text(
             subtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontFamily: 'Inter',
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
+                  fontFamily: 'Inter',
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
             textAlign: TextAlign.center,
           ),
         ],

@@ -119,3 +119,10 @@ Memento is a personal relationship management application designed to help users
     - Designed AchievementCard widgets with progress bars, rarity indicators, and celebration animations.
     - Added advanced animations including hover effects, tap feedback, and achievement unlock celebrations.
     - Updated dependencies (google_fonts, http) and integrated corporate design theme throughout the application.
+16. **Scheduled Messages UI Enhancements**
+    - 2025-10-16 22:00 CEST: Enhanced the Memento details view to display a list of scheduled messages.
+    - 2025-10-16 22:00 CEST: Redesigned the scheduled messages list to be grouped by status (Due, Scheduled, Sent).
+    - 2025-10-16 22:00 CEST: Implemented the logic for creating and updating scheduled messages from the form.
+    - 2025-10-16 22:00 CEST: Resolved all TODOs related to scheduled messages in the router and view models.
+    - 2025-10-16 22:00 CEST: Added the `collection` package for future use.
+    - 2025-10-16 22:00 CEST: Formatted the entire codebase using `dart format`.

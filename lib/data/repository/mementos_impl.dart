@@ -75,13 +75,16 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
 
     return database.searchMementos(searchPattern).then((results) {
       // Sort results by relevance (shorter matches first, then alphabetically)
-      final sortedResults = results.map(MementoMapper.transformToModel).toList();
+      final sortedResults =
+          results.map(MementoMapper.transformToModel).toList();
 
       // Custom sorting for better user experience
       sortedResults.sort((a, b) {
         // Prioritize exact matches at the beginning
-        final aStartsWith = a.name.toLowerCase().startsWith(query.toLowerCase());
-        final bStartsWith = b.name.toLowerCase().startsWith(query.toLowerCase());
+        final aStartsWith =
+            a.name.toLowerCase().startsWith(query.toLowerCase());
+        final bStartsWith =
+            b.name.toLowerCase().startsWith(query.toLowerCase());
 
         if (aStartsWith && !bStartsWith) return -1;
         if (!aStartsWith && bStartsWith) return 1;
@@ -124,7 +127,7 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
       ),
     );
   }
-  
+
   @override
   Stream<List<Memento>> build() {
     return database.watchMementos().map(MementoMapper.transformToModelList);
@@ -168,7 +171,9 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
   }
 
   Future<List<Label>> getLabelsForMemento(int mementoId) {
-    return database.getLabelsForMemento(mementoId).then(MementoMapper.transformLabelListToModel);
+    return database
+        .getLabelsForMemento(mementoId)
+        .then(MementoMapper.transformLabelListToModel);
   }
 
   Future<void> addLabelToMemento(int mementoId, int labelId) {
@@ -193,10 +198,13 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
   }
 
   Future<List<Note>> getNotesForMemento(int mementoId) {
-    return database.getNotesForMemento(mementoId).then(MementoMapper.transformNoteListToModel);
+    return database
+        .getNotesForMemento(mementoId)
+        .then(MementoMapper.transformNoteListToModel);
   }
 
-  Future<Note> createNote(int mementoId, String content, {bool isFavorite = false}) async {
+  Future<Note> createNote(int mementoId, String content,
+      {bool isFavorite = false}) async {
     final now = DateTime.now().millisecondsSinceEpoch;
     final note = await database.insertNote(
       db.NotesCompanion.insert(
@@ -217,7 +225,9 @@ class MementosRepositoryImpl extends _$MementosRepositoryImpl
       db.NotesCompanion(
         content: db.Val(content),
         updatedAt: db.Val(now),
-        isFavorite: isFavorite != null ? db.Val(isFavorite ? 1 : 0) : const db.Val.absent(),
+        isFavorite: isFavorite != null
+            ? db.Val(isFavorite ? 1 : 0)
+            : const db.Val.absent(),
       ),
     );
   }

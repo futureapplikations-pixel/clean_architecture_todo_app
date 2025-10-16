@@ -50,7 +50,9 @@ class ChipsBarWidget extends ConsumerWidget {
       selected: checked,
       onSelected: (_) => onSelect(),
       selectedColor: checked ? Theme.of(context).colorScheme.tertiary : null,
-      labelStyle: checked ? TextStyle(color: Theme.of(context).colorScheme.onTertiary) : null,
+      labelStyle: checked
+          ? TextStyle(color: Theme.of(context).colorScheme.onTertiary)
+          : null,
       checkmarkColor: checked ? Theme.of(context).colorScheme.onTertiary : null,
     );
   }

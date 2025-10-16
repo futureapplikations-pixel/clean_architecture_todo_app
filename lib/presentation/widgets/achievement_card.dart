@@ -164,7 +164,8 @@ class _AchievementCardState extends State<AchievementCard>
       ]),
       builder: (context, child) {
         return Transform.scale(
-          scale: _scaleAnimation.value * (1.0 + (_bounceAnimation.value * 0.05)),
+          scale:
+              _scaleAnimation.value * (1.0 + (_bounceAnimation.value * 0.05)),
           child: Card(
             elevation: _elevationAnimation.value,
             shadowColor: widget.achievement.isUnlocked
@@ -220,12 +221,14 @@ class _AchievementCardState extends State<AchievementCard>
                               decoration: BoxDecoration(
                                 color: widget.achievement.isUnlocked
                                     ? rarityColor.withOpacity(0.1)
-                                    : theme.colorScheme.surfaceVariant.withOpacity(0.3),
+                                    : theme.colorScheme.surfaceVariant
+                                        .withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
                                   color: widget.achievement.isUnlocked
                                       ? rarityColor.withOpacity(0.3)
-                                      : theme.colorScheme.outline.withOpacity(0.3),
+                                      : theme.colorScheme.outline
+                                          .withOpacity(0.3),
                                   width: 1,
                                 ),
                               ),
@@ -296,12 +299,14 @@ class _AchievementCardState extends State<AchievementCard>
                           Container(
                             height: 6,
                             decoration: BoxDecoration(
-                              color: theme.colorScheme.surfaceVariant.withOpacity(0.3),
+                              color: theme.colorScheme.surfaceVariant
+                                  .withOpacity(0.3),
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: FractionallySizedBox(
                               alignment: Alignment.centerLeft,
-                              widthFactor: widget.achievement.progressPercentage / 100,
+                              widthFactor:
+                                  widget.achievement.progressPercentage / 100,
                               child: Container(
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(

@@ -48,7 +48,7 @@ class MementoListPage extends HookConsumerWidget {
           title: Container(
             height: 44,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceVariant.withOpacity(0.3),
+              color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
               borderRadius: BorderRadius.circular(22),
               border: Border.all(
                 color: theme.colorScheme.outlineVariant.withOpacity(0.5),
@@ -69,7 +69,8 @@ class MementoListPage extends HookConsumerWidget {
                     size: 20,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 hintStyle: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant.withOpacity(0.7),
                 ),
@@ -126,22 +127,15 @@ class MementoListPage extends HookConsumerWidget {
                 ),
                 tooltip: 'Delete All Contacts',
                 onPressed: () async {
-                  final messenger = ScaffoldMessenger.of(context);
-                  final deleteAll = await confirm(
-                    context,
-                    title: 'Warning',
-                    content: 'Delete all contacts? This action cannot be undone.',
-                  );
-                  if (deleteAll) {
-                    final model = ref.watch(mementoListWithSearchViewModelProvider.notifier);
+                  final model = ref
+                        .watch(mementoListWithSearchViewModelProvider.notifier);
                     await model.deleteAllMementos();
-                    messenger.showSnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: const Text('All contacts deleted'),
                         backgroundColor: theme.colorScheme.error,
                       ),
                     );
-                  }
                 },
               ),
             ),
@@ -218,7 +212,8 @@ class MementoListPage extends HookConsumerWidget {
         memento: memento,
         showSave: false,
       ),
-      emptyBuilder: (_) => const Material(child: Center(child: Text('Select a Memento'))),
+      emptyBuilder: (_) =>
+          const Material(child: Center(child: Text('Select a Memento'))),
     );
   }
 
@@ -241,7 +236,8 @@ class MementoListPage extends HookConsumerWidget {
     if (confirmed) {
       // Access ref through context
       final container = ProviderScope.containerOf(context);
-      final model = container.read(mementoListWithSearchViewModelProvider.notifier);
+      final model =
+          container.read(mementoListWithSearchViewModelProvider.notifier);
       await model.deleteMemento(memento.id);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('${memento.name} deleted')),
@@ -249,7 +245,8 @@ class MementoListPage extends HookConsumerWidget {
     }
   }
 
-  Widget _buildEmptyState(BuildContext context, ThemeData theme, String searchQuery) {
+  Widget _buildEmptyState(
+      BuildContext context, ThemeData theme, String searchQuery) {
     if (searchQuery.isNotEmpty) {
       return Center(
         child: Column(

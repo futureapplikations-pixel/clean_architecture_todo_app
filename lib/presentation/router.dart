@@ -1,10 +1,13 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'view/search_memento_list.dart';
+import '../domain/model/scheduled_message.dart';
 import 'view/memento_details.dart';
 import 'view/memento_list.dart';
-import 'view/scheduled_messages_list.dart';
 import 'view/scheduled_message_form.dart';
+import 'view/scheduled_messages_list.dart';
+import 'view/search_memento_list.dart';
+import 'viewmodel/scheduled_messages_list.dart';
 
 final router = GoRouter(
   routes: [
@@ -33,8 +36,23 @@ final router = GoRouter(
         GoRoute(
           path: 'scheduled-messages/edit/:messageId',
           builder: (context, state) {
-            // TODO: Load the message and pass it to the form
-            return const ScheduledMessageForm(mementoId: 0);
+            final messageId = int.parse(state.params['messageId']!);
+            final message = state.extra as ScheduledMessage?;
+
+            if (message != null) {
+              return ScheduledMessageForm(
+                  mementoId: message.mementoId, message: message);
+            }
+
+            // Fallback if message is not in extra
+            return Consumer(builder: (context, ref, child) {
+              final messages =
+                  ref.watch(scheduledMessagesListViewModelProvider);
+              final messageToEdit =
+                  messages.firstWhere((element) => element.id == messageId);
+              return ScheduledMessageForm(
+                  mementoId: messageToEdit.mementoId, message: messageToEdit);
+            });
           },
         ),
       ],

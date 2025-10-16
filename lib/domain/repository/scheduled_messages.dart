@@ -33,5 +33,6 @@ abstract class ScheduledMessagesRepository {
   Stream<List<ScheduledMessage>> watchScheduledMessages();
 
   /// Watch scheduled messages for a specific memento
-  Stream<List<ScheduledMessage>> watchScheduledMessagesForMemento(int mementoId);
+  Stream<List<ScheduledMessage>> watchScheduledMessagesForMemento(
+      int mementoId);
 }

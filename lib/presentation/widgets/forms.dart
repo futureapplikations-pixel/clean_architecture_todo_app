@@ -183,8 +183,8 @@ class _TextFieldState extends State<_TextField> {
   }
 }
 
-typedef DateFieldBuilder = Widget Function(BuildContext context,
-    TextEditingController controller, DateTime? value);
+typedef DateFieldBuilder = Widget Function(
+    BuildContext context, TextEditingController controller, DateTime? value);
 
 class DateFormField extends StatelessWidget {
   const DateFormField({

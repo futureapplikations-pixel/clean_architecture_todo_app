@@ -1,16 +1,11 @@
-# Resolved Issues Archive
+# Resolved Issues
 
-## Remove "No Mementos found" Message in Search
-- **Issue**: Remove the "No Mementos found" message when search results are empty
-- **Resolution Date**: 2025-10-14 20:49 CEST
-- **Description**: When searching for mementos and no results are found, display an empty state instead of showing "No Mementos found" text
+## Issue: Uncaught ReferenceError: serviceWorkerVersion is not defined
+
+- **Resolution Date**: 2025-10-16
+- **Description**: On web startup, the console was printing `Uncaught ReferenceError: serviceWorkerVersion is not defined at (index):45:33`. This was because the `serviceWorkerVersion` variable was used in `web/index.html` without being defined.
 - **Resolution Plan**:
-  - [x] Identify the "No Mementos found" message in search results
-  - [x] Replace the message with an empty state (SizedBox.shrink())
-  - [x] Test that empty search results show no message
+  - [x] Modify `web/index.html` to load the `flutter_service_worker.js` script, which defines the `serviceWorkerVersion` variable.
+  - [x] Remove the `serviceWorker` block from the `loadEntrypoint` function in `web/index.html`.
 - **Files Involved**:
-  - Modified: lib/presentation/view/search_memento_list.dart
-- **Actions Taken**:
-  - 2025-10-14 20:48 CEST: Located "No Mementos found" message in search_memento_list.dart
-  - 2025-10-14 20:48 CEST: Replaced Text widget with SizedBox.shrink() for empty state
-  - 2025-10-14 20:49 CEST: Tested that empty search results now show no message
+  - `web/index.html`

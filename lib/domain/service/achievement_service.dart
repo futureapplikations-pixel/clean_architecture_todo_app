@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 
 import '../model/achievement.dart';
-import '../model/memento.dart';
-import '../model/note.dart';
-import '../model/scheduled_message.dart';
 
 abstract class AchievementService {
   Future<List<Achievement>> getAllAchievements();
@@ -243,7 +240,8 @@ class AchievementServiceImpl implements AchievementService {
   @override
   Future<List<Achievement>> getAllAchievements() async {
     return _allAchievements.map((achievement) {
-      final currentProgress = _currentProgress[achievement.requirements.first.type] ?? 0;
+      final currentProgress =
+          _currentProgress[achievement.requirements.first.type] ?? 0;
       return achievement.copyWith(
         progress: currentProgress,
       );
@@ -253,7 +251,8 @@ class AchievementServiceImpl implements AchievementService {
   @override
   Future<List<Achievement>> getUnlockedAchievements() async {
     return _allAchievements
-        .where((achievement) => _unlockedAchievementIds.contains(achievement.id))
+        .where(
+            (achievement) => _unlockedAchievementIds.contains(achievement.id))
         .toList();
   }
 
@@ -262,14 +261,16 @@ class AchievementServiceImpl implements AchievementService {
     final achievement = _allAchievements.where((a) => a.id == id).firstOrNull;
     if (achievement == null) return null;
 
-    final currentProgress = _currentProgress[achievement.requirements.first.type] ?? 0;
+    final currentProgress =
+        _currentProgress[achievement.requirements.first.type] ?? 0;
     return achievement.copyWith(
       progress: currentProgress,
     );
   }
 
   @override
-  Future<void> updateProgress(AchievementRequirementType type, int value) async {
+  Future<void> updateProgress(
+      AchievementRequirementType type, int value) async {
     _currentProgress[type] = (_currentProgress[type] ?? 0) + value;
     await _saveProgress();
     await checkAndUnlockAchievements();
@@ -280,7 +281,8 @@ class AchievementServiceImpl implements AchievementService {
     for (final achievement in _allAchievements) {
       if (_unlockedAchievementIds.contains(achievement.id)) continue;
 
-      final currentProgress = _currentProgress[achievement.requirements.first.type] ?? 0;
+      final currentProgress =
+          _currentProgress[achievement.requirements.first.type] ?? 0;
       if (currentProgress >= achievement.requirements.first.target) {
         _unlockedAchievementIds.add(achievement.id);
         await _saveUnlockedAchievements();
