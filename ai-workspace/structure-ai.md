@@ -111,7 +111,7 @@
 - Platform-specific configurations for:
   - Android (Gradle)
   - iOS (Swift/Storyboards)
-  - Web (index.html) - updated with modern initialization script and service worker versioning
+  - Web (index.html) - updated with modern initialization script, service worker versioning, and mobile-web-app-capable meta tag
   - Linux (CMake)
   - macOS (Cocoa)
   - Windows (CMake)

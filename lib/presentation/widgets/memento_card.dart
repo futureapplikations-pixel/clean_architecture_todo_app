@@ -269,7 +269,6 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                           width: 1,
                                         ),
                                       ),
-                                      ),
                                       child: Text(
                                         widget.memento.context!,
                                         style:
