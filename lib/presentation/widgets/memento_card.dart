@@ -115,13 +115,13 @@ class _MementoCardState extends ConsumerState<MementoCard>
           scale: _scaleAnimation.value,
           child: Card(
             elevation: _elevationAnimation.value,
-            shadowColor: AppTheme.softGold.withOpacity(_glowAnimation.value),
+            shadowColor: theme.colorScheme.tertiary.withOpacity(_glowAnimation.value),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
               side: BorderSide(
                 color: _isHovered
-                    ? AppTheme.softGold.withOpacity(0.3)
-                    : theme.colorScheme.outlineVariant.withOpacity(0.3),
+                    ? theme.colorScheme.tertiary.withOpacity(0.3)
+                    : theme.colorScheme.outline.withOpacity(0.3),
                 width: _isHovered ? 2 : 1,
               ),
             ),
@@ -131,7 +131,7 @@ class _MementoCardState extends ConsumerState<MementoCard>
                 gradient: LinearGradient(
                   colors: [
                     _isHovered
-                        ? AppTheme.softGold.withOpacity(0.05)
+                        ? theme.colorScheme.tertiary.withOpacity(0.05)
                         : theme.colorScheme.surface,
                     theme.colorScheme.surface.withOpacity(0.95),
                   ],
@@ -149,8 +149,8 @@ class _MementoCardState extends ConsumerState<MementoCard>
                   onTapCancel: _onTapCancel,
                   onHover: _onHoverChanged,
                   borderRadius: BorderRadius.circular(16),
-                  splashColor: AppTheme.softGold.withOpacity(0.1),
-                  highlightColor: AppTheme.softGold.withOpacity(0.05),
+                  splashColor: theme.colorScheme.tertiary.withOpacity(0.1),
+                  highlightColor: theme.colorScheme.tertiary.withOpacity(0.05),
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -179,7 +179,7 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                         Icon(
                                           Icons.business,
                                           size: 16,
-                                          color: AppTheme.softGold
+                                          color: theme.colorScheme.tertiary
                                               .withOpacity(0.8),
                                         ),
                                         const SizedBox(width: 6),
@@ -206,7 +206,7 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                         Icon(
                                           Icons.email,
                                           size: 16,
-                                          color: AppTheme.sageGreen
+                                          color: theme.colorScheme.primary
                                               .withOpacity(0.9),
                                         ),
                                         const SizedBox(width: 6),
@@ -215,7 +215,7 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                             widget.memento.email!,
                                             style: theme.textTheme.bodyMedium
                                                 ?.copyWith(
-                                              color: AppTheme.sageGreen,
+                                              color: theme.colorScheme.primary,
                                               fontWeight: FontWeight.w500,
                                               fontFamily: 'Inter',
                                             ),
@@ -232,7 +232,7 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                         Icon(
                                           Icons.phone,
                                           size: 16,
-                                          color: AppTheme.warmCharcoal
+                                          color: theme.colorScheme.secondary
                                               .withOpacity(0.8),
                                         ),
                                         const SizedBox(width: 6),
@@ -240,7 +240,7 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                           widget.memento.phone!,
                                           style: theme.textTheme.bodyMedium
                                               ?.copyWith(
-                                            color: AppTheme.warmCharcoal,
+                                            color: theme.colorScheme.secondary,
                                             fontWeight: FontWeight.w500,
                                             fontFamily: 'Inter',
                                           ),
@@ -257,17 +257,18 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
-                                            AppTheme.softGold.withOpacity(0.1),
-                                            AppTheme.sageGreen
+                                            theme.colorScheme.tertiary.withOpacity(0.1),
+                                            theme.colorScheme.primary
                                                 .withOpacity(0.05),
                                           ],
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                         border: Border.all(
-                                          color: AppTheme.softGold
+                                          color: theme.colorScheme.tertiary
                                               .withOpacity(0.2),
                                           width: 1,
                                         ),
+                                      ),
                                       ),
                                       child: Text(
                                         widget.memento.context!,
@@ -295,13 +296,13 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        AppTheme.softGold.withOpacity(0.1),
-                                        AppTheme.sageGreen.withOpacity(0.05),
+                                        theme.colorScheme.tertiary.withOpacity(0.1),
+                                        theme.colorScheme.primary.withOpacity(0.05),
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: AppTheme.softGold.withOpacity(0.2),
+                                      color: theme.colorScheme.tertiary.withOpacity(0.2),
                                       width: 1,
                                     ),
                                   ),
@@ -330,14 +331,14 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                             Icon(
                                               Icons.edit,
                                               size: 20,
-                                              color: AppTheme.sageGreen,
+                                              color: theme.colorScheme.primary,
                                             ),
                                             const SizedBox(width: 10),
                                             Text(
                                               'Edit',
                                               style: theme.textTheme.bodyMedium
                                                   ?.copyWith(
-                                                color: AppTheme.sageGreen,
+                                                color: theme.colorScheme.primary,
                                                 fontWeight: FontWeight.w500,
                                                 fontFamily: 'Inter',
                                               ),
@@ -373,7 +374,7 @@ class _MementoCardState extends ConsumerState<MementoCard>
                                       child: Icon(
                                         Icons.more_vert,
                                         color: _isHovered
-                                            ? AppTheme.warmCharcoal
+                                            ? theme.colorScheme.secondary
                                             : theme
                                                 .colorScheme.onSurfaceVariant,
                                         size: 22,

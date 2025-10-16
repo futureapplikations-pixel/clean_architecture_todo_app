@@ -22,3 +22,16 @@
   - `ai-workspace/structure-ai.md`
   - `ai-workspace/ai-infrastructure-choice.md`
   - `ai-workspace/current-task-check-list.md`
+
+## Feature: Improve App Aesthetics
+- **Completion Date**: 2025-10-16
+- **Execution Plan**:
+  - [x] Implement a new, aesthetically pleasing color palette in `lib/presentation/theme.dart`.
+  - [x] Update any hardcoded colors in the widget files to use the new theme colors.
+  - [x] Review and update UI elements to be more visually appealing.
+- **Description**: This feature improves the app's aesthetics by implementing a new color scheme and updating UI elements to be more visually appealing. The new color palette uses a deep blue as the primary color, a teal as the secondary color, and a vibrant orange as the accent color. The `Inter` font is now used for all text styles. Hardcoded colors in the widget files have been replaced with the new theme colors.
+- **Files Involved**:
+  - `lib/presentation/theme.dart`
+  - `lib/presentation/widgets/achievement_card.dart`
+  - `lib/presentation/widgets/scheduled_message_card.dart`
+  - `lib/presentation/widgets/memento_card.dart`

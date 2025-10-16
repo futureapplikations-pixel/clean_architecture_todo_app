@@ -37,13 +37,13 @@ class ScheduledMessageCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: _getMessageTypeColor(message.messageType)
+                    color: _getMessageTypeColor(message.messageType, theme)
                         .withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     _getMessageTypeIcon(message.messageType),
-                    color: _getMessageTypeColor(message.messageType),
+                    color: _getMessageTypeColor(message.messageType, theme),
                     size: 20,
                   ),
                 ),
@@ -74,17 +74,17 @@ class ScheduledMessageCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(isSent, isDue).withOpacity(0.1),
+                    color: _getStatusColor(isSent, isDue, theme).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: _getStatusColor(isSent, isDue),
+                      color: _getStatusColor(isSent, isDue, theme),
                       width: 1,
                     ),
                   ),
                   child: Text(
                     _getStatusText(isSent, isDue),
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: _getStatusColor(isSent, isDue),
+                      color: _getStatusColor(isSent, isDue, theme),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -169,14 +169,14 @@ class ScheduledMessageCard extends StatelessWidget {
     );
   }
 
-  Color _getMessageTypeColor(MessageType type) {
+  Color _getMessageTypeColor(MessageType type, ThemeData theme) {
     switch (type) {
       case MessageType.sms:
-        return Colors.green;
+        return theme.colorScheme.primary;
       case MessageType.email:
-        return Colors.blue;
+        return theme.colorScheme.secondary;
       case MessageType.whatsapp:
-        return Colors.green.shade600;
+        return const Color(0xFF25D366);
     }
   }
 
@@ -191,10 +191,10 @@ class ScheduledMessageCard extends StatelessWidget {
     }
   }
 
-  Color _getStatusColor(bool isSent, bool isDue) {
+  Color _getStatusColor(bool isSent, bool isDue, ThemeData theme) {
     if (isSent) return Colors.grey;
-    if (isDue) return Colors.orange;
-    return Colors.green;
+    if (isDue) return theme.colorScheme.tertiary;
+    return theme.colorScheme.primary;
   }
 
   String _getStatusText(bool isSent, bool isDue) {

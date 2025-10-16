@@ -124,37 +124,28 @@ class _AchievementCardState extends State<AchievementCard>
     _tapController.reverse();
   }
 
-  Color _getRarityColor(AchievementRarity rarity) {
+  Color _getRarityColor(AchievementRarity rarity, ThemeData theme) {
     switch (rarity) {
       case AchievementRarity.common:
-        return AppTheme.warmCharcoal;
+        return theme.colorScheme.secondary;
       case AchievementRarity.rare:
-        return AppTheme.softGold;
+        return theme.colorScheme.tertiary;
       case AchievementRarity.epic:
-        return AppTheme.sageGreen;
+        return theme.colorScheme.primary;
       case AchievementRarity.legendary:
-        return Colors.purple;
+        return const Color(0xFFE53935); // Vibrant Red
     }
   }
 
-  Color _getRarityBgColor(AchievementRarity rarity) {
-    switch (rarity) {
-      case AchievementRarity.common:
-        return AppTheme.warmCharcoal.withOpacity(0.1);
-      case AchievementRarity.rare:
-        return AppTheme.softGold.withOpacity(0.1);
-      case AchievementRarity.epic:
-        return AppTheme.sageGreen.withOpacity(0.1);
-      case AchievementRarity.legendary:
-        return Colors.purple.withOpacity(0.1);
-    }
+  Color _getRarityBgColor(AchievementRarity rarity, ThemeData theme) {
+    return _getRarityColor(rarity, theme).withOpacity(0.1);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final rarityColor = _getRarityColor(widget.achievement.rarity);
-    final rarityBgColor = _getRarityBgColor(widget.achievement.rarity);
+    final rarityColor = _getRarityColor(widget.achievement.rarity, theme);
+    final rarityBgColor = _getRarityBgColor(widget.achievement.rarity, theme);
 
     return AnimatedBuilder(
       animation: Listenable.merge([
