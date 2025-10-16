@@ -1,14 +1,13 @@
-# Issue: Uncaught SyntaxError: Unexpected token '...'
+# Issue: `build_runner` fails with `drift_dev` error
 
 ## Description
-After replacing the `index.html` and adding `flutter_bootstrap.js`, a new error appeared: `Uncaught SyntaxError: Unexpected token '...'`. This indicates that the `flutter_bootstrap.js` file was not copied correctly and is truncated.
+The `build_runner` command is failing with a `drift_dev` error, which seems to be caused by a dependency issue. Previous attempts to fix this by cleaning the project and re-running `pub get` have not been successful.
 
 ## Resolution Plan
-- [x] Read the `flutter_bootstrap.js` file from the `temp_project` with a larger limit to get the full content.
-- [x] Overwrite the `flutter_bootstrap.js` file in the `clean_architecture_todo_app` with the full content.
+- [ ] Run `flutter pub upgrade` to upgrade the packages.
+- [ ] Run `flutter pub run build_runner build --delete-conflicting-outputs` to build the project again.
 
 ## Actions Taken
-- 2025-10-16: Manually added the `_flutter.buildConfig` object to the `index.html` file.
 
 ## Status
-Completed
+In progress

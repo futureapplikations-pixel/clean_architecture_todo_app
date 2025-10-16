@@ -17,6 +17,9 @@ class AppTheme {
   static const Color cardColorDark = Color(0xFF112240);
   static const Color fontColorLight = Color(0xFF2C2C2C);
   static const Color fontColorDark = Colors.white;
+  static const Color softGold = Color(0xFFD4AF37);
+  static const Color sageGreen = Color(0xFF9DC183);
+  static const Color warmCharcoal = Color(0xFF36454F);
 
 
   ThemeData _base(Brightness brightness) {
@@ -45,7 +48,7 @@ class AppTheme {
       colorScheme: colors,
       scaffoldBackgroundColor: backgroundColorLight,
       cardColor: cardColorLight,
-      shadowColor: Colors.grey.withOpacity(0.1),
+      shadowColor: Colors.grey.withAlpha(25),
     );
 
     return root.copyWith(
@@ -71,7 +74,7 @@ class AppTheme {
       colorScheme: colors,
       scaffoldBackgroundColor: backgroundColorDark,
       cardColor: cardColorDark,
-      shadowColor: Colors.black.withOpacity(0.3),
+      shadowColor: Colors.black.withAlpha(76),
     );
 
     return root.copyWith(
@@ -105,25 +108,5 @@ class AppTheme {
   }
 }
 
-extension on TextTheme {
-  TextTheme withColor(Color value) {
-    return copyWith(
-      displayLarge: displayLarge!.copyWith(color: value),
-      displayMedium: displayMedium!.copyWith(color: value),
-      displaySmall: displaySmall!.copyWith(color: value),
-      headlineLarge: headlineLarge!.copyWith(color: value),
-      headlineMedium: headlineMedium!.copyWith(color: value),
-      headlineSmall: headlineSmall!.copyWith(color: value),
-      bodyLarge: bodyLarge!.copyWith(color: value),
-      bodyMedium: bodyMedium!.copyWith(color: value),
-      bodySmall: bodySmall!.copyWith(color: value),
-      titleLarge: titleLarge!.copyWith(color: value),
-      titleMedium: titleMedium!.copyWith(color: value),
-      titleSmall: titleSmall!.copyWith(color: value),
-      labelLarge: labelLarge!.copyWith(color: value),
-      labelMedium: labelMedium!.copyWith(color: value),
-      labelSmall: labelSmall!.copyWith(color: value),
-    );
-  }
-}
+
 

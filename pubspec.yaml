@@ -39,6 +39,7 @@ dependencies:
 
   # Google Fonts
   google_fonts: ^6.1.0
+  faker: ^2.2.0
 
 dev_dependencies:
   flutter_test:

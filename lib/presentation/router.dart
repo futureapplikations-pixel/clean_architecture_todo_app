@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/model/scheduled_message.dart';
+import 'view/developer_options_screen.dart';
+import 'view/developer_options_screen.dart';
 import 'view/memento_details.dart';
 import 'view/memento_list.dart';
 import 'view/scheduled_message_form.dart';
@@ -15,6 +17,10 @@ final router = GoRouter(
       path: '/',
       builder: (context, state) => MementoListPage(),
       routes: [
+        GoRoute(
+          path: 'developer-options',
+          builder: (context, state) => const DeveloperOptionsScreen(),
+        ),
         GoRoute(
           path: 'memento/:id',
           builder: (context, state) => MementoDetails(id: state.params['id']!),

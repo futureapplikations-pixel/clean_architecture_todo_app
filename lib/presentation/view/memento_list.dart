@@ -1,16 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/model/memento.dart';
-
 import '../viewmodel/mementolist/memento_list_with_search.dart';
 import '../widgets/actions.dart';
-import '../widgets/master_detail.dart';
-import 'memento_form.dart';
 import '../widgets/chips_bar.dart';
+import '../widgets/master_detail.dart';
 import '../widgets/memento_card.dart';
+import 'memento_form.dart';
 
 class MementoListPage extends HookConsumerWidget {
   @override
@@ -96,6 +96,25 @@ class MementoListPage extends HookConsumerWidget {
           ),
           bottom: null,
           actions: [
+            if (kDebugMode)
+              Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.tertiary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.developer_mode,
+                    color: theme.colorScheme.tertiary,
+                    size: 20,
+                  ),
+                  tooltip: 'Developer Options',
+                  onPressed: () {
+                    context.go('/developer-options');
+                  },
+                ),
+              ),
+            const SizedBox(width: 8),
             Container(
               decoration: BoxDecoration(
                 color: theme.colorScheme.secondary.withOpacity(0.1),
